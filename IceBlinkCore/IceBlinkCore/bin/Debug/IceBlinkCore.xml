@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IceBlinkCore</name>
+    </assembly>
+    <members>
+        <member name="F:IceBlinkCore.ScriptSelect.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IceBlinkCore.ScriptSelect.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IceBlinkCore.ScriptSelect.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IceBlinkCore.EventObjectSelect.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IceBlinkCore.EventObjectSelect.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IceBlinkCore.EventObjectSelect.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:IceBlinkCore.Game.Random(System.Int32)">
+            <summary>
+            Used for generating a random number between 1 and some number.
+            </summary>
+            <param name="max">The maximum value that can be used (ex. Random(5); will return a number between 1-5 so 1, 2, 3, 4 or 5 are possible results).</param>
+            <returns>"returns"</returns>
+        </member>
+        <member name="M:IceBlinkCore.Game.Random(System.Int32,System.Int32)">
+            <summary>
+            Used for generating a random number between some number and some other number (max must be >= min).
+            </summary>
+            <param name="min"> The minimum value that can be found (ex. Random(5, 9); will return a number between 5-9 so 5, 6, 7, 8 or 9 are possible results).</param>
+            <param name="max"> The maximum value that can be found (ex. Random(5, 9); will return a number between 5-9 so 5, 6, 7, 8 or 9 are possible results).</param>
+        </member>
+        <member name="T:IceBlinkCore.ObjectCopier">
+            <summary>
+            Reference Article http://www.codeproject.com/KB/tips/SerializedObjectCloner.aspx
+            Provides a method for performing a deep copy of an object.
+            Binary Serialization is used to perform the copy.
+            </summary>
+        </member>
+        <member name="M:IceBlinkCore.ObjectCopier.Clone``1(``0)">
+            <summary>
+            Perform a deep Copy of the object.
+            </summary>
+            <typeparam name="T">The type of object being copied.</typeparam>
+            <param name="source">The object instance to copy.</param>
+            <returns>The copied object.</returns>
+        </member>
+    </members>
+</doc>

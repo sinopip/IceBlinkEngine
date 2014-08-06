@@ -1,0 +1,5 @@
+C:\Users\Jeremy\documents\visual studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jeremy\documents\visual studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\bin\Release\SpaceFrontiersCore.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\bin\Release\SpaceFrontiersCore.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\obj\Release\SpaceFrontiersCore.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\obj\Release\SpaceFrontiersCore.pdb

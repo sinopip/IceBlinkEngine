@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8FB29102-98AD-4816-BF10-9C2B8DB3EF6E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IceBlinkCore</RootNamespace>
+    <AssemblyName>IceBlinkCore</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>IceBlinkCore.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>IceBlinkCore.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IceBlink">
+      <HintPath>..\..\IceBlink\IceBlink\bin\Release\IceBlink.exe</HintPath>
+    </Reference>
+    <Reference Include="IceBlinkScriptFunctions">
+      <HintPath>..\..\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkScriptFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="IceBlinkToolset">
+      <HintPath>..\..\IceBlinkToolset\IceBlinkToolset\bin\Release\IceBlinkToolset.exe</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\..\Bin\Standard-net20\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>..\..\Bin\Standard-net20\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Area.cs" />
+    <Compile Include="AssemblyObjects.cs" />
+    <Compile Include="CharBase.cs" />
+    <Compile Include="Container.cs" />
+    <Compile Include="ContentNode.cs" />
+    <Compile Include="ConversationConverter.cs" />
+    <Compile Include="Convo.cs" />
+    <Compile Include="Effect.cs" />
+    <Compile Include="Creature.cs" />
+    <Compile Include="Encounter.cs" />
+    <Compile Include="EventObjectSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EventObjectSelect.Designer.cs">
+      <DependentUpon>EventObjectSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventObjectSelectEditor.cs" />
+    <Compile Include="EventObjEditorReturnObject.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GlobalInt.cs" />
+    <Compile Include="GlobalListItem.cs" />
+    <Compile Include="GlobalObject.cs" />
+    <Compile Include="GlobalString.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="Journal.cs" />
+    <Compile Include="LocalInt.cs" />
+    <Compile Include="LocalListItem.cs" />
+    <Compile Include="LocalObject.cs" />
+    <Compile Include="LocalString.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="MultilineStringEditor.cs" />
+    <Compile Include="ObjectCopier.cs" />
+    <Compile Include="PC.cs" />
+    <Compile Include="PlayerClass.cs" />
+    <Compile Include="Prop.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Race.cs" />
+    <Compile Include="ScriptSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScriptSelect.Designer.cs">
+      <DependentUpon>ScriptSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptSelectEditor.cs" />
+    <Compile Include="ScriptSelectEditorReturnObject.cs" />
+    <Compile Include="ShadowTextObject.cs" />
+    <Compile Include="Shop.cs" />
+    <Compile Include="Skill.cs" />
+    <Compile Include="SortableBindingList.cs" />
+    <Compile Include="Spell.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="Theme.cs" />
+    <Compile Include="Trait.cs" />
+    <Compile Include="Trigger.cs" />
+    <Compile Include="XmlColor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EventObjectSelect.resx">
+      <DependentUpon>EventObjectSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScriptSelect.resx">
+      <DependentUpon>ScriptSelect.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

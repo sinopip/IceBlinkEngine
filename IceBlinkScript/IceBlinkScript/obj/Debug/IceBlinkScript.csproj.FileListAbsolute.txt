@@ -1,0 +1,3 @@
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScript\IceBlinkScript\obj\Debug\IceBlinkScript.csprojResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScript\IceBlinkScript\obj\Debug\openForgeScript.Properties.Resources.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScript\IceBlinkScript\obj\Debug\IceBlinkScript.csproj.GenerateResource.Cache

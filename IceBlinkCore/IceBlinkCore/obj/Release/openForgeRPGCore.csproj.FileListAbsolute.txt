@@ -1,0 +1,12 @@
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\bin\Release\SpaceFrontiersCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\bin\Release\SpaceFrontiersCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\obj\Release\SpaceFrontiersCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiersCore\SpaceFrontiersCore\obj\Release\SpaceFrontiersCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Release\openForgeRPGCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Release\openForgeRPGCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\obj\Release\openForgeRPGCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\obj\Release\openForgeRPGCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Release\openForgeRPG.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Release\openForgeRPG.pdb

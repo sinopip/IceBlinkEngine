@@ -1,0 +1,5 @@
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeScript\openForgeScript\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeScript\openForgeScript\obj\Debug\openForgeScript.Properties.Resources.resources
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeScript\openForgeScript\obj\Debug\openForgeScript.testNumPad.resources
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeScript\openForgeScript\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeScript\openForgeScript\obj\Debug\GenerateResource.write.1.tlog

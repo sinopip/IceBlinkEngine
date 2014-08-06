@@ -1,0 +1,7 @@
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Debug\openForgeRPGCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Debug\openForgeRPGCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\obj\Debug\openForgeRPGCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\obj\Debug\openForgeRPGCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Debug\openForgeRPG.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGCore\openForgeRPGCore\bin\Debug\openForgeRPG.pdb
