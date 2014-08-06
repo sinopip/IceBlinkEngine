@@ -1,0 +1,25 @@
+C:\Users\Jeremy\AppData\Local\Temporary Projects\IceBlinkScriptFunctions\bin\Release\IceBlinkScriptFunctions.dll
+C:\Users\Jeremy\AppData\Local\Temporary Projects\IceBlinkScriptFunctions\bin\Release\IceBlinkScriptFunctions.pdb
+C:\Users\Jeremy\AppData\Local\Temporary Projects\IceBlinkScriptFunctions\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Jeremy\AppData\Local\Temporary Projects\IceBlinkScriptFunctions\obj\Release\IceBlinkScriptFunctions.dll
+C:\Users\Jeremy\AppData\Local\Temporary Projects\IceBlinkScriptFunctions\obj\Release\IceBlinkScriptFunctions.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\obj\Release\IceBlinkScriptFunctions.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\obj\Release\IceBlinkScriptFunctions.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkScriptFunctions.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkScriptFunctions.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlink.exe
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkCore.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkToolset.exe
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\WeifenLuo.WinFormsUI.Docking.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlink.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkCore.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkToolset.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\Interop.WMPLib.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\SharpDX.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\SharpDX.xml
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\SharpDX.Direct3D9.xml
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\obj\Release\IceBlinkScriptFunctions.csprojResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\obj\Release\Interop.WMPLib.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\obj\Release\IceBlinkScriptFunctions.csproj.ResolveComReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkCore.xml
