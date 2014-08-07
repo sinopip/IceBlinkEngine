@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{121D28F6-0BBB-4357-8BD3-FDCAC4B58563}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IceBlink</RootNamespace>
+    <AssemblyName>IceBlink</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>IBIcon3.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IceBlinkCore">
+      <HintPath>..\..\IceBlinkCore\IceBlinkCore\bin\Release\IceBlinkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="IceBlinkScriptFunctions">
+      <HintPath>..\..\IceBlinkScriptFunctions\IceBlinkScriptFunctions\bin\Release\IceBlinkScriptFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="IceBlinkToolset, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\..\IceBlinkToolset\IceBlinkToolset\bin\Release\IceBlinkToolset.exe</HintPath>
+    </Reference>
+    <Reference Include="SharpDX, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bin\Standard-net20\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bin\Standard-net20\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterPartySelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharacterPartySelection.Designer.cs">
+      <DependentUpon>CharacterPartySelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharacterSheet.Designer.cs">
+      <DependentUpon>CharacterSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Combat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Combat.Designer.cs">
+      <DependentUpon>Combat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContainerDialogBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContainerDialogBox.Designer.cs">
+      <DependentUpon>ContainerDialogBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConversationDialogBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConversationDialogBox.designer.cs">
+      <DependentUpon>ConversationDialogBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HotKeys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HotKeys.Designer.cs">
+      <DependentUpon>HotKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IceBlinkGroupBoxSmall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TraitSelectMainMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TraitSelectMainMap.Designer.cs">
+      <DependentUpon>TraitSelectMainMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpellSelectMainMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpellSelectMainMap.Designer.cs">
+      <DependentUpon>SpellSelectMainMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileChecker.cs" />
+    <Compile Include="LoadScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadScreen.Designer.cs">
+      <DependentUpon>LoadScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PortraitSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PortraitSelector.Designer.cs">
+      <DependentUpon>PortraitSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpriteSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpriteSelector.Designer.cs">
+      <DependentUpon>SpriteSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Debug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debug.Designer.cs">
+      <DependentUpon>Debug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FontSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FontSelection.Designer.cs">
+      <DependentUpon>FontSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IBForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IBForm.Designer.cs">
+      <DependentUpon>IBForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IBMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IBMessageBox.Designer.cs">
+      <DependentUpon>IBMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IceBlinkButtonClose.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkButtonLarge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkButtonMedium.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkButtonRArrow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkButtonResize.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkButtonSmall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkGroupBoxLarge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IceBlinkGroupBoxMedium.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Journal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Journal.Designer.cs">
+      <DependentUpon>Journal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelUp.Designer.cs">
+      <DependentUpon>LevelUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpenModule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpenModule.designer.cs">
+      <DependentUpon>OpenModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PartyCreation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PartyCreation.Designer.cs">
+      <DependentUpon>PartyCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PartyInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PartyInventory.Designer.cs">
+      <DependentUpon>PartyInventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SkillSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SkillSelect.Designer.cs">
+      <DependentUpon>SkillSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpellSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpellSelect.Designer.cs">
+      <DependentUpon>SpellSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StartScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartScreen.Designer.cs">
+      <DependentUpon>StartScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store.Designer.cs">
+      <DependentUpon>Store.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TraitSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TraitSelect.Designer.cs">
+      <DependentUpon>TraitSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UseItemCombat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UseItemCombat.Designer.cs">
+      <DependentUpon>UseItemCombat.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharacterPartySelection.resx">
+      <DependentUpon>CharacterPartySelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharacterSheet.resx">
+      <DependentUpon>CharacterSheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Combat.resx">
+      <DependentUpon>Combat.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContainerDialogBox.resx">
+      <DependentUpon>ContainerDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConversationDialogBox.resx">
+      <DependentUpon>ConversationDialogBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HotKeys.resx">
+      <DependentUpon>HotKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TraitSelectMainMap.resx">
+      <DependentUpon>TraitSelectMainMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpellSelectMainMap.resx">
+      <DependentUpon>SpellSelectMainMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadScreen.resx">
+      <DependentUpon>LoadScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PortraitSelector.resx">
+      <DependentUpon>PortraitSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpriteSelector.resx">
+      <DependentUpon>SpriteSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Debug.resx">
+      <DependentUpon>Debug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontSelection.resx">
+      <DependentUpon>FontSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IBForm.resx">
+      <DependentUpon>IBForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IBMessageBox.resx">
+      <DependentUpon>IBMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Journal.resx">
+      <DependentUpon>Journal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelUp.resx">
+      <DependentUpon>LevelUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenModule.resx">
+      <DependentUpon>OpenModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartyCreation.resx">
+      <DependentUpon>PartyCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartyInventory.resx">
+      <DependentUpon>PartyInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkillSelect.resx">
+      <DependentUpon>SkillSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpellSelect.resx">
+      <DependentUpon>SpellSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartScreen.resx">
+      <DependentUpon>StartScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store.resx">
+      <DependentUpon>Store.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TraitSelect.resx">
+      <DependentUpon>TraitSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UseItemCombat.resx">
+      <DependentUpon>UseItemCombat.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="bin\Debug\data\system_preferences40.png" />
+    <None Include="Properties\DataSources\IceBlinkCore.Skills.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\portraits\NOPORT_M.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\portraits\HMF_G.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\NOPORT_M.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\NOPORT_S.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\NOPORT_L.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\background_moss.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\inventory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\journal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\grid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\themes\default\standard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_main_hover_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_main_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_main_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\gb_med_header.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\gb_lrg_header.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_rarw_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_close_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_rsize_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_med_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_med_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_med_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\ui\b_med_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\graphics\NOPORT_M.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\data\graphics\convoPlus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="IBIcon3.ico" />
+    <None Include="bin\Debug\data\ui\gb_sml_header.png" />
+    <Content Include="IBIcon2.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

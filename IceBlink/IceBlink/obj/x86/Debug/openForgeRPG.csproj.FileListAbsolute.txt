@@ -1,0 +1,61 @@
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPGCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPGCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.CharacterSheet.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.ContainerDialogBox.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.ConversationDialogBox.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.Form1.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.LogPad.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.OpenModule.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.PartyCreation.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.PartyInventory.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.Properties.Resources.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.SettingsForm.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.StartScreen.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPG.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPG.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.Combat.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPG.exe.config
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\ResGen.read.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\ResGen.write.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.MageSpellsCombat.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.UseItemCombat.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPG.exe.config
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.exe
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPG.exe
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPG.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPGCore.dll
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\bin\Debug\openForgeRPGCore.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.CharacterSheet.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.Combat.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.ContainerDialogBox.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.ConversationDialogBox.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.Form1.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.LogPad.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.MageSpellsCombat.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.OpenModule.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.PartyCreation.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.PartyInventory.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.Properties.Resources.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.SettingsForm.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.StartScreen.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\openForgeRPG.UseItemCombat.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource-ResGen.read.5.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\ResGen.read.1.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\ResGen.write.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource-ResGen.read.5.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPG\openForgeRPG\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\openForgeRPG\bin\Debug\openForgeRPG.exe.config
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\openForgeRPG\obj\x86\Debug\openForgeRPG.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\openForgeRPG\obj\x86\Debug\openForgeRPG.pdb

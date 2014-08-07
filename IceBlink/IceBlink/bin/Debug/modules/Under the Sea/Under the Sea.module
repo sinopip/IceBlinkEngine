@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <modulePlayerClassList />
+  <moduleRacesList />
+  <moduleSkillsList />
+  <moduleSpellsList />
+  <moduleTraitsList />
+  <moduleEffectsList />
+  <moduleButtonEnterSound>btn_hover.wav</moduleButtonEnterSound>
+  <moduleButtonClickSound>btn_click.wav</moduleButtonClickSound>
+  <moduleButtonMediumNormalImage>b_med_normal.png</moduleButtonMediumNormalImage>
+  <moduleButtonMediumHoverImage>b_med_hover.png</moduleButtonMediumHoverImage>
+  <moduleButtonMediumPressedImage>b_med_pressed.png</moduleButtonMediumPressedImage>
+  <moduleButtonMediumDisabledImage>b_med_disabled.png</moduleButtonMediumDisabledImage>
+  <moduleButtonSmallNormalImage>b_sml_normal.png</moduleButtonSmallNormalImage>
+  <moduleButtonSmallHoverImage>b_sml_hover.png</moduleButtonSmallHoverImage>
+  <moduleButtonSmallPressedImage>b_sml_pressed.png</moduleButtonSmallPressedImage>
+  <moduleButtonSmallDisabledImage>b_sml_disabled.png</moduleButtonSmallDisabledImage>
+  <moduleButtonLargeNormalImage>b_lrg_normal.png</moduleButtonLargeNormalImage>
+  <moduleButtonLargeHoverImage>b_lrg_hover.png</moduleButtonLargeHoverImage>
+  <moduleButtonLargePressedImage>b_lrg_pressed.png</moduleButtonLargePressedImage>
+  <moduleButtonLargeDisabledImage>b_lrg_disabled.png</moduleButtonLargeDisabledImage>
+  <moduleButtonRArrowNormalImage>b_rarw_normal.png</moduleButtonRArrowNormalImage>
+  <moduleButtonRArrowHoverImage>b_rarw_hover.png</moduleButtonRArrowHoverImage>
+  <moduleButtonRArrowPressedImage>b_rarw_pressed.png</moduleButtonRArrowPressedImage>
+  <moduleButtonRArrowDisabledImage>b_rarw_disabled.png</moduleButtonRArrowDisabledImage>
+  <moduleButtonCloseNormalImage>b_close_normal.png</moduleButtonCloseNormalImage>
+  <moduleButtonCloseHoverImage>b_close_hover.png</moduleButtonCloseHoverImage>
+  <moduleButtonClosePressedImage>b_close_pressed.png</moduleButtonClosePressedImage>
+  <moduleButtonResizeNormalImage>b_rsize_normal.png</moduleButtonResizeNormalImage>
+  <moduleButtonResizeHoverImage>b_rsize_hover.png</moduleButtonResizeHoverImage>
+  <moduleButtonResizePressedImage>b_rsize_pressed.png</moduleButtonResizePressedImage>
+  <moduleGroupBoxLargeImage>gb_lrg_header.png</moduleGroupBoxLargeImage>
+  <moduleGroupBoxMediumImage>gb_med_header.png</moduleGroupBoxMediumImage>
+  <moduleGroupBoxSmallImage>gb_sml_header.png</moduleGroupBoxSmallImage>
+  <VersionIB>IceBlink v0.8</VersionIB>
+  <ModuleFolderName>Under the Sea</ModuleFolderName>
+  <ModuleName>Under the Sea</ModuleName>
+  <ModuleDescription>Help the seal find some human things. Watch out for sharks.</ModuleDescription>
+  <ThemeFolderName>default</ThemeFolderName>
+  <UseRestSystem>false</UseRestSystem>
+  <UseAlignment>false</UseAlignment>
+  <WorldTime>0</WorldTime>
+  <NextIdNumber>2535</NextIdNumber>
+  <ModuleTheme>
+    <TitleText>Under the Sea</TitleText>
+    <TitleForeColor Web="SeaGreen" />
+    <TitleShadowColor Web="Black" />
+    <IBBorderOutsideColor Web="DarkGray" />
+    <IBBorderMiddleColor Web="Gray" />
+    <IBBorderInsideColor Web="DimGray" />
+    <GroupBoxBackGroundColor Web="SeaGreen" />
+    <GroupBoxBorderColor Web="#404040" />
+    <HeaderForeColor Web="MediumSeaGreen" />
+    <HeaderShadowColor Web="Black" />
+    <ModuleFontName>Comic Sans MS</ModuleFontName>
+    <ModuleFontPointSize>9</ModuleFontPointSize>
+    <ModuleFontScale>1</ModuleFontScale>
+    <StandardBackColor Web="MediumSeaGreen" />
+    <StandardTextColor Web="Black" />
+    <ConvoBackColor Web="Black" />
+    <ConvoTextColor Web="Aqua" />
+  </ModuleTheme>
+  <ModuleEncountersList>
+    <encounters />
+  </ModuleEncountersList>
+  <ModuleContainersList>
+    <containers />
+  </ModuleContainersList>
+  <ModuleShopsList>
+    <shopsList />
+  </ModuleShopsList>
+  <ModuleCreaturesList>
+    <creatures />
+  </ModuleCreaturesList>
+  <ModulePropsList>
+    <propsList />
+  </ModulePropsList>
+  <ModuleJournal>
+    <categories />
+    <NextIdNum>1477</NextIdNum>
+  </ModuleJournal>
+  <ModulePlayerClassList />
+  <ModuleRacesList />
+  <ModuleSkillsList />
+  <ModuleSpellsList />
+  <ModuleTraitsList />
+  <ModuleEffectsList />
+  <ModuleAreasList>
+    <ModuleAreasList>sea</ModuleAreasList>
+    <ModuleAreasList>boat</ModuleAreasList>
+    <ModuleAreasList>sharkEnc</ModuleAreasList>
+  </ModuleAreasList>
+  <ModuleConvosList>
+    <ModuleConvosList>seal</ModuleConvosList>
+    <ModuleConvosList>sharkAmbush</ModuleConvosList>
+  </ModuleConvosList>
+  <ModuleAreasObjects />
+  <ModuleGlobalInts>
+    <ModuleGlobalInts>
+      <Key>TindraHint</Key>
+      <Value>0</Value>
+    </ModuleGlobalInts>
+  </ModuleGlobalInts>
+  <ModuleGlobalStrings />
+  <ModuleGlobalObjects />
+  <ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>TombQuest</GlobalName>
+      <GlobalNotes>1=recieved quest   
+
+2=killed pests
+
+   3=completed quest</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>NordPay</GlobalName>
+      <GlobalNotes>0=no pay   1=half pay (6gp)   
+
+2=75% pay (9gp)   
+
+3=full pay (12gp)</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>WarnCharn</GlobalName>
+      <GlobalNotes>set to "1" in Jena's convo when you disover Zorn's plot and return to warn Charn</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>DalinVertoQuest</GlobalName>
+      <GlobalNotes>1=quest given   2=verto notified   3=returned to dalin</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>JoinRescue</GlobalName>
+      <GlobalNotes>1=will NOT join rescue team    2=will join rescue team    3=went to falls</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>VertoDiscover</GlobalName>
+      <GlobalNotes>1=figured out about Verto</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>TindraDiscover</GlobalName>
+      <GlobalNotes>1=figured out about Tindra</GlobalNotes>
+    </ModuleGlobalListItems>
+    <ModuleGlobalListItems>
+      <GlobalName>TindraHint</GlobalName>
+      <GlobalNotes>Increment this and when you receive a certain amount, set TindraDiscover to 1.</GlobalNotes>
+    </ModuleGlobalListItems>
+  </ModuleGlobalListItems>
+  <ModuleLocalListItems>
+    <ModuleLocalListItems>
+      <LocalName>TalkedTo</LocalName>
+    </ModuleLocalListItems>
+    <ModuleLocalListItems>
+      <LocalName>ReceivedReward</LocalName>
+    </ModuleLocalListItems>
+  </ModuleLocalListItems>
+  <ModuleConvoSavedValuesList />
+  <StartingArea>sea</StartingArea>
+  <StartingPlayerPosition>
+    <X>5</X>
+    <Y>6</Y>
+  </StartingPlayerPosition>
+  <CreaturesFileName>creatures.crt</CreaturesFileName>
+  <ItemsFileName>items.items</ItemsFileName>
+  <PropsFileName>props.prp</PropsFileName>
+  <ShopsFileName>shops.shp</ShopsFileName>
+  <ContainersFileName>containers.cntr</ContainersFileName>
+  <EncountersFileName>encounters.enctr</EncountersFileName>
+  <PlayerClassesFileName>playerClasses.cls</PlayerClassesFileName>
+  <JournalFileName>journal.jnl</JournalFileName>
+  <RacesFileName>races.rce</RacesFileName>
+  <SkillsFileName>skills.skl</SkillsFileName>
+  <SpellsFileName>spells.spls</SpellsFileName>
+  <TraitsFileName>traits.trts</TraitsFileName>
+  <EffectsFileName>effects.eft</EffectsFileName>
+  <LabelFunds>Gold</LabelFunds>
+  <LabelSpells>Spells</LabelSpells>
+  <ModuleFontName>Comic Sans MS</ModuleFontName>
+  <ModuleFontPointSize>9</ModuleFontPointSize>
+  <ModuleFontScale>1</ModuleFontScale>
+  <ModuleFloatyFontScale>2.5</ModuleFloatyFontScale>
+  <OnHeartBeat>
+    <FilenameOrTag>none</FilenameOrTag>
+    <Parm1>none</Parm1>
+    <Parm2>none</Parm2>
+    <Parm3>none</Parm3>
+    <Parm4>none</Parm4>
+  </OnHeartBeat>
+</Module>

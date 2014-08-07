@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Skills xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <skillsList>
+    <SkillName>Search</SkillName>
+    <SkillTag>search</SkillTag>
+    <Description>Ability to search and spot important items</Description>
+    <UseableInSituation>Always</UseableInSituation>
+    <BaseValue>0</BaseValue>
+    <Ranks>0</Ranks>
+    <Modifiers>0</Modifiers>
+    <MaxRanksAtLevel>4</MaxRanksAtLevel>
+    <TotalRanks>0</TotalRanks>
+    <AttributeForBonus>Strength</AttributeForBonus>
+    <RanksAssigned>0</RanksAssigned>
+    <PointsPerRank>1</PointsPerRank>
+    <SkillScript>
+      <FilenameOrTag>none</FilenameOrTag>
+      <Parm1>none</Parm1>
+      <Parm2>none</Parm2>
+      <Parm3>none</Parm3>
+      <Parm4>none</Parm4>
+    </SkillScript>
+  </skillsList>
+</Skills>

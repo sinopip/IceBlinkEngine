@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Sprite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ImageLayout>
+    <X>10</X>
+    <Y>6</Y>
+  </ImageLayout>
+  <SpriteSize>
+    <Width>250</Width>
+    <Height>250</Height>
+  </SpriteSize>
+  <Filename>donutGiant.spt</Filename>
+  <SpriteSheetFilename>donutGiant.png</SpriteSheetFilename>
+  <Actor>false</Actor>
+  <Tag>donutGiant</Tag>
+  <TopDown>false</TopDown>
+  <Animated>true</Animated>
+  <Show>true</Show>
+  <Visible>false</Visible>
+  <Looping>true</Looping>
+  <Location>
+    <X>0</X>
+    <Y>0</Y>
+  </Location>
+  <Frame>0</Frame>
+  <FrameRange>
+    <X>0</X>
+    <Y>59</Y>
+  </FrameRange>
+  <FPS>30</FPS>
+  <NumberOfFrames>60</NumberOfFrames>
+  <IdleNumberOfFrames>15</IdleNumberOfFrames>
+  <AttackingNumberOfFrames>15</AttackingNumberOfFrames>
+  <WalkingNumberOfFrames>15</WalkingNumberOfFrames>
+  <IdleFPS>15</IdleFPS>
+  <AttackingFPS>15</AttackingFPS>
+  <WalkingFPS>15</WalkingFPS>
+  <IdleDelay>2000</IdleDelay>
+</Sprite>

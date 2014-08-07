@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Journal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <categories>
+    <JournalCategories>
+      <OrderIndex>0</OrderIndex>
+      <Name>The Search</Name>
+      <Tag>TiaQuest</Tag>
+      <Priority>Highest</Priority>
+      <Entries>
+        <JournalEntries>
+          <OrderIndex>0</OrderIndex>
+          <EntryTitle>Find Human Things</EntryTitle>
+          <EntryText>Search the sunken ship for human things and bring them to Tia. Tia can help explain what they are?</EntryText>
+          <Tag>Tia1</Tag>
+          <EndPoint>false</EndPoint>
+        </JournalEntries>
+        <JournalEntries>
+          <OrderIndex>1</OrderIndex>
+          <EntryTitle>Items Explained</EntryTitle>
+          <EntryText>Tia has explained what humans do with the items you found.</EntryText>
+          <Tag>Tia2</Tag>
+          <EndPoint>false</EndPoint>
+        </JournalEntries>
+      </Entries>
+    </JournalCategories>
+  </categories>
+  <NextIdNum>1493</NextIdNum>
+</Journal>

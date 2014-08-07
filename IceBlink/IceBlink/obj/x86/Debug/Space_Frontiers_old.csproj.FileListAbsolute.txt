@@ -1,0 +1,2 @@
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.exe
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.pdb

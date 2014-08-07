@@ -1,0 +1,25 @@
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\bin\Debug\SpaceFrontiers.exe
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\bin\Debug\SpaceFrontiers.pdb
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\Space_Frontiers.Form1.resources
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\Space_Frontiers.Properties.Resources.resources
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.exe
+C:\Users\Slowdive\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.exe
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\bin\Debug\SpaceFrontiers.exe
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\bin\Debug\SpaceFrontiers.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\Space_Frontiers.Form1.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\Space_Frontiers.Properties.Resources.resources
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\SpaceFrontiers.Form1.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\Space_Frontiers.Properties.Resources.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\SpaceFrontiers\SpaceFrontiers\obj\x86\Debug\GenerateResource.write.1.tlog

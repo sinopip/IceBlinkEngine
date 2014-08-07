@@ -1,0 +1,57 @@
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlink.exe.config
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlink.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlink.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkCore.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.CharacterSheet.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.Combat.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.ContainerDialogBox.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.ConversationDialogBox.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.Form1.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.OpenModule.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.PartyCreation.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.PartyInventory.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.Properties.Resources.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.SettingsForm.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.StartScreen.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.UseItemCombat.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.Debug.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.Store.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkToolset.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkToolset.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.CharacterPartySelection.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.SpellSelect.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.TraitSelect.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.LevelUp.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkScriptFunctions.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkScriptFunctions.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.SkillSelect.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\Interop.WMPLib.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\Interop.WMPLib.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.csproj.ResolveComReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.JournalScreen.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.FontSelection.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.IBForm.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.IBMessageBox.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.SpriteSelector.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.PortraitSelector.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\SharpDX.dll
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\SharpDX.xml
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\SharpDX.Direct3D9.xml
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.csprojResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.csproj.GenerateResource.Cache
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.LoadScreen.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.SpellSelectMainMap.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.TraitSelectMainMap.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.About.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\obj\x86\Debug\IceBlink.HotKeys.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlink\IceBlink\bin\Debug\IceBlinkCore.xml
+C:\Users\Jeremy\Documents\GitHub\IceBlinkEngine\IceBlink\IceBlink\bin\Debug\IceBlink.exe.config
+C:\Users\Jeremy\Documents\GitHub\IceBlinkEngine\IceBlink\IceBlink\obj\x86\Debug\Interop.WMPLib.dll
+C:\Users\Jeremy\Documents\GitHub\IceBlinkEngine\IceBlink\IceBlink\obj\x86\Debug\IceBlink.csproj.ResolveComReference.cache
+C:\Users\Jeremy\Documents\GitHub\IceBlinkEngine\IceBlink\IceBlink\obj\x86\Debug\IceBlink.exe
+C:\Users\Jeremy\Documents\GitHub\IceBlinkEngine\IceBlink\IceBlink\obj\x86\Debug\IceBlink.pdb

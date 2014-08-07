@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Containers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <containers>
+    <Containers>
+      <containerTag>chest1</containerTag>
+      <items>
+        <ContainerItems>Human Thing</ContainerItems>
+        <ContainerItems>Golden Goblet</ContainerItems>
+        <ContainerItems>Gold Ring</ContainerItems>
+      </items>
+      <containerItemTags>humanThing</containerItemTags>
+      <containerItemTags>goblet</containerItemTags>
+      <containerItemTags>goldring</containerItemTags>
+    </Containers>
+  </containers>
+</Containers>
