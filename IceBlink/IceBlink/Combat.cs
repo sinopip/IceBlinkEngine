@@ -14,7 +14,6 @@ namespace IceBlink
 {
     public partial class Combat : IBForm
     {        
-        //test change
         public Game com_game;
         public Form1 com_frm;
         public Point txtOneLocation = new Point(0, 0);
@@ -28,7 +27,7 @@ namespace IceBlink
         public Encounter com_encounter = new Encounter();
         public List<MoveOrder> com_moveOrderList = new List<MoveOrder>();
         public List<string> comLogList = new List<string>();
-        public bool canMove = true;
+        public bool canMove = false;
         public int bumpedIntoCreatureIndex;
         public int currentMoveOrderIndex = 0;
         public int encounterXP = 0;
