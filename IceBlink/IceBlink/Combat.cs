@@ -1127,7 +1127,8 @@ namespace IceBlink
                     canMove = false;
                     btnContinue.Enabled = false;
                     gbPartyAction.Enabled = true;
-                    doOnDeathScripts();
+                    // * sinopip, 10.08.14
+                    //doOnDeathScripts();
                     cleanUpCreatures();
                     doCreateLabels();
                     refreshCharacterPanel();
@@ -1264,7 +1265,9 @@ namespace IceBlink
                 com_frm.sf.CombatSource = char_pt;
                 com_frm.doScriptBasedOnFilename("dsAttackPC.cs", "none", "none", "none", "none");
                 #endregion
-
+				// * sinopip, 10.08.14
+                doOnDeathScripts();
+                
                 checkEndEncounter();
                 doCreateLabels();
                 refreshCharacterPanel();
