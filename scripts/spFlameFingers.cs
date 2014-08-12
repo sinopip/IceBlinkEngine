@@ -14,7 +14,7 @@ namespace IceBlink
         {
             // C# code goes here
             
-            Creature source = sf.GetActionCreature();
+            Creature source = sf.GetActionCreatureData();
             if (source == null)
             {
             	MessageBox.Show("Invalid script owner, not a Creature of PC");

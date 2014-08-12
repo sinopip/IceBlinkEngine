@@ -109,7 +109,6 @@ namespace IceBlink
 		public bool SavedAgainstSuccessfully = false;
 		public int Score = 0; // ie damage
 		public int ScoreFinal = 0; // ie damage after Save roll
-		public Point location;
 		
 		public SpecialActionResult()
 		{
@@ -3858,7 +3857,7 @@ namespace IceBlink
 		
 	//
 	// ______________________
-        public Creature GetActionCreature()
+        public Creature GetActionCreatureData()
         {
                 Creature source = null;
                 PC PCsource = null;
@@ -3891,7 +3890,7 @@ namespace IceBlink
         // ______________________
         // * 09.08.14
         // * get the owner of an effect (or for a spell with a single target?)
-        public object GetSourceCreature()
+        public object GetSourceCreatureObject()
         {
         	if (MainMapScriptCall)
         	{
@@ -3900,15 +3899,27 @@ namespace IceBlink
         	else
         		return CombatSource;
         }
-		public void CheckDeath(Creature crt)
+		public void CheckDoDeathScript(object crt)
 		{
-            foreach (LocalString hs in crt.CharLocalStrings)
-            	if (hs.Key == "OnDeathSound")
-            	{   
-            		PlaySoundFX(hs.Value);
-            	    break;                          
-            	}
-            frm.currentCombat.drawEndEffect(crt.CombatLocation, 0, "generic_death.spt");			
+			if (crt is PC)
+            {
+				if (((PC)crt).HP <= 0)
+                {
+                    CombatSource = crt;
+                    var scriptCrtDth = ((PC)crt).OnDeath;
+                    frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                }
+            }
+			else if (crt is Creature)
+            {
+                if (((Creature)crt).HP <= 0)
+                {
+                    CombatSource = crt;
+                    var scriptCrtDth = ((Creature)crt).OnDeath;
+                    frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);			
+                }
+            }
+			
 		}
         //
 		// ______________________
@@ -3957,7 +3968,7 @@ namespace IceBlink
         	int dc = sp.BaseDC;
         	if (sp.BaseDC > 0)
         	{
-	        	Creature source = GetActionCreature();
+	        	Creature source = GetActionCreatureData();
 	        	if (sp.StatMod.ToLower() == "int")
 	        		dc += source.Intelligence/2 - 5;        		
 	        	else if (sp.StatMod.ToLower() == "wis")
@@ -4262,7 +4273,7 @@ namespace IceBlink
               /*if (pc.HP <= 0 && pc.HP > -20)
               {
                	c.logText(Environment.NewLine, Color.Black);
-                c.logText(GetActionCreature().Name + " knocked out " + pc.Name + " unconscious...", Color.Orange);
+                c.logText(GetActionCreatureData().Name + " knocked out " + pc.Name + " unconscious...", Color.Orange);
                 c.logText(Environment.NewLine, Color.Black);
                 //pc.Status = CharBase.charStatus.Dead;
                 //pc.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
@@ -4273,7 +4284,8 @@ namespace IceBlink
               {
               	pc.Status = CharBase.charStatus.Dead;
                	WriteToLog(Environment.NewLine, Color.Black);
-                WriteToLog(GetActionCreature().Name + " killed " + pc.Name, Color.LightGreen);
+                WriteToLog(GetActionCreatureData().Name + " killed " + pc.Name, Color.LightGreen);
+                CheckDoDeathScript(pc);
                 pc.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
               }
 			}
@@ -4309,8 +4321,8 @@ namespace IceBlink
               if (creature.HP <= 0)
               {
               	  creature.Status = CharBase.charStatus.Dead;
-                  WriteToLog(GetActionCreature().Name + " killed the " + creature.Name, Color.LightGreen);
-                  CheckDeath(creature); // * for death sounds/animations
+                  WriteToLog(GetActionCreatureData().Name + " killed the " + creature.Name, Color.LightGreen);
+                  CheckDoDeathScript(creature);
                   //creature.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
               }
 			}
@@ -4540,7 +4552,7 @@ namespace IceBlink
 	// ______________________
         public void DoSpell(SpellParameters sp)
         {        	
-        	WriteToLog(GetActionCreature().Name, Color.LightBlue);
+        	WriteToLog(GetActionCreatureData().Name, Color.LightBlue);
         	WriteToLog(" casts ",Color.Black);
         	WriteToLog(sp.Name,sp.SpellColor);
         	WriteToLog(Environment.NewLine, Color.Black);
