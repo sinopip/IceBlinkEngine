@@ -9,6 +9,7 @@ using IceBlinkToolset;
 using IceBlinkCore;
 using IceBlink;
 using System.Threading;
+using WMPLib;
 
 ///Instructions and Version History
 ///
@@ -99,8 +100,54 @@ using System.Threading;
 
 namespace IceBlink
 {
+	
+	public class SpecialActionResult
+	{
+		public int Roll = 0;
+		public int RollMod = 0;
+		public int DC = 0;
+		public bool SavedAgainstSuccessfully = false;
+		public int Score = 0; // ie damage
+		public int ScoreFinal = 0; // ie damage after Save roll
+		public Point location;
+		
+		public SpecialActionResult()
+		{
+
+		}
+	}
+	
+	public class SpellParameters
+	{
+		public string Name = "";
+		public string Type = ""; // "Heal", "Damage", "Buff" or "Debuff"
+		public string TargetType = "";
+		public Effect Effect;
+		public string CountersEffects = "";
+		public int NbDice = 0;
+		public int Die = 1;
+		public int DiceAdd = 0; // <NbDice>d<Die> +<DiceAdd>
+		public int BaseDC = 0;
+		public double SuccessSaveResistance = 0.0;
+		public string EnergySource = "";
+		public string StatMod = ""; // "INT", "WIS", "CHA"
+		public string Save; // "Fortitude", "Reflex" or "Will"
+		public Color SpellColor = Color.Black; // ie "Color.Blue" for a cold spell
+		public string Description = "";
+		public string EffectDescription = "";
+		public string SpriteFileName = "";
+		public string SoundFX = "";
+
+		
+		public SpellParameters()
+		{
+
+		}
+	}
+	
     public class ScriptFunctions
     {
+		#region CORE FUNCTIONS    	
         #region Properties
         public Form1 frm;
         public Game gm;
@@ -3326,8 +3373,8 @@ namespace IceBlink
                     //logText(Environment.NewLine, Color.Black);
                     //_pathfinder.Squares[lowestPoint.X, lowestPoint.Y].IsPath = true;
 
-                    pointX = lowestPoint.X;
-                    pointY = lowestPoint.Y;
+                    /*pointX = lowestPoint.X;
+                    pointY = lowestPoint.Y;*/
                 }
                 else
                 {
@@ -3336,15 +3383,15 @@ namespace IceBlink
                     break;
                 }
 
-                if (pathfinderMainArea.Squares[pointX, pointY].ContentCode == SquareContent.Hero)
+                /*if (pathfinderMainArea.Squares[pointX, pointY].ContentCode == SquareContent.Hero)
                 {
                     /*
                      * 
                      * We went from monster to hero, so we're finished.
                      * 
                      * */
-                    break;
-                }
+                    /*break;
+                }*/
             }
             return lowest;
         }
@@ -3756,7 +3803,7 @@ namespace IceBlink
                 IBMessageBox.Show(gm, "module's journal category wasn't found based on tag given");
             }
         }
-        public void PlaySoundFX(string soundFileNameWithExtension)
+        public void PlaySoundFX(string soundFileNameWithExtension)//, bool looping)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer();
             try
@@ -3764,18 +3811,753 @@ namespace IceBlink
                 player.SoundLocation = gm.mainDirectory + "\\modules\\" + gm.module.ModuleFolderName + "\\sounds\\soundFX\\" + soundFileNameWithExtension;
             }
             catch { }
+            //if (looping)
+            	//player.PlayLooping();
             player.Play();
             //Thread.Sleep(300); //uncomment this delay function if the sound doesn't play because the Dispose() kills it too soon.
-            player.Dispose(); //if you do not want to have the Thread.Sleep delay which freezes everything, maybe commnet out this player.Dispose() function and let the garbage collector clean it up later
+            //player.Dispose(); //if you do not want to have the Thread.Sleep delay which freezes everything, maybe commnet out this player.Dispose() function and let the garbage collector clean it up later
+        }
+        public void PlaySoundFX(string soundFileNameWithExtension, int delay)
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+            try
+            {
+                player.SoundLocation = gm.mainDirectory + "\\modules\\" + gm.module.ModuleFolderName + "\\sounds\\soundFX\\" + soundFileNameWithExtension;
+                player.Play();
+            	Thread.Sleep(delay);
+				//player.Dispose(); //if you do not want to have the Thread.Sleep delay which freezes everything, maybe commnet out this player.Dispose() function and let the garbage collector clean it up later            	
+            }
+            catch { }            
         }
         public void OpenShop(string shopTag)
         {
             frm.doShopBasedOnTag(shopTag);
         }
-
+        #endregion
+        
         #region AUTHOR FUNCTIONS
         //place any methods/functions here that are overloads or new functions.
-        
+	//
+	// ______________________
+	// 09.08.14
+	public void WriteToLog(string text, Color color)
+	{
+		Form1 f = null;
+		Combat c = null;
+		
+		if (MainMapScriptCall)
+			f = frm;
+		else
+			c = frm.currentCombat;
+		
+		if (f != null)
+			f.logText(text, color);
+		else if (c != null)
+			c.logText(text, color);
+	}
+		
+	//
+	// ______________________
+        public Creature GetActionCreature()
+        {
+                Creature source = null;
+                PC PCsource = null;
+                if (MainMapScriptCall)
+                {
+                	PCsource = (PC)MainMapSource;
+                }
+                else
+                {
+                  if (CombatSource is PC)
+                    PCsource = (PC)CombatSource;
+                  else if (CombatSource is Creature)           
+                    source = (Creature)CombatSource;
+                }
+                if (PCsource != null)
+                {             
+                   source = new Creature();
+                   source.Name = PCsource.Name;
+                   source.ClassLevel = PCsource.ClassLevel;
+				   // * stats for spells DC                   
+                   source.Intelligence = PCsource.Intelligence;
+                   source.Wisdom = PCsource.Wisdom;
+                   source.Charisma = PCsource.Charisma;
+                   source.CombatLocation = PCsource.CombatLocation;
+                   // * other vars might be required later
+                }
+                return source;
+    	}
+        //
+        // ______________________
+        // * 09.08.14
+        // * get the owner of an effect (or for a spell with a single target?)
+        public object GetSourceCreature()
+        {
+        	if (MainMapScriptCall)
+        	{
+        		return MainMapSource;
+        	}
+        	else
+        		return CombatSource;
+        }
+		public void CheckDeath(Creature crt)
+		{
+            foreach (LocalString hs in crt.CharLocalStrings)
+            	if (hs.Key == "OnDeathSound")
+            	{   
+            		PlaySoundFX(hs.Value);
+            	    break;                          
+            	}
+            frm.currentCombat.drawEndEffect(crt.CombatLocation, 0, "generic_death.spt");			
+		}
+        //
+		// ______________________
+		// for a spell cast in combat with one or more targets
+        // * produces list of objects (will need to be cast to use either as PC or as Creature)
+        public List<object> GetAllCombatTargets(string targets_type)
+        {
+        	List<object> creatures_list = new List<object>();
+        	Combat c = frm.currentCombat;
+        	Point target;
+        	if (c.currentSpell.AoeRadiusOrLength > 0)
+        		target = (Point)CombatTarget;
+        	else
+        	{
+        		creatures_list.Add(CombatTarget);
+        		return creatures_list;
+        	}
+        	// Encounter Creatures
+			foreach (Creature crt in c.com_encounter.EncounterCreatureList.creatures)
+            {
+                // if in range of radius of x and radius of y
+                if ((crt.CombatLocation.X >= target.X - c.currentSpell.AoeRadiusOrLength) && (crt.CombatLocation.X <= target.X + c.currentSpell.AoeRadiusOrLength))
+                    if ((crt.CombatLocation.Y >= target.Y - c.currentSpell.AoeRadiusOrLength) && (crt.CombatLocation.Y <= target.Y + c.currentSpell.AoeRadiusOrLength))
+                		if (targets_type == "any" 
+                		    || (targets_type == "enemies" && CombatSource is PC)
+                		    || (targets_type == "allies" && CombatSource is Creature))
+                		creatures_list.Add(crt);
+			}
+			// PCs
+            foreach (PC pc in gm.playerList.PCList)
+            {
+                // if in range of radius of x and radius of y
+                if ((pc.CombatLocation.X >= target.X - c.currentSpell.AoeRadiusOrLength) && (pc.CombatLocation.X <= target.X + c.currentSpell.AoeRadiusOrLength))
+                    if ((pc.CombatLocation.Y >= target.Y - c.currentSpell.AoeRadiusOrLength) && (pc.CombatLocation.Y <= target.Y + c.currentSpell.AoeRadiusOrLength))
+                		if (targets_type == "any"
+                		    || (targets_type == "enemies" && CombatSource is Creature)
+                		    || (targets_type == "allies" && CombatSource is PC))
+                		creatures_list.Add(pc);
+            }
+            return creatures_list;
+        }
+        //
+	// ______________________
+        public int GetSpellDC(SpellParameters sp)
+        {
+        	int dc = sp.BaseDC;
+        	if (sp.BaseDC > 0)
+        	{
+	        	Creature source = GetActionCreature();
+	        	if (sp.StatMod.ToLower() == "int")
+	        		dc += source.Intelligence/2 - 5;        		
+	        	else if (sp.StatMod.ToLower() == "wis")
+	        		dc += source.Wisdom/2 - 5;
+	        	else if (sp.StatMod.ToLower() == "cha")
+	        		dc += source.Charisma/2 - 5;        	
+	        	// * might add extra dc with high levels...
+        	}
+        	return dc;
+        }
+        //
+	// ______________________
+        public SpecialActionResult RollVsDC(object target, SpellParameters sp)
+        {
+        	//if (target == null) return;
+			// * check for a valid data object
+        	PC pc = null;
+        	Creature creature = null;        	
+        	if (target is PC)
+        		pc = (PC)target;
+        	else if (target is Creature)
+        		creature = (Creature)target;
+        	else return null;
+        	
+        	SpecialActionResult car = new SpecialActionResult();
+        	// * to get the DC, param1 of spell script is checked
+        	car.DC = GetSpellDC(sp);
+        	car.Roll = gm.Random(20);
+        	if (sp.Save=="Fortitude")
+        	{
+        		if (creature != null)
+        			car.RollMod = creature.Fortitude; 
+        		else
+        			car.RollMod = pc.Fortitude;
+        	}
+        	else if (sp.Save=="Reflex")
+        	{
+        		if (creature != null)
+        			car.RollMod = creature.Reflex; 
+        		else
+        			car.RollMod = pc.Reflex;
+        	}
+        	if (sp.Save=="Will")
+        	{
+        		if (creature != null)
+        			car.RollMod = creature.Will; 
+        		else
+        			car.RollMod = pc.Will;
+        	}
+        	if (car.Roll+car.RollMod >= car.DC && car.DC > 0)
+        		car.SavedAgainstSuccessfully = true;
+        	else
+        		car.SavedAgainstSuccessfully = false;
+        	// * compute score of dice, in case of damage or other effect with a value
+	          int score = 0;	          
+	          for (int i=0; i < sp.NbDice; i++)
+	          	score += gm.Random(sp.Die);
+	          score += sp.DiceAdd;
+	          car.Score = score;
+	          car.ScoreFinal = score;		          
+          	if (sp.EnergySource != "")
+		  	{
+     			float resist = 1f;
+				if (pc != null)        		
+				switch(sp.EnergySource.ToLower())
+		  		{
+				  	case "acid" :
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalAcid / 100f));
+				  	  break;
+					case "bludgeoning" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalBludgeoning / 100f));
+				  	  break;
+					case "cold" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalCold / 100f));
+				  	  break;
+					case "electricity" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalElectricity / 100f));
+				  	  break;
+					case "fire" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalFire / 100f));
+				  	  break;
+					case "light" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalLight / 100f));
+				  	  break;
+					case "magic" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalMagic / 100f));
+				  	  break;
+					case "piercing" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalPiercing / 100f));
+				  	  break;
+					case "poison" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalPoison / 100f));
+				  	  break;
+					case "slashing" :        			  		
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalSlashing / 100f));
+				  	  break;
+				  	case "sonic" :
+				  	  resist = (float)(1f - ((float)pc.DamageTypeResistanceTotalSonic / 100f));
+				  	  break;
+				  	default : break;
+				}
+				else if (creature != null)
+				switch(sp.EnergySource.ToLower())
+		  		{
+				  	case "acid" :
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalAcid / 100f));
+				  	  break;
+					case "bludgeoning" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalBludgeoning / 100f));
+				  	  break;
+					case "cold" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalCold / 100f));
+				  	  break;
+					case "electricity" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalElectricity / 100f));
+				  	  break;
+					case "fire" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalFire / 100f));
+				  	  break;
+					case "light" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalLight / 100f));
+				  	  break;
+					case "magic" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalMagic / 100f));
+				  	  break;
+					case "piercing" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalPiercing / 100f));
+				  	  break;
+					case "poison" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalPoison / 100f));
+				  	  break;
+					case "slashing" :        			  		
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalSlashing / 100f));
+				  	  break;
+				  	case "sonic" :
+				  	  resist = (float)(1f - ((float)creature.DamageTypeResistanceTotalSonic / 100f));
+				  	  break;
+				  	default : break;
+				}					
+				if (resist < 0.0f)
+					resist = 0.0f;
+				car.ScoreFinal = (int)(resist * score);
+        	}
+          return car;
+        }
+	//
+	// ______________________
+        public void DoHeal(SpellParameters sp, SpecialActionResult spell_result, object target)
+        {
+        	PC pc = null;
+        	Creature creature = null;        	
+        	if (target is PC)
+        		pc = (PC)target;
+        	else if (target is Creature)
+        		creature = (Creature)target;
+        	else return;
+
+			if (pc != null)
+			{
+			  //if (pc.Status != CharBase.charStatus.Dead || sp.Effect.EffectName.Contains("Revive"))
+			  if (pc.HP > -20 || sp.Effect.EffectName.Contains("Revive"))
+			  {
+			    // * special revive effect on the dead
+			    if (sp.Effect != null)
+			      if (sp.Effect.EffectName.Contains("Revive") && pc.Status == CharBase.charStatus.Dead)
+			      {
+					pc.Status = CharBase.charStatus.Alive;
+					pc.HP = 1;
+					WriteToLog(pc.Name+" is revived!",Color.Gold);
+			      }
+			    if (pc.HP > -20)
+			    {
+				    // * standard heal effect	
+				    WriteToLog(pc.Name+" ",Color.Blue);        					
+				    WriteToLog("heals ", Color.Gray);
+				    WriteToLog(Math.Min(spell_result.ScoreFinal,pc.HPMax-pc.HP) +" ", Color.Lime);
+				    WriteToLog("hit points",Color.Gray);
+				    pc.HP = Math.Min(pc.HPMax , pc.HP + spell_result.ScoreFinal);
+	               	DrawCombatFloatyTextOverSquare(
+	                	"+"+spell_result.ScoreFinal,
+	                	pc.CombatLocation.X, pc.CombatLocation.Y,
+	                	4,
+	                	Color.Green, Color.Lime);
+					// * only for PCs
+	                if ((pc.HP > 0) && (pc.Status == CharBase.charStatus.Dead))
+	                {
+	                  pc.Status = CharBase.charStatus.Alive;
+	                }
+				}
+			    else
+			    	WriteToLog("Cannot heal "+pc.Name+" with this spell.", Color.Gray);
+			  }
+			}
+			else if (creature != null)
+			  //if (creature.Status != CharBase.charStatus.Dead || sp.Effect.EffectName.Contains("Revive"))
+				//if (creature.HP > 0 || sp.Effect.EffectName.Contains("Revive"))
+			  {
+			    // * special revive effect on the dead
+			    if (sp.Effect != null)
+			    if (sp.Effect.EffectName.Contains("Revive") && creature.Status == CharBase.charStatus.Dead)
+			    {
+					creature.Status = CharBase.charStatus.Alive;
+					creature.HP = 1;
+					WriteToLog(creature.Name+" is revived!",Color.DarkGreen);
+			    }
+			    // * standard heal effect	
+			    WriteToLog(creature.Name+" ",Color.WhiteSmoke);        					
+			    WriteToLog("heals ", Color.Gray);
+			    WriteToLog(Math.Min(spell_result.ScoreFinal,creature.HPMax-creature.HP) +" ", Color.Green);
+			    WriteToLog("hit points",Color.Gray);
+			    creature.HP = Math.Min(creature.HPMax , creature.HP + spell_result.ScoreFinal);
+               	DrawCombatFloatyTextOverSquare(
+                	"+"+spell_result.ScoreFinal,
+                	creature.CombatLocation.X, creature.CombatLocation.Y,
+                	4,
+                	Color.Green, Color.Lime);
+				//c.Refresh();        				
+			}        	
+        }     
+	//
+	// ______________________
+        public void DoDamage(SpellParameters sp, SpecialActionResult spell_result, object target)
+        {
+			// * check for a valid data object
+        	PC pc = null;
+        	Creature creature = null;        	
+        	if (target is PC)
+        		pc = (PC)target;
+        	else if (target is Creature)
+        		creature = (Creature)target;
+        	else return;
+
+        	Combat c = frm.currentCombat;
+        	// * successful save
+			if (spell_result.SavedAgainstSuccessfully)
+			{
+				//loglines.AddRange(sp.SuccessSave_Text);
+    			// * resist damage
+    			spell_result.ScoreFinal = (int)(spell_result.ScoreFinal*(1.0-sp.SuccessSaveResistance));
+    			// * if Trait "Evasion", cancels damage of spell with Reflex Save...
+    			// * ...
+    		}
+			// * failed save, also applies secondary effect
+    		else 
+    		{
+    			if (sp.Effect != null)
+    			{
+    				Effect effect = sp.Effect.DeepCopy();
+    				//effect.CurrentDurationInUnits = 0;
+    				if (pc != null)
+    				{
+    					if (sp.Effect.EffectName.Contains("Death"))
+    				    	pc.HP = -20;
+    				  	else	
+    						pc.AddEffectByObject (effect);
+    				}
+    				else if (creature != null)
+    					if (sp.Effect.EffectName.Contains("Death"))
+    				    	creature.HP = 0;
+    				  	else	
+	    					creature.AddEffectByObject(effect);
+    			}
+    		}
+    		// * animation on hit (could it be only on failed save?)
+   			/*if (sp.SpriteFileName != "") // anim only on failed save?
+    			if (pc != null && pc.HP > -20)
+    				frm.currentCombat.drawEndEffect(pc.CombatLocation, 0, sp.SpriteFileName);
+   				else if (creature != null && creature.HP > 0)
+    				frm.currentCombat.drawEndEffect(creature.CombatLocation, 0, sp.SpriteFileName);*/
+    		// subtract HP and description in log
+			if (pc != null && pc.HP > -20)
+			{        
+			  if (sp.BaseDC >= 0)
+			  {
+			    WriteToLog("("+pc.Name+" ",Color.Blue);        					
+		        WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
+			    if (spell_result.SavedAgainstSuccessfully)
+				  WriteToLog("success",Color.LightGray);
+			    else
+				  WriteToLog("failure",Color.Red);
+			    WriteToLog(") ", Color.Gray);
+			    }
+			  WriteToLog(pc.Name+" "+sp.Description+" : ", Color.Gray);
+			  WriteToLog(spell_result.ScoreFinal+" ", Color.Crimson);
+			  WriteToLog("points of damage ",Color.Gray);
+			  
+		      pc.HP -= spell_result.ScoreFinal;        				
+              DrawCombatFloatyTextOverSquare(
+                	(-spell_result.ScoreFinal).ToString(),
+                	pc.CombatLocation.X,pc.CombatLocation.Y,
+                	4,
+                	Color.Red, Color.Crimson);
+		      // * effect description            			  
+			  if (!spell_result.SavedAgainstSuccessfully)
+				if (sp.Effect != null)
+			      if (!sp.Effect.EffectName.Contains("Special Effect"))
+			        if (sp.EffectDescription != null)
+				      WriteToLog(pc.Name+" "+sp.EffectDescription, Color.Orange);
+				    else
+				      WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ pc.Name, Color.Orange);
+			  
+              /*if (pc.HP <= 0 && pc.HP > -20)
+              {
+               	c.logText(Environment.NewLine, Color.Black);
+                c.logText(GetActionCreature().Name + " knocked out " + pc.Name + " unconscious...", Color.Orange);
+                c.logText(Environment.NewLine, Color.Black);
+                //pc.Status = CharBase.charStatus.Dead;
+                //pc.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
+                c.refreshMap();
+              }*/
+              //else if (pc.HP <= -20)
+              if (pc.HP <= 0)
+              {
+              	pc.Status = CharBase.charStatus.Dead;
+               	WriteToLog(Environment.NewLine, Color.Black);
+                WriteToLog(GetActionCreature().Name + " killed " + pc.Name, Color.LightGreen);
+                pc.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
+              }
+			}
+			else if (creature != null && creature.HP > 0)
+			{
+			  if (sp.BaseDC >= 0)
+			  {
+				  WriteToLog("("+creature.Name+" ",Color.WhiteSmoke);        					
+			      WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
+				  if (spell_result.SavedAgainstSuccessfully)
+					WriteToLog("success",Color.LightGray);
+				  else
+					WriteToLog("failure",Color.Red);
+				  WriteToLog(") ", Color.Gray);
+			  }
+			  WriteToLog(creature.Name+" "+sp.Description+" : ", Color.Gray);
+			  WriteToLog(spell_result.ScoreFinal+" ", Color.Crimson);
+			  WriteToLog("points of damage",Color.Gray);        					
+			  creature.HP -= spell_result.ScoreFinal;
+			  DrawCombatFloatyTextOverSquare(
+                		(-spell_result.ScoreFinal).ToString(),
+                		creature.CombatLocation.X,creature.CombatLocation.Y,
+                		4,
+                		Color.Red,Color.Crimson);
+		      // * effect description            			  
+			  if (!spell_result.SavedAgainstSuccessfully)
+				if (sp.Effect != null)
+			      if (!sp.Effect.EffectName.Contains("Special Effect"))
+			        if (sp.EffectDescription != null)
+				      WriteToLog(creature.Name+" "+sp.EffectDescription, Color.Orange);
+				    else
+				      WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ creature.Name, Color.Orange);
+              if (creature.HP <= 0)
+              {
+              	  creature.Status = CharBase.charStatus.Dead;
+                  WriteToLog(GetActionCreature().Name + " killed the " + creature.Name, Color.LightGreen);
+                  CheckDeath(creature); // * for death sounds/animations
+                  //creature.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
+              }
+			}
+			//WriteToLog(Environment.NewLine, Color.Black);
+        }
+	//
+	// ______________________
+        public void DoBuff(SpellParameters sp, SpecialActionResult spell_result, object target)
+        {
+			// * check for a valid data object
+        	PC pc = null;
+        	Creature creature = null;        	
+        	if (target is PC)
+        		pc = (PC)target;
+        	else if (target is Creature)
+        		creature = (Creature)target;
+        	else return;
+        	
+    		if (sp.Effect != null)
+    		{
+    			MessageBox.Show("existing effect...");
+   		     	Effect buff = sp.Effect.DeepCopy();
+   		     	//buff.CurrentDurationInUnits = 0;
+   		     	if (spell_result.ScoreFinal > 0)
+    				buff.DurationInUnits = spell_result.ScoreFinal * 6;
+    			if (sp.Effect.EffectName.Contains("Restore"))
+        		{
+        		  // * go through all debuff effects and remove them
+        		  // * ...
+        		}
+    			if (pc != null)
+    				pc.AddEffectByObject(buff);
+    			else if (creature != null)
+    				creature.AddEffectByObject(buff);
+			    // * effect description  
+			    MessageBox.Show("effect added");
+			    if (pc != null)
+				    if (sp.EffectDescription != null)
+				    	WriteToLog(pc.Name+" "+sp.EffectDescription, Color.Orange);
+					else
+						WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ pc.Name, Color.Orange);
+			    else if (creature != null)
+				    if (sp.EffectDescription != null)
+				    	WriteToLog(creature.Name+" "+sp.EffectDescription, Color.Orange);
+					else
+						WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ creature.Name, Color.Orange);
+				if (sp.NbDice > 0 || sp.DiceAdd > 0)
+				{
+					
+					WriteToLog(" for ", Color.Orange);
+					WriteToLog(spell_result.ScoreFinal.ToString(), Color.Green);
+					WriteToLog(" rounds", Color.Orange);
+					WriteToLog(Environment.NewLine, Color.Black);
+				}			    
+			}
+        }
+	//
+	// ______________________
+        public void DoDebuff(SpellParameters sp, SpecialActionResult spell_result, object target)
+        {
+			// * check for a valid data object
+        	PC pc = null;
+        	Creature creature = null;        	
+        	if (target is PC)
+        		pc = (PC)target;
+        	else if (target is Creature)
+        		creature = (Creature)target;
+        	else return;
+
+			if (sp.BaseDC > 0)
+				if (pc != null)
+				{
+				    WriteToLog("("+pc.Name+" ",Color.Blue);        					
+			        WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
+				    if (spell_result.SavedAgainstSuccessfully)
+					  WriteToLog("success",Color.LightGray);
+				    else
+					  WriteToLog("failure",Color.Red);
+				    WriteToLog(") ", Color.Gray);
+				}        	
+				else if (creature != null)
+				{
+				    WriteToLog("("+creature.Name+" ",Color.Blue);        					
+			        WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
+				    if (spell_result.SavedAgainstSuccessfully)
+					  WriteToLog("success",Color.LightGray);
+				    else
+					  WriteToLog("failure",Color.Red);
+				    WriteToLog(") ", Color.Gray);
+				}    
+    		if (!spell_result.SavedAgainstSuccessfully)
+    		{
+    			if (sp.Effect != null)
+    			{
+    				Effect debuff = sp.Effect.DeepCopy();
+    				//debuff.CurrentDurationInUnits = 0;
+    				if (spell_result.ScoreFinal > 0)
+    					debuff.DurationInUnits = spell_result.ScoreFinal * 6;
+    				if (pc != null)
+    				{
+    					pc.AddEffectByObject(debuff);
+						if (!sp.Effect.EffectName.Contains("Special Effect")) // * !to implement!
+			    		  if (sp.EffectDescription != null)
+					    	WriteToLog(pc.Name+" "+sp.EffectDescription, Color.Orange);
+					      else
+						    WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ pc.Name, Color.Orange);
+						// * add status
+						if (debuff.EffectCategory == "Hold")
+							pc.Status = CharBase.charStatus.Held;
+						if (debuff.EffectCategory == "Sleep") // ?
+							pc.Status = CharBase.charStatus.Sleeping;
+    				}
+    				else if (creature != null)
+    				{
+    					creature.AddEffectByObject(debuff);
+						if (!sp.Effect.EffectName.Contains("Special Effect")) // * !to implement!
+			    		  if (sp.EffectDescription != null)
+						    WriteToLog(creature.Name+" "+sp.EffectDescription, Color.Orange);
+					      else
+						    WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ creature.Name, Color.Orange); 					
+						// * add status
+						if (debuff.EffectCategory == "Hold")
+							creature.Status = CharBase.charStatus.Held;
+						if (debuff.EffectCategory == "Sleep") // ?
+							creature.Status = CharBase.charStatus.Sleeping;
+    				}
+    			}
+        		//WriteToLog(Environment.NewLine, Color.Black);
+    		}       	
+        }
+	//
+	// ______________________
+        public void DoCounter(SpellParameters sp, object target)
+        {
+			// * check for a valid data object
+        	PC pc = null;
+        	Creature creature = null;        	
+        	if (target is PC)
+        		pc = (PC)target;
+        	else if (target is Creature)
+        		creature = (Creature)target;
+        	else return;
+
+        	int i;
+        	if (pc != null)
+        	  for (i = pc.EffectsList.effectsList.Count; i > 0; i--)
+        		if (sp.CountersEffects.Contains(pc.EffectsList.effectsList[i-1].EffectCategory))
+        		{
+        			WriteToLog(pc.Name, Color.Blue);
+                	WriteToLog(" effect "+pc.EffectsList.effectsList[i-1].EffectName+" fades away.", Color.Black);
+                	pc.EffectsList.effectsList.RemoveAt(i - 1);
+        		}
+        	else if (creature != null)
+        	  for (i = creature.EffectsList.effectsList.Count; i > 0; i--)
+        		if (sp.CountersEffects.Contains(creature.EffectsList.effectsList[i-1].EffectCategory))
+        		{
+        			WriteToLog(creature.Name, Color.WhiteSmoke);
+                	WriteToLog(" effect "+creature.EffectsList.effectsList[i-1].EffectName+" fades away.", Color.Black);
+                	creature.EffectsList.effectsList.RemoveAt(i - 1);
+        		}        	
+        }
+        // ------------------------------------------
+		//
+		// ______________________
+        public void DoSpellAction(SpellParameters sp, bool onMainMap)
+        {
+        	List<object> targets = new List<object>();
+        	if (onMainMap)
+        		targets.Add(MainMapTarget);
+        	else
+        		targets = GetAllCombatTargets(sp.TargetType);
+        	SpecialActionResult spell_result;
+			// ** do attack spell through all targets    	    
+        	foreach (object target in targets)
+        	{
+				// * check for a valid data object
+	        	PC pc = null;
+	        	Creature creature = null;        	
+	        	if (target is PC)
+	        		pc = (PC)target;
+	        	else if (target is Creature)
+	        		creature = (Creature)target;
+	        	else continue;
+        		
+	        	// ** spell result
+        		spell_result = RollVsDC (target, sp);
+        		if (spell_result == null) continue; // * ignore spell targetting errors        		
+        		// * store the spell result on a target in a global varible, for external access
+        		if (pc != null)
+        			SetGlobalObject(pc.Tag+" last_spell_result", spell_result);
+        		else if (creature != null)
+        			SetGlobalObject(creature.Tag+" last_spell_result", spell_result);
+        		
+ 				// * sounds and animations
+    			if (sp.SoundFX != "")
+    				PlaySoundFX(sp.SoundFX);
+    			//if (sp.Type != "Damage" && sp.SpriteFileName != "")
+    			if (sp.SpriteFileName != "")
+    				if (pc != null && pc.HP > -20)
+    					frm.currentCombat.drawEndEffect(pc.CombatLocation, 0, sp.SpriteFileName);
+    			  	else if (creature != null && creature.HP > 0)
+    					frm.currentCombat.drawEndEffect(creature.CombatLocation, 0, sp.SpriteFileName);
+        		
+    			// "sp.Type" of spell
+    			// * heal
+    			// * possible extra : "Revive" in Effect's Tag variable -> make alive from dead
+    			if (sp.Type == "Heal")
+    				DoHeal(sp, spell_result, target);
+    			// * damage
+    			// * possible extra : "Death" in Effect's Tag variable -> instant death
+    			else if (sp.Type == "Damage")
+    				DoDamage(sp, spell_result, target);
+    			// * buff
+    			// * (todo) possible extra : "Restore" in Effect's Tag variable -> cancel debuffs 
+    			else if (sp.Type == "Buff")
+    				DoBuff(sp, spell_result, target);
+    			// * debuff
+    			else if (sp.Type == "Debuff")
+    				DoDebuff(sp, spell_result, target);
+    			if (sp.CountersEffects != "")
+    				DoCounter(sp, target);
+    				    			
+        		WriteToLog(Environment.NewLine, Color.Black);  
+        	}
+        }	
+	//
+	// ______________________
+        public void DoSpell(SpellParameters sp)
+        {        	
+        	WriteToLog(GetActionCreature().Name, Color.LightBlue);
+        	WriteToLog(" casts ",Color.Black);
+        	WriteToLog(sp.Name,sp.SpellColor);
+        	WriteToLog(Environment.NewLine, Color.Black);
+   	
+        	if (MainMapScriptCall) 
+        	{
+        		DoSpellAction(sp, true);
+        		frm.Refresh();
+        		frm.logText(Environment.NewLine, Color.Black);
+        	}
+        	else
+        	{
+        		DoSpellAction(sp, false);
+        		frm.currentCombat.logText(Environment.NewLine, Color.Black);
+        		frm.currentCombat.Refresh();
+        	}
+        }
         #endregion
     }
 }
