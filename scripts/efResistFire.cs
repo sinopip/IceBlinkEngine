@@ -20,7 +20,7 @@ namespace IceBlink
             int parm2 = Convert.ToInt32(p2); // parm2 = DurationInUnits (how long it lasts)
             // C# code goes here
 			
-			//object source = sf.GetSourceCreature();
+			//object source = sf.GetSourceCreatureObject();
 			object source = sf.passParameterScriptObject;
             if (source is PC)
             {

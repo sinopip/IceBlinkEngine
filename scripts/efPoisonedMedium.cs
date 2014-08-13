@@ -19,7 +19,7 @@ namespace IceBlink
             int parm2 = Convert.ToInt32(p2); // parm2 = DurationInUnits (how long it lasts)
             // C# code goes here
 			
-			Creature source = sf.GetActionCreature();
+			Creature source = sf.GetActionCreatureData();
             if (source == null)
             {
             	MessageBox.Show("Invalid script owner, not a Creature of PC");
@@ -45,8 +45,8 @@ namespace IceBlink
             sp.Description = "is poisoned";
             
             SpecialActionResult result = new SpecialActionResult();
-    		result = sf.RollVsDC(sf.GetSourceCreature(),sp);
-        	sf.DoDamage(sp, result, sf.GetSourceCreature()); 
+    		result = sf.RollVsDC(sf.GetSourceCreatureObject(),sp);
+        	sf.DoDamage(sp, result, sf.GetSourceCreatureObject()); 
         }
     }
 }
