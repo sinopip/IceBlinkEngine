@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Encounters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <encounters>
+    <Encounters>
+      <EncounterPcStartLocations>
+        <X>12</X>
+        <Y>9</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>12</X>
+        <Y>10</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>13</X>
+        <Y>9</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>13</X>
+        <Y>10</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>14</X>
+        <Y>9</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>14</X>
+        <Y>10</Y>
+      </EncounterPcStartLocations>
+      <TimePerRound>6</TimePerRound>
+      <EncounterName>sharkEnc</EncounterName>
+      <EncounterLevelFilename>sharkEnc</EncounterLevelFilename>
+      <EncounterMapFilename>sharkEnc.jpg</EncounterMapFilename>
+      <EncounterActive>true</EncounterActive>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>11</X>
+          <Y>4</Y>
+        </CreatureStartLocation>
+        <CreatureName>Baby Shark</CreatureName>
+        <CreatureTag>babyShark_2444</CreatureTag>
+        <CreatureResRef>babyShark</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>12</X>
+          <Y>3</Y>
+        </CreatureStartLocation>
+        <CreatureName>Shark</CreatureName>
+        <CreatureTag>shark_2533</CreatureTag>
+        <CreatureResRef>shark00</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>2</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterTriggerList>
+        <triggersList />
+      </EncounterTriggerList>
+      <OnStartCombatRound>
+        <FilenameOrTag>none</FilenameOrTag>
+        <Parm1>none</Parm1>
+        <Parm2>none</Parm2>
+        <Parm3>none</Parm3>
+        <Parm4>none</Parm4>
+      </OnStartCombatRound>
+      <OnEndCombat>
+        <FilenameOrTag>none</FilenameOrTag>
+        <Parm1>none</Parm1>
+        <Parm2>none</Parm2>
+        <Parm3>none</Parm3>
+        <Parm4>none</Parm4>
+      </OnEndCombat>
+      <OnFleeCombat>
+        <FilenameOrTag>encOnFleeSharks.cs</FilenameOrTag>
+        <Parm1>none</Parm1>
+        <Parm2>none</Parm2>
+        <Parm3>none</Parm3>
+        <Parm4>none</Parm4>
+      </OnFleeCombat>
+    </Encounters>
+  </encounters>
+</Encounters>

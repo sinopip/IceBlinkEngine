@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Races xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <racesList>
+    <DamageTypeResistanceValuePoison>0</DamageTypeResistanceValuePoison>
+    <DamageTypeResistanceValueMagic>0</DamageTypeResistanceValueMagic>
+    <DamageTypeResistanceValueBludgeoning>0</DamageTypeResistanceValueBludgeoning>
+    <DamageTypeResistanceValuePiercing>0</DamageTypeResistanceValuePiercing>
+    <DamageTypeResistanceValueSlashing>0</DamageTypeResistanceValueSlashing>
+    <DamageTypeResistanceValueAcid>0</DamageTypeResistanceValueAcid>
+    <DamageTypeResistanceValueCold>0</DamageTypeResistanceValueCold>
+    <DamageTypeResistanceValueElectricity>0</DamageTypeResistanceValueElectricity>
+    <DamageTypeResistanceValueFire>0</DamageTypeResistanceValueFire>
+    <DamageTypeResistanceValueLight>0</DamageTypeResistanceValueLight>
+    <DamageTypeResistanceValueSonic>0</DamageTypeResistanceValueSonic>
+    <RaceName>Mermaid</RaceName>
+    <RaceTag>mermaid</RaceTag>
+    <Description />
+    <StrMod>0</StrMod>
+    <DexMod>0</DexMod>
+    <ConMod>0</ConMod>
+    <IntMod>0</IntMod>
+    <WisMod>0</WisMod>
+    <ChaMod>0</ChaMod>
+    <MoveDistanceLightArmor>3</MoveDistanceLightArmor>
+    <MoveDistanceMediumHeavyArmor>3</MoveDistanceMediumHeavyArmor>
+    <ClassesAllowed>explorer</ClassesAllowed>
+  </racesList>
+  <racesList>
+    <DamageTypeResistanceValuePoison>0</DamageTypeResistanceValuePoison>
+    <DamageTypeResistanceValueMagic>0</DamageTypeResistanceValueMagic>
+    <DamageTypeResistanceValueBludgeoning>0</DamageTypeResistanceValueBludgeoning>
+    <DamageTypeResistanceValuePiercing>0</DamageTypeResistanceValuePiercing>
+    <DamageTypeResistanceValueSlashing>0</DamageTypeResistanceValueSlashing>
+    <DamageTypeResistanceValueAcid>0</DamageTypeResistanceValueAcid>
+    <DamageTypeResistanceValueCold>0</DamageTypeResistanceValueCold>
+    <DamageTypeResistanceValueElectricity>0</DamageTypeResistanceValueElectricity>
+    <DamageTypeResistanceValueFire>0</DamageTypeResistanceValueFire>
+    <DamageTypeResistanceValueLight>0</DamageTypeResistanceValueLight>
+    <DamageTypeResistanceValueSonic>0</DamageTypeResistanceValueSonic>
+    <RaceName>Fish</RaceName>
+    <RaceTag>fish</RaceTag>
+    <Description />
+    <StrMod>0</StrMod>
+    <DexMod>0</DexMod>
+    <ConMod>0</ConMod>
+    <IntMod>0</IntMod>
+    <WisMod>0</WisMod>
+    <ChaMod>0</ChaMod>
+    <MoveDistanceLightArmor>3</MoveDistanceLightArmor>
+    <MoveDistanceMediumHeavyArmor>3</MoveDistanceMediumHeavyArmor>
+    <ClassesAllowed>explorer</ClassesAllowed>
+  </racesList>
+</Races>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Convo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subNodes>
+    <ContentNode idNum="0" orderNum="0" pcNode="true" linkTo="0">
+      <NodePortraitBitmap />
+      <NodeSound>none</NodeSound>
+      <conversationText>root</conversationText>
+      <subNodes>
+        <ContentNode idNum="1" orderNum="0" pcNode="false" linkTo="0">
+          <NodePortraitBitmap />
+          <NodeSound>none</NodeSound>
+          <conversationText>Door Action Options</conversationText>
+          <subNodes>
+            <ContentNode idNum="3" orderNum="1" pcNode="true" linkTo="0">
+              <NodePortraitBitmap />
+              <NodeSound>none</NodeSound>
+              <conversationText>Search for traps</conversationText>
+              <subNodes>
+                <ContentNode idNum="7" orderNum="0" pcNode="false" linkTo="0">
+                  <NodePortraitBitmap />
+                  <NodeSound>none</NodeSound>
+                  <conversationText>There are no traps on this door.</conversationText>
+                  <subNodes>
+                    <ContentNode idNum="8" orderNum="0" pcNode="true" linkTo="0">
+                      <NodePortraitBitmap />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>Continue</conversationText>
+                      <subNodes>
+                        <ContentNode idNum="11" orderNum="0" pcNode="true" linkTo="1">
+                          <NodePortraitBitmap />
+                          <NodeSound>none</NodeSound>
+                          <conversationText>Door Action Options</conversationText>
+                          <subNodes />
+                          <actions />
+                          <conditions />
+                        </ContentNode>
+                      </subNodes>
+                      <actions />
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions />
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions />
+              <conditions />
+            </ContentNode>
+            <ContentNode idNum="5" orderNum="2" pcNode="true" linkTo="0">
+              <NodePortraitBitmap />
+              <NodeSound>none</NodeSound>
+              <conversationText>Pick the lock</conversationText>
+              <subNodes>
+                <ContentNode idNum="12" orderNum="0" pcNode="false" linkTo="0">
+                  <NodePortraitBitmap />
+                  <NodeSound>none</NodeSound>
+                  <conversationText>You opened the door.</conversationText>
+                  <subNodes>
+                    <ContentNode idNum="14" orderNum="0" pcNode="true" linkTo="0">
+                      <NodePortraitBitmap />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>End Dialog</conversationText>
+                      <subNodes />
+                      <actions>
+                        <Action a_script="gaSetThisPropLockedToFalse.cs" />
+                        <Action a_script="gaTurnLoSBlockingOff.cs" />
+                      </actions>
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions />
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions />
+              <conditions />
+            </ContentNode>
+            <ContentNode idNum="6" orderNum="3" pcNode="true" linkTo="0">
+              <NodePortraitBitmap />
+              <NodeSound>none</NodeSound>
+              <conversationText>Bash open the door</conversationText>
+              <subNodes>
+                <ContentNode idNum="13" orderNum="0" pcNode="false" linkTo="0">
+                  <NodePortraitBitmap />
+                  <NodeSound>none</NodeSound>
+                  <conversationText>You bashed open the door.</conversationText>
+                  <subNodes>
+                    <ContentNode idNum="15" orderNum="0" pcNode="true" linkTo="0">
+                      <NodePortraitBitmap />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>End Dialog</conversationText>
+                      <subNodes />
+                      <actions>
+                        <Action a_script="gaSetThisPropLockedToFalse.cs" />
+                        <Action a_script="gaTurnLoSBlockingOff.cs" />
+                      </actions>
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions />
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions />
+              <conditions />
+            </ContentNode>
+            <ContentNode idNum="16" orderNum="3" pcNode="true" linkTo="0">
+              <NodePortraitBitmap />
+              <NodeSound>none</NodeSound>
+              <conversationText>Leave the door alone</conversationText>
+              <subNodes />
+              <actions>
+                <Action a_script="gaMovePartyToLastLocation.cs" />
+              </actions>
+              <conditions />
+            </ContentNode>
+          </subNodes>
+          <actions />
+          <conditions />
+        </ContentNode>
+      </subNodes>
+      <actions />
+      <conditions />
+    </ContentNode>
+  </subNodes>
+  <ConvoFileName>door01.xml</ConvoFileName>
+  <Narration>false</Narration>
+  <NpcPortraitBitmap>NOPORT_L.png</NpcPortraitBitmap>
+  <NextIdNum>16</NextIdNum>
+</Convo>

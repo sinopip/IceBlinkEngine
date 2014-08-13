@@ -1,0 +1,36 @@
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.exe
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.pdb
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.ParentForm.resources
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.Properties.Resources.resources
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.exe
+C:\Users\Jeremy\AppData\Local\Temporary Projects\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.exe
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.exe
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.pdb
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.ParentForm.resources
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.Properties.Resources.resources
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPGCore.dll
+C:\Users\Jeremy\documents\visual studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPGCore.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.ConvoEditor.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.LevelEditor.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.ContainerEditor.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.ModuleNameDialog.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.EncounterEditor.resources
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.exe.config
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\ResGen.read.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\ResGen.write.1.tlog
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPG.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPG.pdb
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.exe.config
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.exe
+C:\Documents and Settings\Streams of IO\My Documents\Visual Studio 2010\Projects\openForgeRPGToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.pdb
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkToolset\openForgeRPGToolset\bin\Debug\openForgeRPGToolset.exe.config
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.exe
+C:\Users\Jeremy\Documents\Visual Studio 2010\Projects\IceBlinkToolset\openForgeRPGToolset\obj\x86\Debug\openForgeRPGToolset.pdb

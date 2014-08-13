@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Convo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subNodes>
+    <ContentNode idNum="0" orderNum="0" pcNode="true" linkTo="0">
+      <ShowOnlyOnce>false</ShowOnlyOnce>
+      <NodeIsActive>true</NodeIsActive>
+      <NodePortraitBitmap />
+      <NodeNpcName />
+      <NodeSound>none</NodeSound>
+      <conversationText>root</conversationText>
+      <IsExpanded>true</IsExpanded>
+      <subNodes>
+        <ContentNode idNum="1" orderNum="0" pcNode="false" linkTo="0">
+          <ShowOnlyOnce>true</ShowOnlyOnce>
+          <NodeIsActive>true</NodeIsActive>
+          <NodePortraitBitmap />
+          <NodeNpcName />
+          <NodeSound>none</NodeSound>
+          <conversationText>Hello there &lt;FirstName&gt;.</conversationText>
+          <IsExpanded>false</IsExpanded>
+          <subNodes>
+            <ContentNode idNum="2" orderNum="0" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>Hello Tia, how are you today?</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes>
+                <ContentNode idNum="3" orderNum="0" pcNode="false" linkTo="0">
+                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                  <NodeIsActive>true</NodeIsActive>
+                  <NodePortraitBitmap />
+                  <NodeNpcName />
+                  <NodeSound>none</NodeSound>
+                  <conversationText>Wonderful. I saw a ship under water down there. There may be human things, but I saw a shark swimming around there.</conversationText>
+                  <IsExpanded>true</IsExpanded>
+                  <subNodes>
+                    <ContentNode idNum="4" orderNum="0" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>Lulu and I will go have a look.</conversationText>
+                      <IsExpanded>true</IsExpanded>
+                      <subNodes>
+                        <ContentNode idNum="5" orderNum="0" pcNode="false" linkTo="0">
+                          <ShowOnlyOnce>false</ShowOnlyOnce>
+                          <NodeIsActive>true</NodeIsActive>
+                          <NodePortraitBitmap />
+                          <NodeNpcName />
+                          <NodeSound>none</NodeSound>
+                          <conversationText>If you find anything interesting, bring it here and I will tell you what kind of human thing it is.</conversationText>
+                          <IsExpanded>true</IsExpanded>
+                          <subNodes>
+                            <ContentNode idNum="6" orderNum="0" pcNode="true" linkTo="0">
+                              <ShowOnlyOnce>false</ShowOnlyOnce>
+                              <NodeIsActive>true</NodeIsActive>
+                              <NodePortraitBitmap />
+                              <NodeNpcName />
+                              <NodeSound>none</NodeSound>
+                              <conversationText>Thank you Tia, we'll be right back.</conversationText>
+                              <IsExpanded>true</IsExpanded>
+                              <subNodes>
+                                <ContentNode idNum="7" orderNum="0" pcNode="false" linkTo="0">
+                                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                                  <NodeIsActive>true</NodeIsActive>
+                                  <NodePortraitBitmap />
+                                  <NodeNpcName />
+                                  <NodeSound>none</NodeSound>
+                                  <conversationText>Watch out for that shark!</conversationText>
+                                  <IsExpanded>true</IsExpanded>
+                                  <subNodes>
+                                    <ContentNode idNum="8" orderNum="0" pcNode="true" linkTo="0">
+                                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                                      <NodeIsActive>true</NodeIsActive>
+                                      <NodePortraitBitmap />
+                                      <NodeNpcName />
+                                      <NodeSound>none</NodeSound>
+                                      <conversationText>We'll be careful.</conversationText>
+                                      <IsExpanded>true</IsExpanded>
+                                      <subNodes />
+                                      <actions />
+                                      <conditions />
+                                    </ContentNode>
+                                  </subNodes>
+                                  <actions />
+                                  <conditions />
+                                </ContentNode>
+                              </subNodes>
+                              <actions>
+                                <Action a_script="gaAddJournalEntryByTag.cs" a_parameter_1="TiaQuest" a_parameter_2="Tia1" />
+                              </actions>
+                              <conditions />
+                            </ContentNode>
+                          </subNodes>
+                          <actions />
+                          <conditions />
+                        </ContentNode>
+                      </subNodes>
+                      <actions />
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions />
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions />
+              <conditions />
+            </ContentNode>
+          </subNodes>
+          <actions />
+          <conditions />
+        </ContentNode>
+        <ContentNode idNum="9" orderNum="1" pcNode="false" linkTo="0">
+          <ShowOnlyOnce>false</ShowOnlyOnce>
+          <NodeIsActive>true</NodeIsActive>
+          <NodePortraitBitmap />
+          <NodeNpcName />
+          <NodeSound>none</NodeSound>
+          <conversationText>Did you find any human things?</conversationText>
+          <IsExpanded>true</IsExpanded>
+          <subNodes>
+            <ContentNode idNum="10" orderNum="0" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>Not yet Tia.</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes />
+              <actions />
+              <conditions />
+            </ContentNode>
+            <ContentNode idNum="11" orderNum="1" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>We found something.</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes>
+                <ContentNode idNum="12" orderNum="0" pcNode="false" linkTo="0">
+                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                  <NodeIsActive>true</NodeIsActive>
+                  <NodePortraitBitmap />
+                  <NodeNpcName />
+                  <NodeSound>none</NodeSound>
+                  <conversationText>Let's have a look.</conversationText>
+                  <IsExpanded>true</IsExpanded>
+                  <subNodes>
+                    <ContentNode idNum="13" orderNum="0" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>What about this metal thing with sharp things on the end?</conversationText>
+                      <IsExpanded>false</IsExpanded>
+                      <subNodes>
+                        <ContentNode idNum="17" orderNum="0" pcNode="false" linkTo="0">
+                          <ShowOnlyOnce>false</ShowOnlyOnce>
+                          <NodeIsActive>true</NodeIsActive>
+                          <NodePortraitBitmap />
+                          <NodeNpcName />
+                          <NodeSound>none</NodeSound>
+                          <conversationText>Why, that is a dinglebobbin which humans use to scratch their feet.</conversationText>
+                          <IsExpanded>true</IsExpanded>
+                          <subNodes>
+                            <ContentNode idNum="18" orderNum="0" pcNode="true" linkTo="0">
+                              <ShowOnlyOnce>false</ShowOnlyOnce>
+                              <NodeIsActive>true</NodeIsActive>
+                              <NodePortraitBitmap />
+                              <NodeNpcName />
+                              <NodeSound>none</NodeSound>
+                              <conversationText>Uw, yucky. Thank you Tia. What else can you explain?</conversationText>
+                              <IsExpanded>true</IsExpanded>
+                              <subNodes>
+                                <ContentNode idNum="19" orderNum="0" pcNode="true" linkTo="12">
+                                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                                  <NodeIsActive>true</NodeIsActive>
+                                  <NodePortraitBitmap />
+                                  <NodeNpcName />
+                                  <NodeSound>none</NodeSound>
+                                  <conversationText>Let's have a look.</conversationText>
+                                  <IsExpanded>true</IsExpanded>
+                                  <subNodes />
+                                  <actions />
+                                  <conditions />
+                                </ContentNode>
+                              </subNodes>
+                              <actions />
+                              <conditions />
+                            </ContentNode>
+                          </subNodes>
+                          <actions />
+                          <conditions />
+                        </ContentNode>
+                      </subNodes>
+                      <actions />
+                      <conditions>
+                        <Condition c_script="gcCheckForItem.cs" c_btnAndOr="and" c_and="true" c_not="false" c_parameter_1="humanThing" c_parameter_2="1" />
+                      </conditions>
+                    </ContentNode>
+                    <ContentNode idNum="14" orderNum="1" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>What about this circle thing with the shiny green gem on it?</conversationText>
+                      <IsExpanded>false</IsExpanded>
+                      <subNodes>
+                        <ContentNode idNum="20" orderNum="0" pcNode="false" linkTo="0">
+                          <ShowOnlyOnce>false</ShowOnlyOnce>
+                          <NodeIsActive>true</NodeIsActive>
+                          <NodePortraitBitmap />
+                          <NodeNpcName />
+                          <NodeSound>none</NodeSound>
+                          <conversationText>Wow, this one is special. That is a huludunger. Humans use that to clean their teeth.</conversationText>
+                          <IsExpanded>true</IsExpanded>
+                          <subNodes>
+                            <ContentNode idNum="21" orderNum="0" pcNode="true" linkTo="0">
+                              <ShowOnlyOnce>false</ShowOnlyOnce>
+                              <NodeIsActive>true</NodeIsActive>
+                              <NodePortraitBitmap />
+                              <NodeNpcName />
+                              <NodeSound>none</NodeSound>
+                              <conversationText>Great, thank you Tia. What else can you explain?</conversationText>
+                              <IsExpanded>true</IsExpanded>
+                              <subNodes>
+                                <ContentNode idNum="22" orderNum="0" pcNode="true" linkTo="12">
+                                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                                  <NodeIsActive>true</NodeIsActive>
+                                  <NodePortraitBitmap />
+                                  <NodeNpcName />
+                                  <NodeSound>none</NodeSound>
+                                  <conversationText>Let's have a look.</conversationText>
+                                  <IsExpanded>true</IsExpanded>
+                                  <subNodes />
+                                  <actions />
+                                  <conditions />
+                                </ContentNode>
+                              </subNodes>
+                              <actions />
+                              <conditions />
+                            </ContentNode>
+                          </subNodes>
+                          <actions />
+                          <conditions />
+                        </ContentNode>
+                      </subNodes>
+                      <actions />
+                      <conditions>
+                        <Condition c_script="gcCheckForItem.cs" c_btnAndOr="and" c_and="true" c_not="false" c_parameter_1="goldring" c_parameter_2="1" />
+                      </conditions>
+                    </ContentNode>
+                    <ContentNode idNum="15" orderNum="2" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>What about this gold thing with red gems on it?</conversationText>
+                      <IsExpanded>false</IsExpanded>
+                      <subNodes>
+                        <ContentNode idNum="23" orderNum="0" pcNode="false" linkTo="0">
+                          <ShowOnlyOnce>false</ShowOnlyOnce>
+                          <NodeIsActive>true</NodeIsActive>
+                          <NodePortraitBitmap />
+                          <NodeNpcName />
+                          <NodeSound>none</NodeSound>
+                          <conversationText>I haven't seen one of these in a long time. I think it was called a peniumplingger. Humans wear them on their head to attract birds.</conversationText>
+                          <IsExpanded>true</IsExpanded>
+                          <subNodes>
+                            <ContentNode idNum="24" orderNum="0" pcNode="true" linkTo="0">
+                              <ShowOnlyOnce>false</ShowOnlyOnce>
+                              <NodeIsActive>true</NodeIsActive>
+                              <NodePortraitBitmap />
+                              <NodeNpcName />
+                              <NodeSound>none</NodeSound>
+                              <conversationText>Nice, thank you Tia. What else can you explain?</conversationText>
+                              <IsExpanded>true</IsExpanded>
+                              <subNodes>
+                                <ContentNode idNum="25" orderNum="0" pcNode="true" linkTo="12">
+                                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                                  <NodeIsActive>true</NodeIsActive>
+                                  <NodePortraitBitmap />
+                                  <NodeNpcName />
+                                  <NodeSound>none</NodeSound>
+                                  <conversationText>Let's have a look.</conversationText>
+                                  <IsExpanded>true</IsExpanded>
+                                  <subNodes />
+                                  <actions />
+                                  <conditions />
+                                </ContentNode>
+                              </subNodes>
+                              <actions />
+                              <conditions />
+                            </ContentNode>
+                          </subNodes>
+                          <actions />
+                          <conditions />
+                        </ContentNode>
+                      </subNodes>
+                      <actions />
+                      <conditions>
+                        <Condition c_script="gcCheckForItem.cs" c_btnAndOr="and" c_and="true" c_not="false" c_parameter_1="goblet" c_parameter_2="1" />
+                      </conditions>
+                    </ContentNode>
+                    <ContentNode idNum="16" orderNum="3" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>I think that is it for now, bye Tia.</conversationText>
+                      <IsExpanded>true</IsExpanded>
+                      <subNodes />
+                      <actions />
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions />
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions>
+                <Action a_script="gaAddJournalEntryByTag.cs" a_parameter_1="TiaQuest" a_parameter_2="Tia2" />
+              </actions>
+              <conditions>
+                <Condition c_script="gcCheckForItem.cs" c_btnAndOr="and" c_and="true" c_not="false" c_parameter_1="goldring" c_parameter_2="1" />
+                <Condition c_script="gcCheckForItem.cs" c_btnAndOr="or" c_and="false" c_not="false" c_parameter_1="goblet" c_parameter_2="1" />
+                <Condition c_script="gcCheckForItem.cs" c_btnAndOr="or" c_and="false" c_not="false" c_parameter_1="humanThing" c_parameter_2="1" />
+              </conditions>
+            </ContentNode>
+          </subNodes>
+          <actions />
+          <conditions />
+        </ContentNode>
+      </subNodes>
+      <actions />
+      <conditions />
+    </ContentNode>
+  </subNodes>
+  <ConvoFileName>seal.xml</ConvoFileName>
+  <Narration>false</Narration>
+  <PartyChat>false</PartyChat>
+  <NpcPortraitBitmap>BlobPortrait.png</NpcPortraitBitmap>
+  <DefaultNpcName />
+  <NextIdNum>25</NextIdNum>
+</Convo>

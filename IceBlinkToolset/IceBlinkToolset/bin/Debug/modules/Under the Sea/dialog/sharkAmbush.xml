@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Convo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subNodes>
+    <ContentNode idNum="0" orderNum="0" pcNode="true" linkTo="0">
+      <ShowOnlyOnce>false</ShowOnlyOnce>
+      <NodeIsActive>true</NodeIsActive>
+      <NodePortraitBitmap />
+      <NodeNpcName />
+      <NodeSound>none</NodeSound>
+      <conversationText>root</conversationText>
+      <IsExpanded>true</IsExpanded>
+      <subNodes>
+        <ContentNode idNum="1" orderNum="0" pcNode="false" linkTo="0">
+          <ShowOnlyOnce>false</ShowOnlyOnce>
+          <NodeIsActive>true</NodeIsActive>
+          <NodePortraitBitmap />
+          <NodeNpcName />
+          <NodeSound>none</NodeSound>
+          <conversationText>You sense a darkness overhead, as if the day has suddenly become night. You turn around just in time to see a large mommy shark and a baby shark coming at you.</conversationText>
+          <IsExpanded>true</IsExpanded>
+          <subNodes>
+            <ContentNode idNum="2" orderNum="0" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>[Continue]</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes>
+                <ContentNode idNum="3" orderNum="0" pcNode="false" linkTo="0">
+                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                  <NodeIsActive>true</NodeIsActive>
+                  <NodePortraitBitmap />
+                  <NodeNpcName />
+                  <NodeSound>none</NodeSound>
+                  <conversationText>[The chase begins...escape by swimming quickly to the black hole to the left]</conversationText>
+                  <IsExpanded>true</IsExpanded>
+                  <subNodes>
+                    <ContentNode idNum="4" orderNum="0" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>[Begin the chase]</conversationText>
+                      <IsExpanded>true</IsExpanded>
+                      <subNodes />
+                      <actions />
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions />
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions />
+              <conditions />
+            </ContentNode>
+          </subNodes>
+          <actions />
+          <conditions />
+        </ContentNode>
+      </subNodes>
+      <actions />
+      <conditions />
+    </ContentNode>
+  </subNodes>
+  <ConvoFileName>sharkAmbush.xml</ConvoFileName>
+  <Narration>true</Narration>
+  <PartyChat>false</PartyChat>
+  <NpcPortraitBitmap />
+  <DefaultNpcName />
+  <NextIdNum>4</NextIdNum>
+</Convo>
