@@ -14,13 +14,17 @@ namespace IceBlink
         {   
         	Creature cr = (Creature)sf.CombatSource; // sf.getScriptOwnerCreature();
 			//MessageBox.Show(cr.NameWithNotes+" death!");
-            foreach (LocalString hs in cr.CharLocalStrings)
-            	if (hs.Key == "OnDeathSound")
-            	{   
-            		sf.PlaySoundFX(hs.Value);
-            	    break;                          
-            	}
-           	sf.frm.currentCombat.drawEndEffect(cr.CombatLocation, 0, "generic_death.spt"); // file doesn't exists, this does nothing
+			if (sf.GetLocalInt(cr.Tag, "HasDied") != 1)
+			{
+            	foreach (LocalString hs in cr.CharLocalStrings)
+            		if (hs.Key == "OnDeathSound")
+            		{   
+            			sf.PlaySoundFX(hs.Value);
+            		    break;                          
+            		}
+           		sf.frm.currentCombat.drawEndEffect(cr.CombatLocation, 0, "generic_death.spt"); // file doesn't exists, this does nothing
+           		sf.SetLocalInt(cr.Tag, "HasDied", 1);
+			 }
         }
     }
 }

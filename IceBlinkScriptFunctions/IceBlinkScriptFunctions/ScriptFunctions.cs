@@ -119,8 +119,9 @@ namespace IceBlink
 	public class SpellParameters
 	{
 		public string Name = "";
-		public string Type = ""; // "Heal", "Damage", "Buff" or "Debuff"
+		public string Type = ""; // "Heal", "Damage", "Buff" or "Debuff" ; new "Summon"
 		public string TargetType = "";
+		public List<string> ExtraParams;
 		public Effect Effect;
 		public string CountersEffects = "";
 		public int NbDice = 0;
@@ -140,7 +141,7 @@ namespace IceBlink
 		
 		public SpellParameters()
 		{
-
+			ExtraParams = new List<string>();
 		}
 	}
 	
@@ -659,6 +660,8 @@ namespace IceBlink
                             return variable.Value;
                         }
                     }
+                    // * sinopip, 16.08.14
+                    if (frm.debugMode)
                     IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
                     return -1;
                 }
@@ -676,6 +679,8 @@ namespace IceBlink
                             return variable.Value;
                         }
                     }
+                    // * sinopip, 16.08.14
+                    if (frm.debugMode)
                     IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
                     return -1;
                 }
@@ -692,7 +697,9 @@ namespace IceBlink
                                 return variable.Value;
                             }
                         }
-                        IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        // * sinopip, 16.08.14
+                    	if (frm.debugMode)
+                    	IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
                         return -1;
                     }
                 }
@@ -709,7 +716,9 @@ namespace IceBlink
                                 return variable.Value;
                             }
                         }
-                        IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        // * sinopip, 16.08.14
+                   		if (frm.debugMode)
+                    	IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
                         return -1;
                     }
                 }
@@ -729,7 +738,9 @@ namespace IceBlink
                                 return variable.Value;
                             }
                         }
-                        IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        // * sinopip, 16.08.14
+                    	if (frm.debugMode)
+                    	IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
                         return -1;
                     }
                 }
@@ -746,7 +757,9 @@ namespace IceBlink
                                 return variable.Value;
                             }
                         }
-                        IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        // * sinopip, 16.08.14
+                    	if (frm.debugMode)
+                    	IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
                         return -1;
                     }
                 }
@@ -1599,6 +1612,9 @@ namespace IceBlink
         #endregion
 
         #region Combat Stuff
+        //
+     	// * sinopip, 16.08.14
+     	//
         public void DoCreatureTurn(Creature crt)
         {
             //Creature crt_pt = new Creature();
@@ -1607,8 +1623,12 @@ namespace IceBlink
 
             if ((crt.HP > 0) && (crt.Status != PC.charStatus.Held))
             {
-                PC char_pt = new PC();
-                char_pt.passRefs(gm, null);
+            	PC char_pt = new PC();
+            	char_pt.passRefs(gm, null);
+                // * sinopip, 16.08.14
+            	Creature creature_pt = new Creature();
+                creature_pt.passRefs(gm, null);
+                //
                 CombatTarget = null;
                 CombatSource = crt;
                 ActionToTake = null;
@@ -1637,6 +1657,10 @@ namespace IceBlink
                         }
                         else if (CombatTarget is Creature)
                         {
+                        	// * sinopip, 16.08.14
+                        	creature_pt = (Creature)CombatTarget;
+                        	CombatTarget = creature_pt;
+							//
                             //target is a creature
                         }
                         else if (CombatTarget is Point)
@@ -1660,7 +1684,12 @@ namespace IceBlink
                         char_pt = gm.playerList.PCList[whichOne];
                         CombatTarget = char_pt;
                     }
-                    CreatureDoesAttack(crt, char_pt);
+                    // * sinopip, 16.08.14
+                    if (CombatTarget is PC)
+                    	CreatureDoesAttack(crt, char_pt);
+                    else if (CombatTarget is Creature)
+                    	CreatureDoesAttack(crt, creature_pt);
+                    //
                     #endregion
                 }
                 else if ((ChosenAction)ActionToTake == ChosenAction.CastSpell)
@@ -2339,7 +2368,6 @@ namespace IceBlink
             {
                 if ((crt.HP > 0) && (crt.Status != CharBase.charStatus.Held) && (crt.Status != CharBase.charStatus.Sleeping))
                 {
-
                     Combat c = frm.currentCombat;
 
                     //note: I had to to borrow lots of code directly from scriptfunctions. dll as the function calls themselves mixed up crt and pc
@@ -3836,9 +3864,293 @@ namespace IceBlink
         
         #region AUTHOR FUNCTIONS
         //place any methods/functions here that are overloads or new functions.
+        //
+		// ______________________
+		// might return null or ""
+        public string GetLocalString(string objectTag, string variableName)
+        {
+            //check creatures, PCs, Props, areas, items
+            #region Search PCs
+            foreach (PC pc in gm.playerList.PCList)
+            {
+                if (pc.Tag == objectTag)
+                {
+                    foreach (LocalString variable in pc.CharLocalStrings)
+                    {
+                        if (variable.Key == variableName)
+                        {
+                            return variable.Value;
+                        }
+                    }
+                    	IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                    return null;
+                }
+            }
+            #endregion
+            foreach (Area a in gm.module.ModuleAreasObjects)
+            {
+                #region Area itself
+                if (a.AreaFileName == objectTag)
+                {
+                    foreach (LocalString variable in a.AreaLocalStrings)
+                    {
+                        if (variable.Key == variableName)
+                        {
+                            return variable.Value;
+                        }
+                    }
+                    if (frm.debugMode)
+                    	IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                    return null;
+                }
+                #endregion
+                #region Creatures
+                foreach (Creature cr in a.AreaCreatureList.creatures)
+                {
+                    if (cr.Tag == objectTag)
+                    {
+                        foreach (LocalString variable in cr.CharLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                return variable.Value;
+                            }
+                        }
+                    	if (frm.debugMode)
+                    		IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        return null;
+                    }
+                }
+                #endregion
+                #region Props
+                foreach (Prop pr in a.AreaPropList.propsList)
+                {
+                    if (pr.PropTag == objectTag)
+                    {
+                        foreach (LocalString variable in pr.PropLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                return variable.Value;
+                            }
+                        }
+                   		if (frm.debugMode)
+                    		IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        return null;
+                    }
+                }
+                #endregion
+            }
+            foreach (Encounter e in gm.module.ModuleEncountersList.encounters)
+            {
+                #region Creatures
+                foreach (Creature cr in e.EncounterCreatureList.creatures)
+                {
+                    if (cr.Tag == objectTag)
+                    {
+                        foreach (LocalString variable in cr.CharLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                return variable.Value;
+                            }
+                        }
+                    	if (frm.debugMode)
+                    		IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        return null;
+                    }
+                }
+                #endregion
+                #region Props
+                foreach (Prop pr in e.EncounterPropList.propsList)
+                {
+                    if (pr.PropTag == objectTag)
+                    {
+                        foreach (LocalString variable in pr.PropLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                return variable.Value;
+                            }
+                        }
+                    	if (frm.debugMode)
+                    		IBMessageBox.Show(gm, "Found the object, but couldn't find the tag specified...returning a value of -1");
+                        return null;
+                    }
+                }
+                #endregion
+            }
+            if (frm.debugMode) //SD_20131102
+            {
+                IBMessageBox.Show(gm, "couldn't find the object with the tag specified (only PCs, Creatures, Areas and Props), returning a value of -1");
+            }
+            return null;
+        }
+        //
+        //
+        public void SetLocalString(string objectTag, string variableName, string value)
+        {
+            //check creatures, PCs, Props, areas, items
+            #region Search PCs
+            foreach (PC pc in gm.playerList.PCList)
+            {
+                if (pc.Tag == objectTag)
+                {
+                    int exists = 0;
+                    foreach (LocalString variable in pc.CharLocalStrings)
+                    {
+                        if (variable.Key == variableName)
+                        {
+                            variable.Value = value;
+                            exists = 1;
+                        }
+                    }
+                    if (exists == 0)
+                    {
+                        LocalString newLocalString = new LocalString();
+                        newLocalString.Key = variableName;
+                        newLocalString.Value = value;
+                        pc.CharLocalStrings.Add(newLocalString);
+                    }
+                    return;
+                }
+            }
+            #endregion
+            foreach (Area a in gm.module.ModuleAreasObjects)
+            {
+                #region Area itself
+                if (a.AreaFileName == objectTag)
+                {
+                    int exists = 0;
+                    foreach (LocalString variable in a.AreaLocalStrings)
+                    {
+                        if (variable.Key == variableName)
+                        {
+                            variable.Value = value;
+                            exists = 1;
+                        }
+                    }
+                    if (exists == 0)
+                    {
+                        LocalString newLocalString = new LocalString();
+                        newLocalString.Key = variableName;
+                        newLocalString.Value = value;
+                        a.AreaLocalStrings.Add(newLocalString);
+                    }
+                    return;
+                }
+                #endregion
+                #region Creatures
+                foreach (Creature cr in a.AreaCreatureList.creatures)
+                {
+                    if (cr.Tag == objectTag)
+                    {
+                        int exists = 0;
+                        foreach (LocalString variable in cr.CharLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                variable.Value = value;
+                                exists = 1;
+                            }
+                        }
+                        if (exists == 0)
+                        {
+                            LocalString newLocalString = new LocalString();
+                            newLocalString.Key = variableName;
+                            newLocalString.Value = value;
+                            cr.CharLocalStrings.Add(newLocalString);
+                        }
+                        return;
+                    }
+                }
+                #endregion
+                #region Props
+                foreach (Prop pr in a.AreaPropList.propsList)
+                {
+                    if (pr.PropTag == objectTag)
+                    {
+                        int exists = 0;
+                        foreach (LocalString variable in pr.PropLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                variable.Value = value;
+                                exists = 1;
+                            }
+                        }
+                        if (exists == 0)
+                        {
+                            LocalString newLocalString = new LocalString();
+                            newLocalString.Key = variableName;
+                            newLocalString.Value = value;
+                            pr.PropLocalStrings.Add(newLocalString);
+                        }
+                        return;
+                    }
+                }
+                #endregion
+            }
+            foreach (Encounter e in gm.module.ModuleEncountersList.encounters)
+            {
+                #region Creatures
+                foreach (Creature cr in e.EncounterCreatureList.creatures)
+                {
+                    if (cr.Tag == objectTag)
+                    {
+                        int exists = 0;
+                        foreach (LocalString variable in cr.CharLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                variable.Value = value;
+                                exists = 1;
+                            }
+                        }
+                        if (exists == 0)
+                        {
+                            LocalString newLocalString = new LocalString();
+                            newLocalString.Key = variableName;
+                            newLocalString.Value = value;
+                            cr.CharLocalStrings.Add(newLocalString);
+                        }
+                        return;
+                    }
+                }
+                #endregion
+                #region Props
+                foreach (Prop pr in e.EncounterPropList.propsList)
+                {
+                    if (pr.PropTag == objectTag)
+                    {
+                        int exists = 0;
+                        foreach (LocalString variable in pr.PropLocalStrings)
+                        {
+                            if (variable.Key == variableName)
+                            {
+                                variable.Value = value;
+                                exists = 1;
+                            }
+                        }
+                        if (exists == 0)
+                        {
+                            LocalString newLocalString = new LocalString();
+                            newLocalString.Key = variableName;
+                            newLocalString.Value = value;
+                            pr.PropLocalStrings.Add(newLocalString);
+                        }
+                        return;
+                    }
+                }
+                #endregion
+            }
+            if (frm.debugMode) //SD_20131102
+            {
+                IBMessageBox.Show(gm, "couldn't find the object with the tag (tag: " + objectTag + ") specified (only PCs, Creatures, Areas and Props)");
+            }
+        }        
 	//
 	// ______________________
-	// 09.08.14
 	public void WriteToLog(string text, Color color)
 	{
 		Form1 f = null;
@@ -3888,8 +4200,7 @@ namespace IceBlink
     	}
         //
         // ______________________
-        // * 09.08.14
-        // * get the owner of an effect (or for a spell with a single target?)
+        // * get the owner of an effect (or for a spell with a single target)
         public object GetSourceCreatureObject()
         {
         	if (MainMapScriptCall)
@@ -3899,27 +4210,32 @@ namespace IceBlink
         	else
         		return CombatSource;
         }
-		public void CheckDoDeathScript(object crt)
+        //
+		// ______________________
+		public void DoDeathScript(object crt)
 		{
+			object temp = CombatSource;
 			if (crt is PC)
             {
-				if (((PC)crt).HP <= 0)
+				if (((PC)crt).HP <= 0 && GetLocalInt(((PC)crt).Tag, "HasDied") != 1)
                 {
                     CombatSource = crt;
                     var scriptCrtDth = ((PC)crt).OnDeath;
                     frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    SetLocalInt(((PC)crt).Tag, "HasDied", 1);
                 }
             }
 			else if (crt is Creature)
             {
-                if (((Creature)crt).HP <= 0)
+                if (((Creature)crt).HP <= 0 && GetLocalInt(((Creature)crt).Tag, "HasDied") != 1)
                 {
                     CombatSource = crt;
                     var scriptCrtDth = ((Creature)crt).OnDeath;
-                    frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);			
+                    frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    SetLocalInt(((Creature)crt).Tag, "HasDied", 1);
                 }
             }
-			
+			CombatSource = temp;
 		}
         //
 		// ______________________
@@ -4110,6 +4426,8 @@ namespace IceBlink
 				}					
 				if (resist < 0.0f)
 					resist = 0.0f;
+				if (resist < 1.0f)
+					WriteToLog("(with damage resistance : "+(1.0f-resist)*100+"%)", Color.Chartreuse);
 				car.ScoreFinal = (int)(resist * score);
         	}
           return car;
@@ -4138,6 +4456,7 @@ namespace IceBlink
 					pc.Status = CharBase.charStatus.Alive;
 					pc.HP = 1;
 					WriteToLog(pc.Name+" is revived!",Color.Gold);
+					SetLocalInt(pc.Tag, "HasDied", 0);
 			      }
 			    if (pc.HP > -20)
 			    {
@@ -4173,6 +4492,7 @@ namespace IceBlink
 					creature.Status = CharBase.charStatus.Alive;
 					creature.HP = 1;
 					WriteToLog(creature.Name+" is revived!",Color.DarkGreen);
+					SetLocalInt(creature.Tag, "HasDied", 0);
 			    }
 			    // * standard heal effect	
 			    WriteToLog(creature.Name+" ",Color.WhiteSmoke);        					
@@ -4238,37 +4558,39 @@ namespace IceBlink
     				frm.currentCombat.drawEndEffect(pc.CombatLocation, 0, sp.SpriteFileName);
    				else if (creature != null && creature.HP > 0)
     				frm.currentCombat.drawEndEffect(creature.CombatLocation, 0, sp.SpriteFileName);*/
-    		// subtract HP and description in log
-			if (pc != null && pc.HP > -20)
-			{        
-			  if (sp.BaseDC >= 0)
-			  {
-			    WriteToLog("("+pc.Name+" ",Color.Blue);        					
-		        WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
-			    if (spell_result.SavedAgainstSuccessfully)
-				  WriteToLog("success",Color.LightGray);
-			    else
-				  WriteToLog("failure",Color.Red);
-			    WriteToLog(") ", Color.Gray);
-			    }
-			  WriteToLog(pc.Name+" "+sp.Description+" : ", Color.Gray);
-			  WriteToLog(spell_result.ScoreFinal+" ", Color.Crimson);
-			  WriteToLog("points of damage ",Color.Gray);
+    		// subtract HP and description in comlog
+    		if (pc != null)
+    		{
+				if (pc.HP > -20)
+				{        
+			  		if (sp.BaseDC >= 0)
+					{
+				    	WriteToLog("("+pc.Name+" ",Color.Blue);        					
+				        WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
+				    	if (spell_result.SavedAgainstSuccessfully)
+					  		WriteToLog("success",Color.LightGray);
+				    	else
+					  	WriteToLog("failure",Color.Red);
+				    	WriteToLog(") ", Color.Gray);
+				    }
+			  		WriteToLog(pc.Name+" "+sp.Description+" : ", Color.Gray);
+			  		WriteToLog(spell_result.ScoreFinal+" ", Color.Crimson);
+			  		WriteToLog("points of damage ",Color.Gray);
 			  
-		      pc.HP -= spell_result.ScoreFinal;        				
-              DrawCombatFloatyTextOverSquare(
-                	(-spell_result.ScoreFinal).ToString(),
-                	pc.CombatLocation.X,pc.CombatLocation.Y,
-                	4,
-                	Color.Red, Color.Crimson);
-		      // * effect description            			  
-			  if (!spell_result.SavedAgainstSuccessfully)
-				if (sp.Effect != null)
-			      if (!sp.Effect.EffectName.Contains("Special Effect"))
-			        if (sp.EffectDescription != null)
-				      WriteToLog(pc.Name+" "+sp.EffectDescription, Color.Orange);
-				    else
-				      WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ pc.Name, Color.Orange);
+		      		pc.HP -= spell_result.ScoreFinal;        				
+              		DrawCombatFloatyTextOverSquare(
+                		(-spell_result.ScoreFinal).ToString(),
+	                	pc.CombatLocation.X,pc.CombatLocation.Y,
+                		4,
+                		Color.Red, Color.Crimson);
+		      		// * effect description            			  
+			  		if (!spell_result.SavedAgainstSuccessfully)
+						if (sp.Effect != null)
+			      			if (!sp.Effect.EffectName.Contains("Special Effect"))
+			        			if (sp.EffectDescription != null)
+				      				WriteToLog(pc.Name+" "+sp.EffectDescription, Color.Orange);
+				    			else
+				      				WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ pc.Name, Color.Orange);
 			  
               /*if (pc.HP <= 0 && pc.HP > -20)
               {
@@ -4280,51 +4602,57 @@ namespace IceBlink
                 c.refreshMap();
               }*/
               //else if (pc.HP <= -20)
-              if (pc.HP <= 0)
-              {
-              	pc.Status = CharBase.charStatus.Dead;
-               	WriteToLog(Environment.NewLine, Color.Black);
-                WriteToLog(GetActionCreatureData().Name + " killed " + pc.Name, Color.LightGreen);
-                CheckDoDeathScript(pc);
-                pc.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
-              }
-			}
-			else if (creature != null && creature.HP > 0)
+              // ...
+            	}
+				if (pc.HP <= 0)
+		        {
+		            pc.Status = CharBase.charStatus.Dead;
+		           	WriteToLog(Environment.NewLine, Color.Black);
+		            WriteToLog(GetActionCreatureData().Name + " killed " + pc.Name, Color.LightGreen);
+		            DoDeathScript(pc);
+		            pc.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
+		        }
+    		}
+			if (creature != null)
 			{
-			  if (sp.BaseDC >= 0)
-			  {
-				  WriteToLog("("+creature.Name+" ",Color.WhiteSmoke);        					
-			      WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
-				  if (spell_result.SavedAgainstSuccessfully)
-					WriteToLog("success",Color.LightGray);
-				  else
-					WriteToLog("failure",Color.Red);
-				  WriteToLog(") ", Color.Gray);
-			  }
-			  WriteToLog(creature.Name+" "+sp.Description+" : ", Color.Gray);
-			  WriteToLog(spell_result.ScoreFinal+" ", Color.Crimson);
-			  WriteToLog("points of damage",Color.Gray);        					
-			  creature.HP -= spell_result.ScoreFinal;
-			  DrawCombatFloatyTextOverSquare(
-                		(-spell_result.ScoreFinal).ToString(),
-                		creature.CombatLocation.X,creature.CombatLocation.Y,
-                		4,
-                		Color.Red,Color.Crimson);
-		      // * effect description            			  
-			  if (!spell_result.SavedAgainstSuccessfully)
-				if (sp.Effect != null)
-			      if (!sp.Effect.EffectName.Contains("Special Effect"))
-			        if (sp.EffectDescription != null)
-				      WriteToLog(creature.Name+" "+sp.EffectDescription, Color.Orange);
-				    else
-				      WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ creature.Name, Color.Orange);
-              if (creature.HP <= 0)
-              {
-              	  creature.Status = CharBase.charStatus.Dead;
-                  WriteToLog(GetActionCreatureData().Name + " killed the " + creature.Name, Color.LightGreen);
-                  CheckDoDeathScript(creature);
-                  //creature.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
-              }
+				if (creature.HP > 0)
+				{
+				  if (sp.BaseDC >= 0)
+				  {
+					  WriteToLog("("+creature.Name+" ",Color.WhiteSmoke);        					
+				      WriteToLog("rolls "+spell_result.Roll+" +"+spell_result.RollMod+" vs DC "+spell_result.DC+" : ",Color.Gray);
+					  if (spell_result.SavedAgainstSuccessfully)
+						WriteToLog("success",Color.LightGray);
+					  else
+						WriteToLog("failure",Color.Red);
+					  WriteToLog(") ", Color.Gray);
+				  }
+				  WriteToLog(creature.Name+" "+sp.Description+" : ", Color.Gray);
+				  WriteToLog(spell_result.ScoreFinal+" ", Color.Crimson);
+				  WriteToLog("points of damage",Color.Gray);        					
+				  creature.HP -= spell_result.ScoreFinal;
+				  DrawCombatFloatyTextOverSquare(
+	                		(-spell_result.ScoreFinal).ToString(),
+	                		creature.CombatLocation.X,creature.CombatLocation.Y,
+	                		4,
+	                		Color.Red,Color.Crimson);
+			      // * effect description            			  
+				  if (!spell_result.SavedAgainstSuccessfully)
+					if (sp.Effect != null)
+				      if (!sp.Effect.EffectName.Contains("Special Effect"))
+				        if (sp.EffectDescription != null)
+					      WriteToLog(creature.Name+" "+sp.EffectDescription, Color.Orange);
+					    else
+					      WriteToLog("Effect "+ sp.Effect.EffectName+" on "+ creature.Name, Color.Orange);
+              
+				}
+				if (creature != null && creature.HP <= 0)
+            	{
+	            	creature.Status = CharBase.charStatus.Dead;
+	                WriteToLog(GetActionCreatureData().Name + " killed the " + creature.Name, Color.LightGreen);
+	                DoDeathScript(creature);
+	                //creature.CharSprite.Image = new Bitmap(gm.mainDirectory + "\\data\\rip.png");
+	            }	
 			}
 			//WriteToLog(Environment.NewLine, Color.Black);
         }
@@ -4343,7 +4671,6 @@ namespace IceBlink
         	
     		if (sp.Effect != null)
     		{
-    			MessageBox.Show("existing effect...");
    		     	Effect buff = sp.Effect.DeepCopy();
    		     	//buff.CurrentDurationInUnits = 0;
    		     	if (spell_result.ScoreFinal > 0)
@@ -4358,7 +4685,6 @@ namespace IceBlink
     			else if (creature != null)
     				creature.AddEffectByObject(buff);
 			    // * effect description  
-			    MessageBox.Show("effect added");
 			    if (pc != null)
 				    if (sp.EffectDescription != null)
 				    	WriteToLog(pc.Name+" "+sp.EffectDescription, Color.Orange);
@@ -4482,7 +4808,99 @@ namespace IceBlink
         			WriteToLog(creature.Name, Color.WhiteSmoke);
                 	WriteToLog(" effect "+creature.EffectsList.effectsList[i-1].EffectName+" fades away.", Color.Black);
                 	creature.EffectsList.effectsList.RemoveAt(i - 1);
-        		}        	
+        		}   
+        }
+	//
+	// ______________________
+	// * target could be Point where summons will be in a radius of 1
+    	public void DoSummon(SpellParameters sp, SpecialActionResult spell_result, object target)
+        {        	
+        	Creature summon = null;
+        	int list_index = 0;
+        	//CreatureRefs cr_ref = new CreatureRefs();
+            	
+        	// * select the summon from the list of sp.ExtraParams
+        	if (sp.ExtraParams.Count > 0)
+        	  list_index = gm.Random(sp.ExtraParams.Count/2)-1;
+        	else
+        	{
+				WriteToLog("No creature to summoned", Color.Black);
+        		WriteToLog(Environment.NewLine, Color.Black);
+        		return;
+        	}        	
+        	if (list_index * 2 + 1 < sp.ExtraParams.Count)
+        	{
+        		summon = gm.module.ModuleCreaturesList.getCreatureByTag(sp.ExtraParams[list_index*2]);
+        	}
+        	if (summon == null)
+        	{ 
+        		WriteToLog("No creature is summoned", Color.Black);
+        		WriteToLog(Environment.NewLine, Color.Black);
+        		return;
+        	}
+        	int count;
+        	try
+        	{
+           		count = int.Parse(sp.ExtraParams[list_index*2+1]);
+        	}
+        	catch 
+        	{
+        		if (frm.debugMode)
+        		{
+        			WriteToLog("Next parameter of summon is not a number", Color.Black);
+        			WriteToLog(Environment.NewLine, Color.Black);
+        		}
+        		return;
+        	}
+           	// * add ResRefs to encounter and add creatures
+        	int order = frm.currentCombat.currentMoveOrderIndex; 
+        	Creature crt = new Creature();
+        	CreatureRefs crt_ref = null;
+        	for (int i=0; i < count; i++)
+        	{
+        		// * ResRef
+           		crt_ref = new CreatureRefs();
+            	crt_ref.CreatureResRef = summon.ResRef;
+            	crt_ref.CreatureName = summon.Name + " Ally";
+            	crt_ref.CreatureTag = summon.Tag+i;
+ 				//crt_ref.CreatureStartLocation = new Point(frm.currentEncounter.EncounterPcStartLocations[0].X + gm.Random(6)-3,
+            	//                             frm.currentEncounter.EncounterPcStartLocations[0].Y + 5 + gm.Random(3)-2);
+            	crt_ref.CreatureStartLocation = new Point(1, i+5);
+            	//gm.currentCombatArea.AreaCreatureRefsList.Add(crt_ref);
+            	gm.currentEncounter.EncounterCreatureRefsList.Add(crt_ref);
+            	
+            	// * creature
+            	crt = summon.DeepCopy();
+        		//crt.passRefs(gm, null);
+        		crt.Tag = "Summoned "+summon.Name+" "+i; // * need to check for further summonings!
+        		//crt.OnStartCombatTurn.FilenameOrTag = "crtPCAllyOnStartCombatTurn.cs";
+            	//crt.CombatLocation = crt_ref.CreatureStartLocation;
+            	crt.LoadCharacterSprite(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module", 
+            	                        crt.SpriteFilename);
+            	/*crt.LoadCharacterSpriteBitmap(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module", 
+            	                        crt.CharSprite.SpriteSheetFilename);*/
+            	//crt.CharSprite = crt.CharSprite.loadSpriteFile(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module\\"+crt.SpriteFilename);            	
+            	//summon.CharSprite.Image = (Bitmap)Image.FromFile(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module\\"+
+            	//                        crt.CharSprite.SpriteSheetFilename);
+            	gm.currentEncounter.EncounterCreatureList.creatures.Add(crt);
+           		//gm.currentCombatArea.AreaCreatureList.creatures.Add(crt); // * adds duplicates of already present creatures??
+            	/*MoveOrder mo = new MoveOrder();
+            	mo.index = gm.currentEncounter.EncounterCreatureList.creatures.Count -1;
+				mo.type = "";
+                mo.tag = crt.Tag;
+                mo.rank = gm.Random(10);// gm.Random(100) + (dexMod * 10) + Stats.CalcInitiativeBonuses(chr);
+                frm.currentCombat.com_moveOrderList.Add(mo);*/
+                //
+                /*frm.currentCombat.drawEndEffect(crt.CombatLocation, 0, "on_effect.spt");
+                frm.currentCombat.Refresh();
+                Application.DoEvents();
+            	Thread.Sleep(200);
+                //*/
+                //gm.RenderCreatureSpriteStatic(crt);
+        	}
+			WriteToLog(sp.ExtraParams[list_index*2+1]+" "+crt.Name+((count>1)?"s are":" is")+" summoned.", Color.YellowGreen);
+        	//frm.currentCombat.com_moveOrderList = frm.currentCombat.com_moveOrderList.OrderByDescending(x => x.rank).ToList();
+        	//frm.currentCombat.currentMoveOrderIndex = gm.currentEncounter.EncounterCreatureList.creatures.Count-count;
         }
         // ------------------------------------------
 		//
@@ -4517,15 +4935,17 @@ namespace IceBlink
         			SetGlobalObject(creature.Tag+" last_spell_result", spell_result);
         		
  				// * sounds and animations
-    			if (sp.SoundFX != "")
-    				PlaySoundFX(sp.SoundFX);
-    			//if (sp.Type != "Damage" && sp.SpriteFileName != "")
-    			if (sp.SpriteFileName != "")
-    				if (pc != null && pc.HP > -20)
-    					frm.currentCombat.drawEndEffect(pc.CombatLocation, 0, sp.SpriteFileName);
-    			  	else if (creature != null && creature.HP > 0)
-    					frm.currentCombat.drawEndEffect(creature.CombatLocation, 0, sp.SpriteFileName);
-        		
+ 				if (sp.Type == "Damage" || !spell_result.SavedAgainstSuccessfully)
+ 				{
+	    			if (sp.SoundFX != "")
+	    				PlaySoundFX(sp.SoundFX);
+	    			if (sp.SpriteFileName != "")
+	    				if (pc != null && pc.HP > -20)
+	    					frm.currentCombat.drawEndEffect(pc.CombatLocation, 0, sp.SpriteFileName);
+	    			  	else if (creature != null && creature.HP > 0)
+	    					frm.currentCombat.drawEndEffect(creature.CombatLocation, 0, sp.SpriteFileName);
+ 				}
+ 				
     			// "sp.Type" of spell
     			// * heal
     			// * possible extra : "Revive" in Effect's Tag variable -> make alive from dead
@@ -4542,10 +4962,10 @@ namespace IceBlink
     			// * debuff
     			else if (sp.Type == "Debuff")
     				DoDebuff(sp, spell_result, target);
+    			else if (sp.Type == "Summon")
+    				DoSummon(sp, spell_result, target);
     			if (sp.CountersEffects != "")
-    				DoCounter(sp, target);
-    				    			
-        		WriteToLog(Environment.NewLine, Color.Black);  
+    				DoCounter(sp, target); 
         	}
         }	
 	//
@@ -4569,7 +4989,487 @@ namespace IceBlink
         		frm.currentCombat.logText(Environment.NewLine, Color.Black);
         		frm.currentCombat.Refresh();
         	}
+        	WriteToLog(Environment.NewLine, Color.Black); 
         }
         #endregion
+        
+        #region ALLIES
+        //
+        // * sinopip, 16.08.14
+        // * all from here
+        public Creature TargetCreatureWithLowestHP(bool ignoreIfInStealthMode)
+        {
+            Creature target = null;
+            int lowHP = 999;
+            List<Creature> creatures = gm.module.ModuleEncountersList.
+            				getEncounter(frm.currentCombat.com_encounter.EncounterName).
+            				EncounterCreatureList.creatures;
+            foreach (Creature crt in creatures)
+            {
+				// * sinopip, 16.08.14
+                if (crt.Tag.ToLower().Contains("summoned") || crt.Tag.ToLower().Contains("ally"))
+                	continue;
+
+                if (ignoreIfInStealthMode)
+                {
+                    if ((crt.Status != PC.charStatus.Dead) && (!CheckLocalInt(crt.Tag, "StealthModeOn", "=", 1)))
+                    {
+                        if (crt.HP < lowHP)
+                        {
+                            lowHP = crt.HP;
+                            target = crt;
+                        }
+                    }
+                }
+                else
+                {
+                    if (crt.Status != PC.charStatus.Dead)
+                    {
+                        if (crt.HP < lowHP)
+                        {
+                            lowHP = crt.HP;
+                            target = crt;
+                        }
+                    }
+                }
+            }
+            return target;
+        }
+        public Creature TargetClosestCreature(bool ignoreIfInStealthMode)
+        {
+            Creature crt = (Creature)CombatSource; //this is the creature that is calling this script
+            Creature target = null;
+            int farDist = 99;
+            List<Creature> creatures = gm.module.ModuleEncountersList.
+            				getEncounter(frm.currentCombat.com_encounter.EncounterName).
+            				EncounterCreatureList.creatures;
+            foreach (Creature crttarget in creatures)
+            {
+            	if (crttarget.CombatLocation == crt.CombatLocation) continue; // exclude self
+            	// * sinopip, 16.08.14
+                if (crt.Tag.ToLower().Contains("summoned") || crt.Tag.ToLower().Contains("ally"))
+                	continue;
+                if (ignoreIfInStealthMode)
+                {
+                    if ((crttarget.Status != PC.charStatus.Dead) && (!CheckLocalInt(crt.Tag, "StealthModeOn", "=", 1)))
+                    {
+                        int dist = CalcDistance(crt.CombatLocation, crttarget.CombatLocation);
+                        if (dist < farDist)
+                        {
+                            farDist = dist;
+                            target = crttarget;
+                        }
+                    }
+                }
+                else
+                {
+                    if (crttarget.Status != PC.charStatus.Dead)
+                    {
+                        int dist = CalcDistance(crt.CombatLocation, crttarget.CombatLocation);
+                        if (dist < farDist)
+                        {
+                            farDist = dist;
+                            target = crttarget;
+                        }
+                    }
+                }
+            }
+            return target;
+        }
+        public Creature TargetClosestCreatureNotHeld(bool ignoreIfInStealthMode)
+        {
+            Creature crt = (Creature)CombatSource; //this is the creature that is calling this script
+            Creature target = null;
+            int farDist = 99;
+            List<Creature> creatures = gm.module.ModuleEncountersList.
+            				getEncounter(frm.currentCombat.com_encounter.EncounterName).
+            				EncounterCreatureList.creatures;
+            foreach (Creature crttarget in creatures)    
+            {
+            	// * sinopip, 16.08.14
+                if (crt.Tag.ToLower().Contains("summoned") || crt.Tag.ToLower().Contains("ally"))
+                	continue;
+
+                if (ignoreIfInStealthMode)
+                {
+                    //ignore if held, dead, or in stealth mode
+                    if ((crttarget.Status != PC.charStatus.Held) && (crttarget.Status != PC.charStatus.Dead) && (!CheckLocalInt(crttarget.Tag, "StealthModeOn", "=", 1)))
+                    {
+                        int dist = CalcDistance(crt.CombatLocation, crttarget.CombatLocation);
+                        if (dist < farDist)
+                        {
+                            farDist = dist;
+                            target = crttarget;
+                        }
+                    }
+                }
+                else
+                {
+                    //ignore if held or dead
+                    if ((crttarget.Status != PC.charStatus.Held) && (crttarget.Status != PC.charStatus.Dead))
+                    {
+                        int dist = CalcDistance(crt.CombatLocation, crttarget.CombatLocation);
+                        if (dist < farDist)
+                        {
+                            farDist = dist;
+                            target = crttarget;
+                        }
+                    }
+                }
+            }
+            return target;
+        }
+        public PC GetPCWithLowestHP()
+        {
+            int lowHP = 999;
+            PC returnCrt = null;
+            foreach (PC pc in gm.playerList.PCList)
+            {
+                if (pc.HP > 0)
+                {
+                    if (pc.HP < lowHP)
+                    {
+                        lowHP = pc.HP;
+                        returnCrt = pc;
+                    }
+                }
+            }
+            return returnCrt;
+        }
+        public Creature GetNextAdjacentCreature(Creature crt)
+        {
+            foreach (Creature nextCrt in gm.currentEncounter.EncounterCreatureList.creatures)
+            {
+                if ((CalcDistance(crt.CombatLocation, nextCrt.CombatLocation) < 2) && (nextCrt.HP > 0))
+                {
+                    return nextCrt;
+                }
+            }
+            return null;
+        }    
+        //
+		// * sinopip, 16.08.14
+		// * all from here
+		// * many functions todos : take in account creature of size greater than 1x1
+        public void setupPathfindArray(Creature c, Creature target)
+        {
+            for (int x = 0; x <= (gm.currentCombatArea.MapSizeInSquares.Width - 1); x++)
+            {
+                for (int y = 0; y <= (gm.currentCombatArea.MapSizeInSquares.Height - 1); y++)
+                {
+                    //logText("x=" + x.ToString() + " y=" + y.ToString(), Color.Black);
+                    //logText(Environment.NewLine, Color.Black);
+                    if (gm.currentCombatArea.getCombatTile(x, y).collidable == true)
+                        pathfinder.Squares[x, y].ContentCode = SquareContent.Wall;
+                    else
+                        pathfinder.Squares[x, y].ContentCode = SquareContent.Empty;
+                }
+            }
+            foreach (Creature crt in frm.currentEncounter.EncounterCreatureList.creatures)
+            {
+                if (crt == c) { continue; }
+                if (target == c) continue;
+                if (crt.HP > 0)
+                {
+                    //TODO if creature size is greater than 1, make all squares walls
+                    if (crt.Size == 1)
+                    {
+                        pathfinder.Squares[crt.CombatLocation.X, crt.CombatLocation.Y].ContentCode = SquareContent.Wall;
+                    }
+                    if (crt.Size == 2)
+                    {
+                        pathfinder.Squares[crt.CombatLocation.X + 0, crt.CombatLocation.Y + 0].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 1, crt.CombatLocation.Y + 0].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 0, crt.CombatLocation.Y + 1].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 1, crt.CombatLocation.Y + 1].ContentCode = SquareContent.Wall;
+                    }
+                    if (crt.Size == 3)
+                    {
+                        pathfinder.Squares[crt.CombatLocation.X + 0, crt.CombatLocation.Y + 0].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 1, crt.CombatLocation.Y + 0].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 2, crt.CombatLocation.Y + 0].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 0, crt.CombatLocation.Y + 1].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 2, crt.CombatLocation.Y + 1].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 0, crt.CombatLocation.Y + 2].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 1, crt.CombatLocation.Y + 2].ContentCode = SquareContent.Wall;
+                        pathfinder.Squares[crt.CombatLocation.X + 2, crt.CombatLocation.Y + 2].ContentCode = SquareContent.Wall;
+                    }
+                }
+            }
+            foreach (Prop prp in frm.currentEncounter.EncounterPropList.propsList)
+            {
+                if (prp.HasCollision)
+                {
+                    pathfinder.Squares[prp.Location.X, prp.Location.Y].ContentCode = SquareContent.Wall;
+                }
+            }
+            foreach (PC pc in gm.playerList.PCList)
+            {
+                if (pc.HP > 0)
+                {
+                    pathfinder.Squares[pc.CombatLocation.X, pc.CombatLocation.Y].ContentCode = SquareContent.Wall;
+                }
+            }
+        }     
+        //
+        public void setupMonsterSquares(Creature source_crt, Creature crt)
+        {
+            if (crt.Size == 1)
+            {
+                return;
+            }
+            if (crt.Size == 2)
+            {
+                for (int x = source_crt.CombatLocation.X - 1; x < source_crt.CombatLocation.X + 1; x++)
+                {
+                    for (int y = source_crt.CombatLocation.Y - 1; y < source_crt.CombatLocation.Y + 1; y++)
+                    {
+                        if (Pathfinder.ValidCoordinates(x, y, gm))
+                        {
+                            pathfinder.Squares[x, y].ContentCode = SquareContent.Monster;
+                        }
+                    }
+                }
+            }
+            if (crt.Size == 3)
+            {
+                for (int x = source_crt.CombatLocation.X - 2; x < source_crt.CombatLocation.X + 1; x++)
+                {
+                    for (int y = source_crt.CombatLocation.Y - 2; y < source_crt.CombatLocation.Y + 1; y++)
+                    {
+                        if (Pathfinder.ValidCoordinates(x, y, gm))
+                        {
+                            pathfinder.Squares[x, y].ContentCode = SquareContent.Monster;
+                        }
+                    }
+                }
+            }
+        }	
+		//        
+        public bool creatureWithinMeleeDistance(Creature crt, Creature crt_target)
+        {
+            if (crt.Size == 1)
+            {
+                if (CalcDistance(crt_target.CombatLocation, crt.CombatLocation) == 1)
+                {
+                    return true;
+                }
+            }
+            else if (crt.Size == 2)
+            {
+                for (int x = crt_target.CombatLocation.X - 2; x <= crt_target.CombatLocation.X + 1; x++)
+                {
+                    for (int y = crt_target.CombatLocation.Y - 2; y <= crt_target.CombatLocation.Y + 1; y++)
+                    {
+                        if (new Point(x, y) == crt.CombatLocation)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (crt.Size == 3)
+            {
+                for (int x = crt_target.CombatLocation.X - 3; x <= crt_target.CombatLocation.X + 1; x++)
+                {
+                    for (int y = crt_target.CombatLocation.Y - 3; y <= crt_target.CombatLocation.Y + 1; y++)
+                    {
+                        if (new Point(x, y) == crt.CombatLocation)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }	
+		//        
+        public void doCreatureCombatFacing(Creature crt_pt, Creature crt_target_pt)
+        {
+            if ((crt_target_pt.CombatLocation.X == crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y > crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.Down; }
+            if ((crt_target_pt.CombatLocation.X > crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y > crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.DownRight; }
+            if ((crt_target_pt.CombatLocation.X < crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y > crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.DownLeft; }
+            if ((crt_target_pt.CombatLocation.X == crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y < crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.Up; }
+            if ((crt_target_pt.CombatLocation.X > crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y < crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.UpRight; }
+            if ((crt_target_pt.CombatLocation.X < crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y < crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.UpLeft; }
+            if ((crt_target_pt.CombatLocation.X > crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y == crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.Right; }
+            if ((crt_target_pt.CombatLocation.X < crt_pt.CombatLocation.X) && (crt_target_pt.CombatLocation.Y == crt_pt.CombatLocation.Y))
+            { crt_pt.CombatFacing = CharBase.facing.Left; }
+        }       
+		//        
+        public int CalcCreatureDamageToCreature(Creature crt_target, Creature crt) //SD_20131126
+        {
+            int armDamRed = 0;
+            /*if (pc.Body != null)
+            {
+                armDamRed = pc.Body.ItemDamageReduction;
+            }*/
+            int dDam = crt.DamageDie;
+            float damage = (crt.NumberOfDamageDice * gm.Random(dDam)) - armDamRed + crt.DamageAdder;
+            if (damage < 0)
+            {
+                damage = 0;
+            }
+
+            float resist = 0;
+
+            if (crt.TypeOfDamage == DamageType.Acid)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalAcid / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Bludgeoning)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalBludgeoning / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Cold)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalCold / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Electricity)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalElectricity / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Fire)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalFire / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Light)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalLight / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Magic)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalMagic / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Piercing)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalPiercing / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Poison)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalPoison / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Slashing)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalSlashing / 100f));
+            }
+            else if (crt.TypeOfDamage == DamageType.Sonic)
+            {
+                resist = (float)(1f - ((float)crt_target.DamageTypeResistanceTotalSonic / 100f));
+            }
+
+            int totalDam = (int)(damage * resist);
+            if (totalDam < 0)
+            {
+                totalDam = 0;
+            }
+
+            return totalDam;
+        }
+        //
+        public int CalcCreatureAttackModifier(Creature crt)
+        {
+            return crt.Attack;
+        }
+        //
+        public void drawHitSymbolOnCreature(Creature crt)
+        {
+            gm.CombatAreaHitSymbolOnCreatureRenderAll(crt);
+            //gm.drawHitSymbol(crt.CombatLocation.X, crt.CombatLocation.Y);
+            //gm.UpdateCombat();
+            //Application.DoEvents();
+            Thread.Sleep(200);
+            //frm.currentCombat.refreshMap();
+        }        
+        //
+        public void CreatureDoesAttack(Creature crt_pt, Creature crt_target_pt)
+        {
+            crt_target_pt = (Creature)CombatTarget;
+            // determine if ranged or melee
+            if ((crt_pt.WeaponType == Creature.crCategory.Ranged) && (CalcDistance(crt_target_pt.CombatLocation, crt_pt.CombatLocation) <= crt_pt.AttackRange) && (frm.currentCombat.IsVisibleLineOfSight(crt_pt.CombatLocation, crt_target_pt.CombatLocation)))
+            {
+                Point starting = new Point((crt_pt.CombatLocation.X * gm._squareSize) + (gm._squareSize / 2), (crt_pt.CombatLocation.Y * gm._squareSize) + (gm._squareSize / 2));
+                Point ending = new Point((crt_target_pt.CombatLocation.X * gm._squareSize) + (gm._squareSize / 2), (crt_target_pt.CombatLocation.Y * gm._squareSize) + (gm._squareSize / 2));
+                frm.currentCombat.playCreatureAttackSound(crt_pt);
+                frm.currentCombat.drawProjectile(starting, ending, crt_pt.ProjectileSpriteFilename);
+
+                #region The actual attack portion
+                if (crt_pt.HP > 0)
+                {
+                    #region OnAttack
+                    // run OnStartCombatTurn script 
+                    CombatTarget = crt_target_pt;
+                    CombatSource = crt_pt;
+                    var scriptCrt = crt_pt.OnAttack;
+                    frm.doScriptBasedOnFilename(scriptCrt.FilenameOrTag, scriptCrt.Parm1, scriptCrt.Parm2, scriptCrt.Parm3, scriptCrt.Parm4);
+                    #endregion
+                    #region CreatureAttack
+                    // run OnStartCombatTurn script 
+                    CombatTarget = crt_target_pt;
+                    CombatSource = crt_pt;
+                    frm.doScriptBasedOnFilename("dsAttackCreature.cs", "none", "none", "none", "none");
+                    #endregion
+                }
+                else
+                {
+                    frm.currentCombat.logText(crt_pt.Name, Color.LightGray);
+                    frm.currentCombat.logText(" is unconscious...skips turn", Color.Black);
+                    frm.currentCombat.logText(Environment.NewLine, Color.Black);
+                    frm.currentCombat.logText(Environment.NewLine, Color.Black);
+                }
+                #endregion
+            }
+            else
+            {
+                setupPathfindArray(crt_pt, crt_target_pt);
+                pathfinder.Squares[crt_pt.CombatLocation.X, crt_pt.CombatLocation.Y].ContentCode = SquareContent.Monster;
+                pathfinder.Squares[crt_target_pt.CombatLocation.X, crt_target_pt.CombatLocation.Y].ContentCode = SquareContent.Hero;
+                Recalculate(crt_pt);
+                setupMonsterSquares(crt_target_pt, crt_pt);
+                navigatePath(crt_pt);
+
+                // if melee, try and move to attack or get close
+                // check to see if selected PC is one square away, if so attack else skip
+                //if (calcDistance(crt_target_pt.CombatLocation, crt_pt.CombatLocation) == 1)
+                if (creatureWithinMeleeDistance(crt_pt, crt_target_pt))
+                {
+                    doCreatureCombatFacing(crt_pt, crt_target_pt);
+                    #region The actual attack portion
+                    if (crt_pt.HP > 0)
+                    {
+                        #region OnAttack
+                        // run OnStartCombatTurn script 
+                        CombatTarget = crt_target_pt;
+                        CombatSource = crt_pt;
+                        var scriptCrt = crt_pt.OnAttack;
+                        frm.doScriptBasedOnFilename(scriptCrt.FilenameOrTag, scriptCrt.Parm1, scriptCrt.Parm2, scriptCrt.Parm3, scriptCrt.Parm4);
+                        #endregion
+                        #region CreatureAttack
+                        // run OnStartCombatTurn script 
+                        CombatTarget = crt_target_pt;
+                        CombatSource = crt_pt;
+                        frm.doScriptBasedOnFilename("dsAttackCreature.cs", "none", "none", "none", "none");
+                        #endregion
+                    }
+                    else
+                    {
+                        frm.currentCombat.logText(crt_pt.Name, Color.LightGray);
+                        frm.currentCombat.logText(" is unconscious...skips turn", Color.Black);
+                        frm.currentCombat.logText(Environment.NewLine, Color.Black);
+                        frm.currentCombat.logText(Environment.NewLine, Color.Black);
+                    }
+                    #endregion
+                }
+            }
+        }		
+        #endregion
+ 
     }
 }

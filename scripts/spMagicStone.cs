@@ -37,7 +37,8 @@ namespace IceBlink
 			for (int i=0; i< nb_stones; i++)
 			{
 				sf.PlaySoundFX("punch.wav");
-				sf.DoSpellAction(sp, sf.MainMapScriptCall);	
+				sf.DoSpellAction(sp, sf.MainMapScriptCall);
+				WriteToLog(Environment.NewLine, Color.Black);
 			}
         }
     }
