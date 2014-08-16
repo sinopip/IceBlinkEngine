@@ -23,6 +23,7 @@ namespace IceBlink
             sp.DiceAdd = 20;
 			sp.SpellColor = Color.Cyan;
  			sp.Description = "heals";
-            sf.DoSpell(sp); 			
+            sf.DoSpell(sp); 		
+		}
     }
 }

@@ -39,7 +39,7 @@ namespace IceBlink
 				bless = new SpecialActionResult();
 				bless.ScoreFinal = sp.DiceAdd;
 				if (pc.Name != ((PC)sf.MainMapTarget).Name)
-					sf.DoBuff(sp, bless, pc);
+					sf.DoBuff(sp, bless, (object)pc);
 			}			
         }
     }

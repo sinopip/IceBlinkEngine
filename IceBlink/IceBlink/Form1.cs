@@ -632,6 +632,8 @@ namespace IceBlink
                 loadScrn.BackgroundImage = currentTheme.StandardLoadScreen;
                 loadScrn.SetupScreenSize();
                 loadScrn.Show();
+                // * sinopip, 15.08.14
+                Application.DoEvents();
             }
             catch (Exception ex)
             {
@@ -847,7 +849,7 @@ namespace IceBlink
             }
             #endregion
 
-            LoadTheme();
+            //LoadTheme();
 
             this.btnRest.Visible = game.module.UseRestSystem;
 

@@ -33,12 +33,12 @@ namespace IceBlink
 			sp.SpellColor = Color.Magenta;
             //sp.Description = "is hit by "+sp.NbDice+" bolts";
 			int nb_bolts = source.ClassLevel / 3 + 1;
-			SpecialActionResult bolt;
 			sf.DoSpell(sp); 	
 			for (int i=0; i < nb_bolts-1; i++)
 			{
 				sf.PlaySoundFX("buffer.wav");
 				sf.DoSpellAction(sp, sf.MainMapScriptCall);
+				WriteToLog(Environment.NewLine, Color.Black);
 			}
         }
     }

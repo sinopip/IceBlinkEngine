@@ -1484,7 +1484,9 @@ namespace IceBlink
                 }
                 */
                 #endregion
-
+				// * sinopip, 14.08.14
+                doOnDeathScripts();
+                
                 checkEndEncounter();
                 btnContinue.Enabled = true;
                 currentMoveOrderIndex++;
@@ -1582,24 +1584,32 @@ namespace IceBlink
         }
 
         #region Helper Functions
+        // * sinopip, 14.08.14
+        // * do scriptCrtDth only once per combat (unless revive which must reset (to 0) the local int shown below
         private void doOnDeathScripts()
         {
             foreach (Creature crtr in com_encounter.EncounterCreatureList.creatures)
             {
-                if (crtr.HP <= 0)
+            	if (crtr.HP <= 0 && com_frm.sf.GetLocalInt(crtr.Tag, "HasDied")!=1)
                 {
+            		Thread.Sleep(100);
                     com_frm.sf.CombatSource = crtr;
                     var scriptCrtDth = crtr.OnDeath;
                     com_frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    com_frm.sf.SetLocalInt(crtr.Tag, "HasDied", 1);
+                    Thread.Sleep(100);
                 }
             }
             foreach (PC chr in com_game.playerList.PCList)
             {
-                if (chr.HP <= 0)
+                if (chr.HP <= 0  && com_frm.sf.GetLocalInt(chr.Tag, "HasDied")!=1)
                 {
+                	Thread.Sleep(100);
                     com_frm.sf.CombatSource = chr;
                     var scriptCrtDth = chr.OnDeath;
                     com_frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    com_frm.sf.SetLocalInt(chr.Tag, "HasDied", 1);
+                    Thread.Sleep(100);
                 }
             }
         }
