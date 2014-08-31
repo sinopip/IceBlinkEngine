@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Convo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subNodes>
+    <ContentNode idNum="0" orderNum="0" pcNode="true" linkTo="0">
+      <ShowOnlyOnce>false</ShowOnlyOnce>
+      <NodeIsActive>true</NodeIsActive>
+      <NodePortraitBitmap />
+      <NodeNpcName />
+      <NodeSound>none</NodeSound>
+      <conversationText>root</conversationText>
+      <IsExpanded>true</IsExpanded>
+      <subNodes>
+        <ContentNode idNum="1" orderNum="0" pcNode="false" linkTo="0">
+          <ShowOnlyOnce>false</ShowOnlyOnce>
+          <NodeIsActive>true</NodeIsActive>
+          <NodePortraitBitmap />
+          <NodeNpcName />
+          <NodeSound>none</NodeSound>
+          <conversationText>Hey,  you need a hand?</conversationText>
+          <IsExpanded>true</IsExpanded>
+          <subNodes>
+            <ContentNode idNum="2" orderNum="0" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>Sure!</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes />
+              <actions>
+                <Action a_script="gaAddPartyMember.cs" a_parameter_1="Arius.char" />
+              </actions>
+              <conditions />
+            </ContentNode>
+            <ContentNode idNum="3" orderNum="1" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>No.</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes />
+              <actions />
+              <conditions />
+            </ContentNode>
+          </subNodes>
+          <actions />
+          <conditions />
+        </ContentNode>
+      </subNodes>
+      <actions />
+      <conditions />
+    </ContentNode>
+  </subNodes>
+  <ConvoFileName>Arius help</ConvoFileName>
+  <Narration>false</Narration>
+  <PartyChat>false</PartyChat>
+  <NpcPortraitBitmap>HalflingThiefMale_L.png</NpcPortraitBitmap>
+  <DefaultNpcName>Arius</DefaultNpcName>
+  <NextIdNum>4</NextIdNum>
+</Convo>

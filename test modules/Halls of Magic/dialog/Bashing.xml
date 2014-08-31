@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Convo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <subNodes>
+    <ContentNode idNum="0" orderNum="0" pcNode="true" linkTo="0">
+      <ShowOnlyOnce>false</ShowOnlyOnce>
+      <NodeIsActive>true</NodeIsActive>
+      <NodePortraitBitmap />
+      <NodeNpcName />
+      <NodeSound>none</NodeSound>
+      <conversationText>root</conversationText>
+      <IsExpanded>true</IsExpanded>
+      <subNodes>
+        <ContentNode idNum="1" orderNum="0" pcNode="false" linkTo="0">
+          <ShowOnlyOnce>false</ShowOnlyOnce>
+          <NodeIsActive>true</NodeIsActive>
+          <NodePortraitBitmap />
+          <NodeNpcName />
+          <NodeSound>none</NodeSound>
+          <conversationText>You begin to hear many blows striking the doors to the south.
+You'd better prepare yourself for something bad!</conversationText>
+          <IsExpanded>true</IsExpanded>
+          <subNodes>
+            <ContentNode idNum="2" orderNum="0" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>(Pray)</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes>
+                <ContentNode idNum="3" orderNum="0" pcNode="false" linkTo="0">
+                  <ShowOnlyOnce>false</ShowOnlyOnce>
+                  <NodeIsActive>true</NodeIsActive>
+                  <NodePortraitBitmap />
+                  <NodeNpcName />
+                  <NodeSound>buffer.wav</NodeSound>
+                  <conversationText>You pray to your God...
+And suddenly, you are filled with powers!</conversationText>
+                  <IsExpanded>true</IsExpanded>
+                  <subNodes>
+                    <ContentNode idNum="4" orderNum="0" pcNode="true" linkTo="0">
+                      <ShowOnlyOnce>false</ShowOnlyOnce>
+                      <NodeIsActive>true</NodeIsActive>
+                      <NodePortraitBitmap />
+                      <NodeNpcName />
+                      <NodeSound>none</NodeSound>
+                      <conversationText>(Continue)</conversationText>
+                      <IsExpanded>true</IsExpanded>
+                      <subNodes />
+                      <actions />
+                      <conditions />
+                    </ContentNode>
+                  </subNodes>
+                  <actions>
+                    <Action a_script="add_spells.cs" />
+                  </actions>
+                  <conditions />
+                </ContentNode>
+              </subNodes>
+              <actions />
+              <conditions />
+            </ContentNode>
+            <ContentNode idNum="5" orderNum="1" pcNode="true" linkTo="0">
+              <ShowOnlyOnce>false</ShowOnlyOnce>
+              <NodeIsActive>true</NodeIsActive>
+              <NodePortraitBitmap />
+              <NodeNpcName />
+              <NodeSound>none</NodeSound>
+              <conversationText>(Continue)</conversationText>
+              <IsExpanded>true</IsExpanded>
+              <subNodes />
+              <actions />
+              <conditions />
+            </ContentNode>
+          </subNodes>
+          <actions />
+          <conditions />
+        </ContentNode>
+      </subNodes>
+      <actions />
+      <conditions />
+    </ContentNode>
+  </subNodes>
+  <ConvoFileName>Bashing.xml</ConvoFileName>
+  <Narration>false</Narration>
+  <PartyChat>false</PartyChat>
+  <NpcPortraitBitmap />
+  <DefaultNpcName />
+  <NextIdNum>5</NextIdNum>
+</Convo>

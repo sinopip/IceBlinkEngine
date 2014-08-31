@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Encounters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <encounters>
+    <Encounters>
+      <EncounterPcStartLocations>
+        <X>9</X>
+        <Y>5</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>10</X>
+        <Y>5</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>9</X>
+        <Y>4</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>10</X>
+        <Y>4</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>9</X>
+        <Y>3</Y>
+      </EncounterPcStartLocations>
+      <EncounterPcStartLocations>
+        <X>10</X>
+        <Y>3</Y>
+      </EncounterPcStartLocations>
+      <TimePerRound>6</TimePerRound>
+      <EncounterName>Battle Hall encounter</EncounterName>
+      <EncounterLevelFilename>Battle Hall</EncounterLevelFilename>
+      <EncounterMapFilename>Castlex.jpg</EncounterMapFilename>
+      <EncounterActive>true</EncounterActive>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>7</X>
+          <Y>12</Y>
+        </CreatureStartLocation>
+        <CreatureName>Mercenary</CreatureName>
+        <CreatureTag>mercenary_1913</CreatureTag>
+        <CreatureResRef>merc01</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>8</X>
+          <Y>12</Y>
+        </CreatureStartLocation>
+        <CreatureName>Mercenary</CreatureName>
+        <CreatureTag>mercenary_1914</CreatureTag>
+        <CreatureResRef>merc01</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>7</X>
+          <Y>10</Y>
+        </CreatureStartLocation>
+        <CreatureName>Mercenary</CreatureName>
+        <CreatureTag>mercenary_1915</CreatureTag>
+        <CreatureResRef>merc01</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>6</X>
+          <Y>9</Y>
+        </CreatureStartLocation>
+        <CreatureName>Mercenary</CreatureName>
+        <CreatureTag>mercenary_1916</CreatureTag>
+        <CreatureResRef>merc01</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>9</X>
+          <Y>10</Y>
+        </CreatureStartLocation>
+        <CreatureName>Mercenary</CreatureName>
+        <CreatureTag>mercenary_1917</CreatureTag>
+        <CreatureResRef>merc01</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterCreatureRefsList>
+        <CreatureStartLocation>
+          <X>5</X>
+          <Y>11</Y>
+        </CreatureStartLocation>
+        <CreatureName>Mercenary</CreatureName>
+        <CreatureTag>mercenary_1964</CreatureTag>
+        <CreatureResRef>merc01</CreatureResRef>
+        <MouseOverText />
+        <CreatureSize>1</CreatureSize>
+      </EncounterCreatureRefsList>
+      <EncounterTriggerList>
+        <triggersList />
+      </EncounterTriggerList>
+      <OnStartCombatRound>
+        <FilenameOrTag>none</FilenameOrTag>
+        <Parm1>none</Parm1>
+        <Parm2>none</Parm2>
+        <Parm3>none</Parm3>
+        <Parm4>none</Parm4>
+      </OnStartCombatRound>
+      <OnEndCombat>
+        <FilenameOrTag>none</FilenameOrTag>
+        <Parm1>none</Parm1>
+        <Parm2>none</Parm2>
+        <Parm3>none</Parm3>
+        <Parm4>none</Parm4>
+      </OnEndCombat>
+      <OnFleeCombat>
+        <FilenameOrTag>encOnFleeCombat.cs</FilenameOrTag>
+        <Parm1>none</Parm1>
+        <Parm2>none</Parm2>
+        <Parm3>none</Parm3>
+        <Parm4>none</Parm4>
+      </OnFleeCombat>
+    </Encounters>
+  </encounters>
+</Encounters>

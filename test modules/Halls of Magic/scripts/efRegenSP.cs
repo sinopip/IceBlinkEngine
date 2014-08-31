@@ -19,30 +19,25 @@ namespace IceBlink
             int parm1 = Convert.ToInt32(p1); // parm1 = CurrentDurationInUnits (how many time units have passed)
             int parm2 = Convert.ToInt32(p2); // parm2 = DurationInUnits (how long it lasts)
             // C# code goes here
-			
-			//object source = sf.GetSourceCreatureObject();
-			object source = sf.passParameterScriptObject;
+            object source = sf.GetSourceCreatureObject();
             if (source is PC)
             {
-                ((PC)source).DamageTypeResistanceTotalCold += 50;
-                if (((PC)source).DamageTypeResistanceTotalCold > 100)
-                {
-                    ((PC)source).DamageTypeResistanceTotalCold = 100;
-                }
+            	if (((PC)source).SP != ((PC)source).SPMax)
+            	{
+	            	sf.WriteToLog(((PC)source).Name + " regains 6 SP", Color.Blue);
+	            	((PC)source).SP = Math.Min(((PC)source).SPMax, ((PC)source).SP + 6);
+            	}
+                
             }
             else if (source is Creature)
             {
-                ((Creature)source).DamageTypeResistanceTotalCold += 50;
-                if (((Creature)source).DamageTypeResistanceTotalCold > 100)
-                {
-                    ((Creature)source).DamageTypeResistanceTotalCold = 100;
-                }
+            	if (((Creature)source).SP != ((Creature)source).SPMax)
+            	{
+	                sf.WriteToLog(((Creature)source).Name + " regains 6 SP", Color.Blue);
+	                ((Creature)source).SP = Math.Min(((Creature)source).SPMax, ((Creature)source).SP + 6);
+            	}
             }
-            else // don't know who cast this spell
-            {
-                MessageBox.Show("Invalid script owner, not a Creature of PC");
-                return;
-            }
+            
         }
     }
 }

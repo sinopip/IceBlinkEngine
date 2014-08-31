@@ -19,24 +19,15 @@ namespace IceBlink
             int parm1 = Convert.ToInt32(p1); // parm1 = CurrentDurationInUnits (how many time units have passed)
             int parm2 = Convert.ToInt32(p2); // parm2 = DurationInUnits (how long it lasts)
             // C# code goes here
-			
-			//object source = sf.GetSourceCreatureObject();
-			object source = sf.passParameterScriptObject;
-            if (source is PC)
+            if (sf.passParameterScriptObject is PC)
             {
-                ((PC)source).DamageTypeResistanceTotalCold += 50;
-                if (((PC)source).DamageTypeResistanceTotalCold > 100)
-                {
-                    ((PC)source).DamageTypeResistanceTotalCold = 100;
-                }
+                PC source = (PC)sf.passParameterScriptObject;
+                source.MoveDistance = source.MoveDistance * 2;
             }
-            else if (source is Creature)
+            else if (sf.passParameterScriptObject is Creature)
             {
-                ((Creature)source).DamageTypeResistanceTotalCold += 50;
-                if (((Creature)source).DamageTypeResistanceTotalCold > 100)
-                {
-                    ((Creature)source).DamageTypeResistanceTotalCold = 100;
-                }
+                Creature source = (Creature)sf.passParameterScriptObject;
+                source.MoveDistance = source.MoveDistance * 2;
             }
             else // don't know who cast this spell
             {
