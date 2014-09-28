@@ -165,6 +165,12 @@ namespace IceBlink
             {
                 defense -= 2;
             }
+            //Fine the weapon being used MainHand or Offhand 
+            Item theWeapon = (Item)pc.MainHand; //Get the weapon that is being used, mainhand or offhand. store it as variable
+            if (isOffhand == 1)
+            {
+                theWeapon = pc.OffHand;
+            }
 			int modifier = (pc.Strength - 10) / 2; //the default for weapons is STR
             int dmgModifier = (pc.Strength - 10) / 2;
 			if (isRanged == 1) 
@@ -172,7 +178,7 @@ namespace IceBlink
 				modifier = (pc.Dexterity - 10) / 2; //the default for ranged is DEX
                 dmgModifier = (pc.Dexterity - 10) / 2;
 			}
-            if (pc.MainHand.ItemCategory == Item.category.Melee && pc.MainHand.ArmorWeightType == Item.ArmorWeight.Light)
+            if (theWeapon.ItemCategory == Item.category.Melee && theWeapon.ArmorWeightType == Item.ArmorWeight.Light)
 			{ 
 				if (pc.Dexterity > pc.Strength) 
 				{
@@ -181,25 +187,25 @@ namespace IceBlink
                     c.logText(" Finesse Weapon ", Color.Violet);     
 				}
 			}
-            if (isRanged == 1 && pc.MainHand.ItemCategory == Item.category.Melee && pc.MainHand.ArmorWeightType != Item.ArmorWeight.Light)
+            if (isRanged == 1 && theWeapon.ItemCategory == Item.category.Melee && theWeapon.ArmorWeightType != Item.ArmorWeight.Light)
 			{
 				modifier = (pc.Strength - 10) / 2; //heavy thrown weapons use Strength, so if its not Light, and its a melee weapon with a range, it must be heavy thrown
                 dmgModifier = (pc.Strength - 10) / 2;
                 c.logText(" Heavy Thrown ", Color.Violet);     
 			}
-            int attackMod = modifier + pc.BaseAttBonus + pc.MainHand.ItemAttackBonus;
+            int attackMod = modifier + pc.BaseAttBonus + theWeapon.ItemAttackBonus;
 			//factor in the penalty for multiple attacks
             attackMod -= multAttackPenalty;
             int attack = attackRoll + attackMod;			
             //int damage = sf.CalcPcDamageToCreature(); //JamesManhattan edit why call it elsewhere do it all here.
-			int wpnDieSize = pc.MainHand.ItemDamageDie;
-			int wpnNumDie = pc.MainHand.ItemDamageNumberOfDice;			
-			int additDamage = pc.MainHand.ItemDamageAdder; //such as magic weapon bonus +1
-			if (isOffhand == 1) { 
-				wpnDieSize = pc.OffHand.ItemDamageDie;
-				wpnNumDie = pc.OffHand.ItemDamageNumberOfDice;
-				additDamage = pc.OffHand.ItemDamageAdder; //such as magic weapon bonus +1
-			}				
+            int wpnDieSize = theWeapon.ItemDamageDie;
+            int wpnNumDie = theWeapon.ItemDamageNumberOfDice;
+            int additDamage = theWeapon.ItemDamageAdder; //such as magic weapon bonus +1
+			//if (isOffhand == 1) { 
+			//	wpnDieSize = pc.OffHand.ItemDamageDie;
+			//	wpnNumDie = pc.OffHand.ItemDamageNumberOfDice;
+			//	additDamage = pc.OffHand.ItemDamageAdder; //such as magic weapon bonus +1
+			//}				
             int extraDieSize = 6;
             int extraNumDie = 0;             
 			//dmgModifier = (pc.Strength - 10) / 2;
@@ -227,9 +233,9 @@ namespace IceBlink
             //variable storing whether a critical hit was rolled
             int criticalHitScored = 0;
             // variable for storing the critical hit range
-            int criticalHitRange = pc.MainHand.CriticalHitRange;
+            int criticalHitRange = theWeapon.CriticalHitRange;
             //variable for storing the critical hit multiplier
-            int criticalHitDamageMultiplier = pc.MainHand.CriticalHitDamageMultiplier;
+            int criticalHitDamageMultiplier = theWeapon.CriticalHitDamageMultiplier;
             //critical hit mechanism - triggered on a roll equal or higher than criticalHitRange  
             if ((attackRoll >= criticalHitRange) || (attackRoll == 20))
             {
