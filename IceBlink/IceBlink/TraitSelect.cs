@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -90,16 +90,28 @@ namespace IceBlink
             IceBlinkButtonMedium selectBtn = (IceBlinkButtonMedium)sender;
             Trait selectedTrait = pc.KnownTraitsList.getTraitByTag(selectBtn.Name);
             int cost = selectedTrait.CostSP;
-            // check to see if enough SP
-            if (pc.SP >= cost) // if enough SP, then currentTS equals selected and close
+            string strBonus = selectBtn.Name; //JamesManhattan 
+            //MyString.Substring(MyString.Length-6);
+            // check to see if enough Actions left - and if is a Bonus or not //JamesManhattan
+            if (combat.usedAction >= 1)
             {
-                combat.currentTrait = selectedTrait;
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            }
-            else // else message with not enough
-            {
-                IBMessageBox.Show(game, "You do not have enough SP at this time");
+                //combat.logText(" chose Trait it is " + strBonus, Color.Black); //JamesManhattan
+                IBMessageBox.Show(game, "You already used your Action");
                 this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            }
+            else
+            {
+                // check to see if enough SP
+                if (pc.SP >= cost) // if enough SP, then currentTS equals selected and close
+                {
+                    combat.currentTrait = selectedTrait;
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                }
+                else // else message with not enough
+                {
+                    IBMessageBox.Show(game, "You do not have enough SP at this time");
+                    this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                }
             }
         }
         private void btnSelectedSpell_Enter(object sender, EventArgs e)
