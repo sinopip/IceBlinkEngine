@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -500,7 +500,7 @@ namespace IceBlink
                 e.Effect = DragDropEffects.All;
             }*/
             //else if ((pcI_game.playerList.PCList[_selectedPC].Class == PC.charClass.Fighter) && (getItem.ItemCategory == IceBlinkCore.Item.category.Shield) && (getItem.ItemUseByFighter))
-            if ((pcI_game.playerList.PCList[_selectedPC].Class.ItemsAllowed.Contains(getItem.ItemResRef)) && (getItem.ItemCategory == IceBlinkCore.Item.category.Shield))
+            if ((pcI_game.playerList.PCList[_selectedPC].Class.ItemsAllowed.Contains(getItem.ItemResRef)) && ((getItem.ItemCategory == IceBlinkCore.Item.category.Shield) || getItem.ArmorWeightType.ToString() == "Light"))
             //if ((pcI_game.playerList.PCList[_selectedPC].Class == PC.charClass.Fighter) && (getItem.ItemCategory == IceBlinkCore.Item.category.Shield) && (getItem.ItemUseByFighter))
             {
                 e.Effect = DragDropEffects.All;
@@ -1013,6 +1013,11 @@ namespace IceBlink
             pcI_frm.inventoryOpen = false;
             this.Hide();
             e.Cancel = true; // this cancels the close event.            
+        }
+
+        private void txtOffHand_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

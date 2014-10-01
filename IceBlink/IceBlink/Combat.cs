@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +19,14 @@ namespace IceBlink
         public Point txtOneLocation = new Point(0, 0);
         public Point txtTwoLocation = new Point(1, 1);
         public int turn = 1;
-        public int currentMoves = 0;
+        public int currentMoves = 0; 
+        public int usedAction = 0;  //JamesManhattan added 9/25/14
+        public int midAttack = 0;  //JamesManhattan added 9/26/14
+        public int startedMoving = 0; //JamesManhattan added 9/28/14
+        public int usedSwiftBonusAction = 0;  //JamesManhattan added 9/25/14
+        public int numAttacks = 1;  //JamesManhattan added 9/25/14 the default is 1
+        public int numBonusAttacks = 0;  //JamesManhattan added 9/26/14 the default is 0
+        public int numSpellAttacks = 1; //JamesManhattan for multi target spells, such as each bolt of magic missile 
         public int distance = 77;
         public int currentIndex = 0;       
         public int mousex, mousey;
@@ -735,7 +742,7 @@ namespace IceBlink
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.X--;
                 char_pt.CombatLocation.Y--;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.X++;
                     char_pt.CombatLocation.Y++;
@@ -753,6 +760,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -765,7 +773,7 @@ namespace IceBlink
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.X--;
                 char_pt.CombatFacing = CharBase.facing.Left;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.X++;
                     if ((bumpedIntoCreatureIndex >= 0) && (com_encounter.EncounterCreatureList.creatures[bumpedIntoCreatureIndex].HP > 0))
@@ -782,6 +790,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -795,7 +804,7 @@ namespace IceBlink
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.X--;
                 char_pt.CombatLocation.Y++;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.X++;
                     char_pt.CombatLocation.Y--;
@@ -813,6 +822,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -826,7 +836,7 @@ namespace IceBlink
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.X++;
                 char_pt.CombatLocation.Y--;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.X--;
                     char_pt.CombatLocation.Y++;
@@ -844,6 +854,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -856,7 +867,7 @@ namespace IceBlink
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.X++;
                 char_pt.CombatFacing = CharBase.facing.Right;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.X--;
                     if ((bumpedIntoCreatureIndex >= 0) && (com_encounter.EncounterCreatureList.creatures[bumpedIntoCreatureIndex].HP > 0))
@@ -873,6 +884,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -886,7 +898,7 @@ namespace IceBlink
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.X++;
                 char_pt.CombatLocation.Y++;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.X--;
                     char_pt.CombatLocation.Y--;
@@ -904,6 +916,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -916,7 +929,7 @@ namespace IceBlink
                 char_pt.CombatFacing = CharBase.facing.Up;
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.Y--;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.Y++;
                     if ((bumpedIntoCreatureIndex >= 0) && (com_encounter.EncounterCreatureList.creatures[bumpedIntoCreatureIndex].HP > 0))
@@ -933,6 +946,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate 9/25/14
                 }
             }
 
@@ -945,7 +959,7 @@ namespace IceBlink
                 char_pt.CombatFacing = CharBase.facing.Down;
                 Point lastLocation = new Point(char_pt.CombatLocation.X, char_pt.CombatLocation.Y);
                 char_pt.CombatLocation.Y++;
-                if (checkCollision() == true)
+                if (checkCollision() == true || (char_pt.MoveDistance - currentMoves) <= 0) //JamesManhattan check for out of moves. 9/26/14
                 {
                     char_pt.CombatLocation.Y--;
                     if ((bumpedIntoCreatureIndex >= 0) && (com_encounter.EncounterCreatureList.creatures[bumpedIntoCreatureIndex].HP > 0))
@@ -962,6 +976,7 @@ namespace IceBlink
                     //doTrigger
                     doTrigger(char_pt);
                     doPropOnEnter(char_pt, lastLocation);
+                    currentMoves++; //JamesManhattan added here, removed from doUpdate
                 }
             }
 
@@ -1166,6 +1181,7 @@ namespace IceBlink
                             doCreateLabels();
                             refreshCharacterPanel();
                             currentMoves = 99;
+                            usedAction = 1; //JamesManhattan set dead players with no action
                             doUpdate(char_pt);
                             return;
                         }
@@ -1175,6 +1191,23 @@ namespace IceBlink
                         btnContinue.Enabled = false;
                         canMove = true;
                         lblMovesLeft.Text = char_pt.MoveDistance.ToString();
+                        if (char_pt.OffHand.ItemCategory == Item.category.Melee) //JamesManhattan check for off hand equipped
+                        {
+                            logText(char_pt.Name + " has a off-hand weapon. ", Color.Black); //give notice of offhand weapon equipped
+                            usedSwiftBonusAction = 0; //JamesManhattan 9/25/14 bonus action
+                            numBonusAttacks = 1; //JamesManhattan 9/25/14 set that they can use bonus action to attack
+                        }
+                        if (HasTraitLookup(char_pt, "5E_ExtraAttack")) //JamesManhattan lookup whether player has 5E_ExtraAttack Trait
+                        {                            
+                            numAttacks = 2; //JamesManhattan 9/25/14 set the number of attacks at the start of the player turn.
+                            logText(char_pt.Name, Color.LightGray);
+                            logText(" can make 2 attacks. ", Color.Black); //give notice of 2 attacks
+                            logText(Environment.NewLine, Color.Black);
+                        }
+                        else 
+                        { numAttacks = 1;}
+                        usedAction = 0; //JamesManhattan 9/26/14 set that the player has not used an Action yet. at the beginning
+                        startedMoving = 0; //JamesManhattan 9/28/14 set that the player has not started moving
 
                         #region OnStartCombatTurn
                         // run OnStartCombatTurn script 
@@ -1193,6 +1226,8 @@ namespace IceBlink
                             currentMoveOrderIndex = 0;
                         }
                         currentMoves = 0;
+                        usedAction = 0; //JamesManhattan
+                        startedMoving = 0; //JamesManhattan 9/28/14 set that the player has not started moving
                     }
                 }
                 #endregion
@@ -1217,6 +1252,7 @@ namespace IceBlink
                     doCreateLabels();
                     refreshCharacterPanel();
                     currentMoves = 99;
+                    usedAction = 1; //JamesManhattan
                     doUpdate(char_pt);
                     return;
                 }
@@ -1224,6 +1260,23 @@ namespace IceBlink
                 PlayerTurnButtonsOnOff();
                 canMove = true;
                 lblMovesLeft.Text = char_pt.MoveDistance.ToString();
+                if (char_pt.OffHand.ItemCategory == Item.category.Melee) //JamesManhattan check for off hand equipped
+                {
+                    logText(char_pt.Name + " has a off-hand weapon. ", Color.Black); //give notice of offhand weapon equipped
+                    usedSwiftBonusAction = 0; //JamesManhattan 9/25/14 bonus action
+                    numBonusAttacks = 1; //JamesManhattan 9/25/14 set that they can use bonus action to attack
+                }
+                if (HasTraitLookup(char_pt, "5E_ExtraAttack")) //JamesManhattan lookup whether player has 5E_ExtraAttack Trait
+                {
+                    numAttacks = 2; //JamesManhattan 9/25/14 set the number of attacks at the start of the player turn.
+                    logText(char_pt.Name, Color.LightGray);
+                    logText(" can make 2 attacks. ", Color.Black); //give notice of 2 attacks
+                    logText(Environment.NewLine, Color.Black);
+                }
+                else
+                { numAttacks = 1; }
+                usedAction = 0; //JamesManhattan 9/26/14 set that the player has not used an Action yet. at the beginning
+                startedMoving = 0; //JamesManhattan 9/28/14 set that the player has not started moving
             }
             #endregion
 
@@ -1238,46 +1291,93 @@ namespace IceBlink
                     currentMoveOrderIndex = 0;
                 }
                 currentMoves = 0;
+                usedAction = 0; //JamesManhattan reset used action at start of turn
+                startedMoving = 0; //JamesManhattan 9/28/14 set that the player has not started moving
             }
             #endregion
         }
         private void doPcTurn()
         {
-            try
+            if ((numAttacks <= 0 && numBonusAttacks <=0) || (usedAction > 0 && midAttack != 1)) //JamesManhattan added a check if already used action or out of #attacks.
             {
-                Creature crt_pt = new Creature();
-                crt_pt.passRefs(com_game, null);
-                PC char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
-                crt_pt = com_encounter.EncounterCreatureList.creatures[bumpedIntoCreatureIndex];
-                char_pt.UpdateStats(com_frm.sf);
-
-                #region OnAttack
-                // run OnStartCombatTurn script 
-                com_frm.sf.CombatTarget = crt_pt;
-                com_frm.sf.CombatSource = char_pt;   
-                var scriptCrt = char_pt.OnAttack;
-                com_frm.doScriptBasedOnFilename(scriptCrt.FilenameOrTag, scriptCrt.Parm1, scriptCrt.Parm2, scriptCrt.Parm3, scriptCrt.Parm4);
-                #endregion
-
-                #region PcAttack
-                // run OnStartCombatTurn script 
-                com_frm.sf.CombatTarget = crt_pt;
-                com_frm.sf.CombatSource = char_pt;
-                com_frm.doScriptBasedOnFilename("dsAttackPC.cs", "none", "none", "none", "none");
-                #endregion
-				// * sinopip, 10.08.14
-                doOnDeathScripts();
-                
-                checkEndEncounter();
-                doCreateLabels();
-                refreshCharacterPanel();
-                currentMoves = 20;
-                refreshMap();
+                IBMessageBox.Show(com_game, "used all Attacks this turn.");
             }
-            catch (Exception ex)
+            else
             {
-                IBMessageBox.Show(com_game, "failed doPCTurn");
-                com_game.errorLog(ex.ToString());
+                try
+                {
+                    Creature crt_pt = new Creature();
+                    crt_pt.passRefs(com_game, null);
+                    PC char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
+                    crt_pt = com_encounter.EncounterCreatureList.creatures[bumpedIntoCreatureIndex];
+                    char_pt.UpdateStats(com_frm.sf);
+
+                    #region OnAttack
+                    // run OnStartCombatTurn script 
+                    com_frm.sf.CombatTarget = crt_pt;
+                    com_frm.sf.CombatSource = char_pt;
+                    var scriptCrt = char_pt.OnAttack;
+                    com_frm.doScriptBasedOnFilename(scriptCrt.FilenameOrTag, scriptCrt.Parm1, scriptCrt.Parm2, scriptCrt.Parm3, scriptCrt.Parm4);
+                    #endregion
+
+                    #region PcAttack
+                    // run OnStartCombatTurn script 
+                    com_frm.sf.CombatTarget = crt_pt;
+                    com_frm.sf.CombatSource = char_pt;
+                    //int damage = com_frm.sf.CalcCreatureDamageToPc(); //JamesManhattan commented out, why needed here?
+                    if (rangedItem == false && char_pt.MainHand.ItemCategory == Item.category.Ranged) //JamesManhattan check for using a ranged item in melee and give warning
+                    {
+                        IBMessageBox.Show(com_game, "You have a ranged weapon equipped and attempted a melee attack. You must press Ranged Attack or switch weapons.");
+                    }
+                    else
+                    {
+                        if (numAttacks > 0)
+                        {
+
+                            if (rangedItem == true) //JamesManhattan flagged from using a ranged attack
+                            {
+                                com_frm.doScriptBasedOnFilename("dsAttackPC.cs", "ranged", "none", "none", "none");
+                            }
+                            else
+                            {
+                                com_frm.doScriptBasedOnFilename("dsAttackPC.cs", "none", "none", "none", "none");
+                            }
+                        }
+
+                        else
+                        {
+                            if (numBonusAttacks > 0)
+                            {
+                                com_frm.doScriptBasedOnFilename("dsAttackPC.cs", "none", "offhand", "none", "none"); //off-hand attack
+                            }
+                        }
+
+                         #endregion
+                        // * sinopip, 10.08.14
+                        //doOnDeathScripts();   //JamesManhattan temp commented out for test 9/25/14 only orig one, this should go in different place than here
+                        //cleanUpCreatures(); //JamesManhattan test if this works 9/25/14
+                        //resetMoveOrder(); //JamesManhattan test if this works 9/25/14
+
+                        //checkEndEncounter(); //JamesManhattan commented out for test 9/25/14  9/25/14 orig here
+                        //doCreateLabels(); //JamesManhattan commented out for test 9/25/14  9/25/14 orig here      
+                        usedAction = 1; //JamesManhattan added 9/26/14
+                        midAttack = 1; //JamesManhattan added 9/26/14   to flag you started attacking and arent finished. for 5 ft step or other stuff                   
+                        numAttacks = numAttacks - 1; //JamesManhattan added 9/25/14   
+                        if (numAttacks < 0) { numBonusAttacks = numBonusAttacks - 1; } //first decrement attacks, once it goes negative, then decrement Bonus Attacks.
+                        if (numAttacks <= 0 && numBonusAttacks <= 0)   //JamesManhattan added 9/26/14 once you used all attacks mark midAttack as 0    
+                        {
+                            midAttack = 0;
+                        }
+                    }
+                    refreshCharacterPanel(); //JamesManhattan commented out for test 9/25/14  9/25/14 orig here
+                    //currentMoves = 20; //JamesManhattan commented out 9/25/14                                     
+                    //refreshMap(); //JamesManhattan commented out for test 9/25/14  9/25/14 orig here
+                }
+                catch (Exception ex)
+                {
+                    IBMessageBox.Show(com_game, "failed doPCTurn");
+                    com_game.errorLog(ex.ToString());
+                }
             }
         }
         public void attackPcAnimation(PC pc, int PcIndex)
@@ -1590,7 +1690,7 @@ namespace IceBlink
         {
             foreach (Creature crtr in com_encounter.EncounterCreatureList.creatures)
             {
-            	if (crtr.HP <= 0 && com_frm.sf.GetLocalInt(crtr.Tag, "HasDied")!=1)
+            	if (crtr.HP <= 0) //&& com_frm.sf.GetLocalInt(crtr.Tag, "HasDied")!=1)  //had to remove the getlocalint for the tag, because if its empty it causes error JamesManhattan 9/25/14
                 {
             		Thread.Sleep(100);
                     com_frm.sf.CombatSource = crtr;
@@ -1602,7 +1702,7 @@ namespace IceBlink
             }
             foreach (PC chr in com_game.playerList.PCList)
             {
-                if (chr.HP <= 0  && com_frm.sf.GetLocalInt(chr.Tag, "HasDied")!=1)
+                if (chr.HP <= 0) // && com_frm.sf.GetLocalInt(chr.Tag, "HasDied") != 1) //had to remove the getlocalint for the tag, because if its empty it causes error JamesManhattan 9/25/14
                 {
                 	Thread.Sleep(100);
                     com_frm.sf.CombatSource = chr;
@@ -1702,7 +1802,7 @@ namespace IceBlink
                 newMoveOrderItem.tag = chr.Tag;
                 newMoveOrderItem.index = cnt;
                 int dexMod = (chr.Dexterity - 10) / 2;
-                newMoveOrderItem.rank = com_game.Random(100) + (dexMod * 10) + Stats.CalcInitiativeBonuses(chr);
+                newMoveOrderItem.rank = com_game.Random(20) + (dexMod) + Stats.CalcInitiativeBonuses(chr); //JamesManhattan changed to d20
                 com_moveOrderList.Add(newMoveOrderItem);
                 cnt++;
             }
@@ -1714,7 +1814,7 @@ namespace IceBlink
                 newMoveOrderItem.tag = crt.Tag;
                 newMoveOrderItem.index = cnt;
                 int dexMod = (crt.Dexterity - 10) / 2;
-                newMoveOrderItem.rank = com_game.Random(100) + (dexMod * 10) + crt.InitiativeModifier;
+                newMoveOrderItem.rank = com_game.Random(20) + (dexMod) + crt.InitiativeModifier; //JamesManhattan changed to d20
                 com_moveOrderList.Add(newMoveOrderItem);
                 cnt++;
             }
@@ -2197,26 +2297,53 @@ namespace IceBlink
         }
         private void doUpdate(PC pc)
         {            
-            currentMoves++;
-            refreshMap();
+            //currentMoves++; //JamesManhattan 9/25/14 moved this increment to each individual moveUp moveDown etc. so attacking wont mess up moves
+            refreshMap();   
             txtInfo.Text = "currentMoves = " + currentMoves.ToString();
             int moveleft = pc.MoveDistance - currentMoves;
             if (moveleft < 0) { moveleft = 0; }
             lblMovesLeft.Text = moveleft.ToString();
+            //doOnDeathScripts(); //JamesManhattan Added this here, since its better to be called here rather than in doPCTurn() 9/25/14 - might slow it down to be doing this after every move!
+            //checkEndEncounter(); //JamesManhattan added this 9/25/14 - this also cleans up creatures - might slow it down to be doing this after every move!
+            //doCreateLabels(); //JamesManhattan moved these up out of the if statement below 9/25/14
+            //refreshCharacterPanel(); //JamesManhattan moved these up out of the if statement below 9/25/14
             //PC pc = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
             //if (currentMoves >= 5)
-            if (currentMoves >= pc.MoveDistance)
+            //if (currentMoves >= pc.MoveDistance) //Added this line and below JamesManhattan 9/25/14
+            //{ 
+                   //canMove = false;
+            //       btnContinue.Enabled = true;
+           //        doCreateLabels(); //JamesManhattan moved these up out of the if statement below 9/25/14
+            //       refreshCharacterPanel(); //JamesManhattan moved these up out of the if statement below 9/25/14
+            //}  
+            if (usedAction < 1 && currentMoves > 0) //they started moving before taking an action, mark it
             {
-                canMove = false;
+                startedMoving = 1;
+            }
+            if (com_frm.sf.GetGlobalInt("rsMoveAttackMove") != 1) //JamesManhattan check for globalint rules options such as can players move, attack, then finish moving.
+            {
+                if ((usedAction >= 1 && midAttack != 1) && (startedMoving > 0)) //they already moved some, and used their action and aren't mid attack, so mark all their movement as used.
+                {
+                    //currentMoves = pc.MoveDistance; 
+                    currentMoves = 99;
+                }
+
+            }
+            if ((currentMoves >= pc.MoveDistance) && (numAttacks <= 0 || (usedAction >= 1 && midAttack != 1))) //checks to see if both used action/attacks and all movement JamesManhattan 9/25/14 
+            {
+                //canMove = false; //Commented out, see above JamesManhattan
                 btnContinue.Enabled = true;
                 currentMoveOrderIndex++;
-                doCreateLabels();
-                refreshCharacterPanel();
-                if (currentMoveOrderIndex > com_moveOrderList.Count - 1)
+                if (currentMoveOrderIndex > com_moveOrderList.Count - 1) 
                 {
                     currentMoveOrderIndex = 0;
                 }
+                doOnDeathScripts(); //JamesManhattan Added this here,   since its better to be called here rather than in doPCTurn() 9/25/14
+                doCreateLabels(); //JamesManhattan moved these out of the if statement above 9/25/14
+                refreshCharacterPanel();  //JamesManhattan moved these out of the if statement above 9/25/14
                 currentMoves = 0;
+                numSpellAttacks = 1; //JamesManhattan
+                usedAction = 0; //JamesManhattan
                 BeginRound();
             }
         }
@@ -2763,7 +2890,7 @@ namespace IceBlink
             char_pt.passRefs(com_game, null);
             char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
             //RANGED WEAPON
-            if (char_pt.MainHand.ItemCategory == Item.category.Ranged)
+            if (char_pt.MainHand.ItemCategory == Item.category.Ranged || char_pt.MainHand.ItemAttackRange > 1) //some melee items such as daggers should be able to be thrown also. until their is seperate flag, check range
                 { btnRangedAttack.Enabled = true; }
             else
                 { btnRangedAttack.Enabled = false; }
@@ -2801,10 +2928,13 @@ namespace IceBlink
             currentSpellRadius = 0;
             currentSpellRange = 0;
             //currentSpell = MageSpells.mageSpellList.None;
+            doOnDeathScripts(); //JamesManhattan added 9/25/14
             checkEndEncounter();
             doCreateLabels();
             refreshCharacterPanel();
             currentMoves = 99;
+            numAttacks = 0; //Added this JamesManhattan 9/25/14
+            usedAction = 1; //Added this JamesManhattan 9/25/14
             refreshMap();
             doUpdate(char_pt);
         }
@@ -2825,7 +2955,7 @@ namespace IceBlink
         private void selectedRangedAttack()
         {
             rangedItem = true;
-            gbPlayerTurn.Enabled = false;
+            //gbPlayerTurn.Enabled = false; //JamesManhattan I want to be able to do stuff even after making ranged attack. commented out
         }
         private void btnUseItem_Click(object sender, EventArgs e)
         {
@@ -2837,7 +2967,7 @@ namespace IceBlink
             char_pt.passRefs(com_game, null);
             char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
             int PCindex = com_moveOrderList[currentMoveOrderIndex].index;
-            gbPlayerTurn.Enabled = false;
+            //gbPlayerTurn.Enabled = false; //JamesManhattan
             UseItemCombat uic = new UseItemCombat(com_game, com_frm, PCindex);
             DialogResult result = uic.ShowDialog();
             if (result == DialogResult.Yes)
@@ -2877,7 +3007,7 @@ namespace IceBlink
             PC char_pt = new PC();
             char_pt.passRefs(com_game, null);
             char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
-            gbPlayerTurn.Enabled = false;
+            //gbPlayerTurn.Enabled = false; //JamesManhattan want to still do more
             //currentSpell = MageSpells.mageSpellList.None;
             //MageSpellsCombat msc = new MageSpellsCombat(this, com_game, char_pt);
             //msc.ShowDialog();
@@ -2909,7 +3039,7 @@ namespace IceBlink
             PC char_pt = new PC();
             char_pt.passRefs(com_game, null);
             char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
-            gbPlayerTurn.Enabled = false;
+            //gbPlayerTurn.Enabled = false; JamesManhattan want to still do more
             SkillSelect sks = new SkillSelect(this, com_game, char_pt);
             DialogResult result = sks.ShowDialog();
             if (result == DialogResult.OK)
@@ -2947,7 +3077,7 @@ namespace IceBlink
             PC char_pt = new PC();
             char_pt.passRefs(com_game, null);
             char_pt = com_game.playerList.PCList[com_moveOrderList[currentMoveOrderIndex].index];
-            gbPlayerTurn.Enabled = false;
+            //gbPlayerTurn.Enabled = false; JamesManhattan want to still do more
             //currentSpell = MageSpells.mageSpellList.None;
             //MageSpellsCombat msc = new MageSpellsCombat(this, com_game, char_pt);
             //msc.ShowDialog();
@@ -2955,7 +3085,14 @@ namespace IceBlink
             DialogResult result = tss.ShowDialog();
             if (result == DialogResult.OK)
             {
-                SpellTargeting();
+                //if (currentSpell.SpellTag == "5E_MagicMissile_X3") { numSpellAttacks = 3; } //JamesManhattan testing spell 9/26/14
+                if (currentSpell.SpellTag.Substring(currentSpell.SpellTag.Length - 3, 2) == "_X") //JamesManhattan checks the tag of the spell which I put _X as a multiplier
+                {
+                    //numSpellAttacks = 3;
+                    numSpellAttacks = Int32.Parse(currentSpell.SpellTag.Substring(currentSpell.SpellTag.Length - 1, 1));
+                }
+                else { numSpellAttacks = 1; } 
+                SpellTargeting();      
             }
             else if (result == DialogResult.Cancel)
             {
@@ -3469,7 +3606,8 @@ namespace IceBlink
                                         bumpedIntoCreatureIndex = crIndex;
                                         doPcTurn();
                                         rangedItem = false;
-                                        gbPlayerTurn.Enabled = false;
+                                        //gbPlayerTurn.Enabled = false; //JamesManhattan
+                                        gbPlayerTurn.Enabled = true; //JamesManhattan had to turn the buttons back on to allow more attacks
                                         refreshMap();
                                         doUpdate(char_pt);
                                         break;
@@ -3513,7 +3651,15 @@ namespace IceBlink
                             //if ((currentSpell.AoeRadiusOrLength > 0) || (currentSpell.TargetIsPointLocation))
                             if ((currentSpell.AoeRadiusOrLength > 0) || (currentSpell.SpellTargetType == TargetType.PointLocation))
                             {
-                                rangedSpell = false;
+                                if (numSpellAttacks <= 1) //JamesManhattan allow multiple target spells such as each magic missile bolt
+                                {
+                                    rangedSpell = false;
+                                }
+                                else
+                                {
+                                    logText(" Choose another target.", Color.DarkRed);
+                                    numSpellAttacks = numSpellAttacks - 1;
+                                }
 
                                 Point starting = new Point((char_pt.CombatLocation.X * com_game._squareSize) + (com_game._squareSize / 2), (char_pt.CombatLocation.Y * com_game._squareSize) + (com_game._squareSize / 2));
                                 Point ending = new Point((selectedPoint.X * com_game._squareSize) + (com_game._squareSize / 2), (selectedPoint.Y * com_game._squareSize) + (com_game._squareSize / 2));
@@ -3532,13 +3678,14 @@ namespace IceBlink
                                 com_frm.sf.CombatTarget = pnt;
                                 SpellExecute(char_pt, null, null);
 
-                                gbPlayerTurn.Enabled = false;
+                                //gbPlayerTurn.Enabled = false; //JamesManhattan
                                 spellTargetSelected = false;
                                 DecreaseSpellPoints(currentSpell.CostSP, char_pt);
                                 checkEndEncounter();
                                 doCreateLabels();
                                 refreshCharacterPanel();
-                                currentMoves = 99;
+                                //currentMoves = 99; //JamesManhattan
+                                usedAction = usedAction + 1; //JamesManhattan
                                 refreshMap();
                                 doUpdate(char_pt);
                             }
@@ -3552,7 +3699,15 @@ namespace IceBlink
                                     {
                                         if ((gridx == pc.CombatLocation.X) && (gridy == pc.CombatLocation.Y))
                                         {
-                                            rangedSpell = false;
+                                            if (numSpellAttacks <= 1) //JamesManhattan allow multiple target spells such as each magic missile bolt
+                                            {
+                                                rangedSpell = false;
+                                            }
+                                            else
+                                            {
+                                                logText(" Choose another target.", Color.DarkRed);
+                                                numSpellAttacks = numSpellAttacks - 1;
+                                            }
 
                                             Point starting = new Point((char_pt.CombatLocation.X * com_game._squareSize) + (com_game._squareSize / 2), (char_pt.CombatLocation.Y * com_game._squareSize) + (com_game._squareSize / 2));
                                             Point ending = new Point((selectedPoint.X * com_game._squareSize) + (com_game._squareSize / 2), (selectedPoint.Y * com_game._squareSize) + (com_game._squareSize / 2));
@@ -3569,14 +3724,15 @@ namespace IceBlink
                                             com_frm.sf.CombatSource = char_pt;
                                             com_frm.sf.CombatTarget = pc;
                                             SpellExecute(char_pt, null, pc);
-                                            gbPlayerTurn.Enabled = false;
+                                            //gbPlayerTurn.Enabled = false; //JamesManhattan
                                             spellTargetSelected = false;
                                             DecreaseSpellPoints(currentSpell.CostSP, char_pt);
                                             checkEndEncounter();
                                             doCreateLabels();
                                             refreshCharacterPanel();
-                                            currentMoves = 99;
-                                            refreshMap();
+                                            //currentMoves = 99; //JamesManhattan
+                                            usedAction = usedAction + 1; //JamesManhattan
+                                            refreshMap(); 
                                             doUpdate(char_pt);
                                             break;
                                         }
@@ -3590,7 +3746,15 @@ namespace IceBlink
                                     {
                                         if ((gridx == crt.CombatLocation.X) && (gridy == crt.CombatLocation.Y))
                                         {
-                                            rangedSpell = false;
+                                            if (numSpellAttacks <= 1) //JamesManhattan allow multiple target spells such as each magic missile bolt
+                                            {
+                                                rangedSpell = false;
+                                            }
+                                            else
+                                            {
+                                                logText(" Choose another target.", Color.DarkRed);
+                                                numSpellAttacks = numSpellAttacks - 1;
+                                            }
 
                                             Point starting = new Point((char_pt.CombatLocation.X * com_game._squareSize) + (com_game._squareSize / 2), (char_pt.CombatLocation.Y * com_game._squareSize) + (com_game._squareSize / 2));
                                             Point ending = new Point((selectedPoint.X * com_game._squareSize) + (com_game._squareSize / 2), (selectedPoint.Y * com_game._squareSize) + (com_game._squareSize / 2));
@@ -3608,13 +3772,14 @@ namespace IceBlink
                                             com_frm.sf.CombatSource = char_pt;
                                             com_frm.sf.CombatTarget = crt;
                                             SpellExecute(char_pt, crt, null);
-                                            gbPlayerTurn.Enabled = false;
+                                            //gbPlayerTurn.Enabled = false; //JamesManhattan
                                             spellTargetSelected = false;
                                             DecreaseSpellPoints(currentSpell.CostSP, char_pt);
                                             checkEndEncounter();
                                             doCreateLabels();
                                             refreshCharacterPanel();
-                                            currentMoves = 99;
+                                            //currentMoves = 99; //JamesManhattan
+                                            usedAction = usedAction + 1; //JamesManhattan
                                             refreshMap();
                                             doUpdate(char_pt);
                                             break;
@@ -3691,12 +3856,13 @@ namespace IceBlink
                                     }
                                     crIndex++;
                                 }
-                                gbPlayerTurn.Enabled = false;
+                                //gbPlayerTurn.Enabled = false; //JamesManhattan
                                 DecreaseSpellPoints(currentTrait.CostSP, char_pt);
                                 checkEndEncounter();
                                 doCreateLabels();
                                 refreshCharacterPanel();
-                                currentMoves = 99;
+                                //currentMoves = 99; //JamesManhattan
+                                usedAction = usedAction + 1; //JamesManhattan
                                 refreshMap();
                                 doUpdate(char_pt);
                             }
@@ -3727,12 +3893,13 @@ namespace IceBlink
                                             com_frm.sf.CombatSource = char_pt;
                                             com_frm.sf.CombatTarget = pc;
                                             TraitExecute(char_pt, null, pc);
-                                            gbPlayerTurn.Enabled = false;
+                                            //gbPlayerTurn.Enabled = false; //JamesManhattan
                                             DecreaseSpellPoints(currentTrait.CostSP, char_pt);
                                             checkEndEncounter();
                                             doCreateLabels();
                                             refreshCharacterPanel();
-                                            currentMoves = 99;
+                                            //currentMoves = 99; //JamesManhattan
+                                            usedAction = usedAction + 1; //JamesManhattan
                                             refreshMap();
                                             doUpdate(char_pt);
                                             break;
@@ -3764,12 +3931,13 @@ namespace IceBlink
                                             com_frm.sf.CombatSource = char_pt;
                                             com_frm.sf.CombatTarget = crt;
                                             TraitExecute(char_pt, crt, null);
-                                            gbPlayerTurn.Enabled = false;
+                                            //gbPlayerTurn.Enabled = false; //JamesManhattan
                                             DecreaseSpellPoints(currentTrait.CostSP, char_pt);
                                             checkEndEncounter();
                                             doCreateLabels();
                                             refreshCharacterPanel();
-                                            currentMoves = 99;
+                                            //currentMoves = 99; //JamesManhattan
+                                            usedAction = 1; //JamesManhattan
                                             refreshMap();
                                             doUpdate(char_pt);
                                             break;
@@ -4249,7 +4417,15 @@ namespace IceBlink
             combatTimer.Stop();
             com_game.DisposeCombatSpritesTextures();
         }
-
+        //JamesManhattan added this function to look up whether a player possesses a certain trait.
+        public bool HasTraitLookup(PC pc, string strTraitTag)
+        {
+            foreach (Trait tr in pc.KnownTraitsList.traitList)
+            {
+                if (tr.TraitTag == strTraitTag) { return true; }
+            }
+            return false;
+        }
         
     }
 
@@ -4262,4 +4438,5 @@ namespace IceBlink
         public int index { get; set; }
         public int rank { get; set; }
     }
+ 
 }

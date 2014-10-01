@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -96,16 +96,28 @@ namespace IceBlink
             IceBlinkButtonMedium selectBtn = (IceBlinkButtonMedium)sender;
             Spell selectedSpell = msc_pc.KnownSpellsList.getSpellByTag(selectBtn.Name);
             int cost = selectedSpell.CostSP;
-            // check to see if enough SP
-            if (msc_pc.SP >= cost) // if enough SP, then currentTS equals selected and close
+            string strBonus = selectBtn.Name; //JamesManhattan 
+            //MyString.Substring(MyString.Length-6);
+            // check to see if enough Actions left - and if is a Bonus or not //JamesManhattan
+            if (msc_combat.usedAction >= 1)
             {
-                msc_combat.currentSpell = selectedSpell;
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            }
-            else // else message with not enough
-            {
-                IBMessageBox.Show(msc_game, "You do not have enough SP at this time");
+                //combat.logText(" chose Trait it is " + strBonus, Color.Black); //JamesManhattan
+                IBMessageBox.Show(msc_game, "You already used your Action");
                 this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            }
+            else
+            {
+                // check to see if enough SP
+                if (msc_pc.SP >= cost) // if enough SP, then currentTS equals selected and close
+                {
+                    msc_combat.currentSpell = selectedSpell;
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                }
+                else // else message with not enough
+                {
+                    IBMessageBox.Show(msc_game, "You do not have enough SP at this time");
+                    this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                }
             }
         }
         private void btnSelectedSpell_Enter(object sender, EventArgs e)
