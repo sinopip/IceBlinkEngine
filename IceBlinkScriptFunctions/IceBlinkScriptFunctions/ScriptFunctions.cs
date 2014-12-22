@@ -2413,6 +2413,10 @@ namespace IceBlink
                     if ((attack >= defense) || (attackRoll == 20))
                     {
                         //sf.drawHitSymbolOnPC();
+                        
+                        // * sinopip, 22.12.14
+                        c.playCreatureHitSound(crt);
+                        //
 
                         //Some addition to explain why the extra attack has happened
                         string attackResult = (damage.ToString() + " of " + pc.HP.ToString());
@@ -4215,7 +4219,10 @@ namespace IceBlink
 		public void DoDeathScript(object crt)
 		{
 			object temp = CombatSource;
-			if (crt is PC)
+			// * sinopip, 20.12.14
+        	System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+        	//
+            if (crt is PC)
             {
 				if (((PC)crt).HP <= 0 && GetLocalInt(((PC)crt).Tag, "HasDied") != 1)
                 {
@@ -4232,6 +4239,16 @@ namespace IceBlink
                     CombatSource = crt;
                     var scriptCrtDth = ((Creature)crt).OnDeath;
                     frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    // * sinopip, 20.12.14
+        			try {
+                    	player.SoundLocation = gm.mainDirectory + "\\modules\\" + gm.module.ModuleFolderName + "\\sounds\\soundFX\\" + ((Creature)crt).OnDeathSound;
+        			} catch { }
+		            player.Play();
+		            Thread.Sleep(100);
+		            // * default death animation (not checking for one in the creature spritesheet yet)
+		            frm.currentCombat.drawEndEffect(((Creature)crt).CombatLocation, 0, "generic_death.spt"); // if file doesn't exists, this does nothing
+		            Thread.Sleep(100);
+                    //                    
                     SetLocalInt(((Creature)crt).Tag, "HasDied", 1);
                 }
             }
@@ -4865,31 +4882,24 @@ namespace IceBlink
             	crt_ref.CreatureTag = summon.Tag+i;
  				//crt_ref.CreatureStartLocation = new Point(frm.currentEncounter.EncounterPcStartLocations[0].X + gm.Random(6)-3,
             	//                             frm.currentEncounter.EncounterPcStartLocations[0].Y + 5 + gm.Random(3)-2);
-            	crt_ref.CreatureStartLocation = new Point(1, i+5);
-            	//gm.currentCombatArea.AreaCreatureRefsList.Add(crt_ref);
+            	crt_ref.CreatureStartLocation = new Point(((Point)target).X, ((Point)target).Y+i);
             	gm.currentEncounter.EncounterCreatureRefsList.Add(crt_ref);
             	
             	// * creature
             	crt = summon.DeepCopy();
         		//crt.passRefs(gm, null);
-        		crt.Tag = "Summoned "+summon.Name+" "+i; // * need to check for further summonings!
-        		//crt.OnStartCombatTurn.FilenameOrTag = "crtPCAllyOnStartCombatTurn.cs";
-            	//crt.CombatLocation = crt_ref.CreatureStartLocation;
-            	crt.LoadCharacterSprite(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module", 
-            	                        crt.SpriteFilename);
-            	/*crt.LoadCharacterSpriteBitmap(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module", 
-            	                        crt.CharSprite.SpriteSheetFilename);*/
-            	//crt.CharSprite = crt.CharSprite.loadSpriteFile(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module\\"+crt.SpriteFilename);            	
-            	//summon.CharSprite.Image = (Bitmap)Image.FromFile(gm.mainDirectory+"\\modules\\"+gm.module.ModuleFolderName+"\\graphics\\sprites\\tokens\\module\\"+
-            	//                        crt.CharSprite.SpriteSheetFilename);
+        		crt.Tag = "Summoned "+summon.Name+" "+gm.currentEncounter.EncounterCreatureList.creatures.Count; // * need to check for further summonings!
+        		crt.OnStartCombatTurn.FilenameOrTag = "crtPCAllyOnStartCombatTurn.cs";
+            	crt.CombatLocation = crt_ref.CreatureStartLocation;
+            	
             	gm.currentEncounter.EncounterCreatureList.creatures.Add(crt);
            		//gm.currentCombatArea.AreaCreatureList.creatures.Add(crt); // * adds duplicates of already present creatures??
-            	/*MoveOrder mo = new MoveOrder();
+            	MoveOrder mo = new MoveOrder();
             	mo.index = gm.currentEncounter.EncounterCreatureList.creatures.Count -1;
 				mo.type = "";
                 mo.tag = crt.Tag;
                 mo.rank = gm.Random(10);// gm.Random(100) + (dexMod * 10) + Stats.CalcInitiativeBonuses(chr);
-                frm.currentCombat.com_moveOrderList.Add(mo);*/
+                frm.currentCombat.com_moveOrderList.Add(mo);
                 //
                 /*frm.currentCombat.drawEndEffect(crt.CombatLocation, 0, "on_effect.spt");
                 frm.currentCombat.Refresh();
@@ -4923,7 +4933,11 @@ namespace IceBlink
 	        		pc = (PC)target;
 	        	else if (target is Creature)
 	        		creature = (Creature)target;
-	        	else continue;
+	        	else if (sp.Type == "Summon")
+	        	{
+    				DoSummon(sp, null, target);
+    				return;	
+	        	}
         		
 	        	// ** spell result
         		spell_result = RollVsDC (target, sp);
@@ -4962,10 +4976,8 @@ namespace IceBlink
     			// * debuff
     			else if (sp.Type == "Debuff")
     				DoDebuff(sp, spell_result, target);
-    			else if (sp.Type == "Summon")
-    				DoSummon(sp, spell_result, target);
     			if (sp.CountersEffects != "")
-    				DoCounter(sp, target); 
+    				DoCounter(sp, target);
         	}
         }	
 	//
