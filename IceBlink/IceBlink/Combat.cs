@@ -1413,6 +1413,19 @@ namespace IceBlink
                 Thread.Sleep(sleep);
             }
         }
+        // * sinopip, 25.12.14
+        public void deathPCAnimation(PC pc, int PcIndex)
+        {
+            int deathRowIndex = 3;
+            int sleep = 1000 / pc.CharSprite.DeathFPS;
+            //start a for loop based on the number of frames in the attack row
+            for (int x = 0; x < pc.CharSprite.DeathNumberOfFrames; x++)
+            {
+                com_game.CombatAreaPcAnimateRenderAll(PcIndex, x, deathRowIndex);
+                Thread.Sleep(sleep);
+            }
+        }
+        //
         public void playPcAttackSound(PC pc, string soundFileName)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer();
@@ -1687,7 +1700,7 @@ namespace IceBlink
             com_game.spriteCreatureCombatDraw(crt.CombatLocation.X * com_game._squareSize, crt.CombatLocation.Y * com_game._squareSize, crt, 0, attackRowIndex, 100);
             com_game.UpdateCombat();
             */
-        }
+        }        
         public void playCreatureAttackSound(Creature cr)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer();
@@ -1742,7 +1755,20 @@ namespace IceBlink
             Thread.Sleep(300);
             player.Dispose();
         }
-
+        // * sinopip, 25.12.15
+        public void deathCreatureAnimation(Creature crt)
+        {
+            int deathRowIndex = 3;
+            int sleep = 1000 / crt.CharSprite.DeathFPS;
+            //start a for loop based on the number of frames in the attack row
+            for (int x = 0; x < crt.CharSprite.DeathNumberOfFrames; x++)
+            {
+                com_game.CombatAreaCreatureAnimateRenderAll(crt, x, deathRowIndex);
+                Thread.Sleep(sleep);
+            }
+        }
+        //
+        
         #region Helper Functions
         // * sinopip, 14.08.14
         // * do scriptCrtDth of a creature only once per combat,
@@ -1770,8 +1796,12 @@ namespace IceBlink
         				player.Play();
 		            	Thread.Sleep(100);
 		            } catch { }
-		            // * default death animation (not checking for one in the creature spritesheet yet)
-		            com_frm.currentCombat.drawEndEffect(crtr.CombatLocation, 0, "generic_death.spt"); // if file doesn't exists, this does nothing
+                    // * sinopip, 25.12.14
+		            // * default death animation, or from spritsheet
+		            if (crtr.CharSprite.DeathNumberOfFrames <= 1)
+		            	com_frm.currentCombat.drawEndEffect(crtr.CombatLocation, 0, "generic_death.spt"); // if file doesn't exists, this does nothing
+		            else
+		            	deathCreatureAnimation(crtr);
 		            Thread.Sleep(100);
                     //
                     com_frm.sf.SetLocalInt(crtr.Tag, "HasDied", 1);
@@ -1789,6 +1819,12 @@ namespace IceBlink
                     com_frm.sf.CombatSource = chr;                 
                     var scriptCrtDth = chr.OnDeath;
                     com_frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    // * sinopip, 25.12.14
+                    if (chr.CharSprite.DeathNumberOfFrames > 1)
+                    	for (int index = 0; index < com_game.playerList.PCList.Count; index++)
+                    		if (com_game.playerList.PCList[index].NameWithNotes == chr.NameWithNotes)
+                    			deathPCAnimation(chr, index);
+                    //
 		            com_frm.sf.SetLocalInt(chr.Tag, "HasDied", 1);
                     Thread.Sleep(100);
                 }
