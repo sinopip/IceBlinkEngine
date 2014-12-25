@@ -2336,7 +2336,8 @@ namespace IceBlink
             //iterate through each creature
             foreach (Creature crt in gm.currentEncounter.EncounterCreatureList.creatures)
             {
-                if ((crt.HP > 0) && (crt.Status != CharBase.charStatus.Held) && (crt.Status != CharBase.charStatus.Sleeping)) //SD_20131215
+            	// * sinopip, 25.12.14 : added a check for PC alive too
+            	if ((crt.HP > 0) && (pc.HP > 0) && (crt.Status != CharBase.charStatus.Held) && (crt.Status != CharBase.charStatus.Sleeping)) //SD_20131215
                 {
                     //if started in distance = 1 and now distance = 2 then do attackOfOpportunity
                     if ((CalcDistance(crt.CombatLocation, lastPlayerLocation) == 1) && (CalcDistance(crt.CombatLocation, pc.CombatLocation) == 2))
@@ -2347,6 +2348,9 @@ namespace IceBlink
                         if (pc.HP <= 0)
                         {
                             frm.currentCombat.currentMoves = 20;
+                            // * sinopip, 25.12.14
+                            frm.currentCombat.doOnDeathScripts();
+                            //
                         }
                     }
                 }
@@ -4229,6 +4233,12 @@ namespace IceBlink
                     CombatSource = crt;
                     var scriptCrtDth = ((PC)crt).OnDeath;
                     frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    // * sinopip, 25.12.14
+                    if (((PC)crt).CharSprite.DeathNumberOfFrames > 1)
+                    	for (int index = 0; index < gm.playerList.PCList.Count; index++)
+                    		if (gm.playerList.PCList[index].NameWithNotes == ((PC)crt).NameWithNotes)
+                    			deathPCAnimation(((PC)crt), index);
+                    //
                     SetLocalInt(((PC)crt).Tag, "HasDied", 1);
                 }
             }
@@ -4244,16 +4254,47 @@ namespace IceBlink
                     	player.SoundLocation = gm.mainDirectory + "\\modules\\" + gm.module.ModuleFolderName + "\\sounds\\soundFX\\" + ((Creature)crt).OnDeathSound;
         			} catch { }
 		            player.Play();
+		            frm.doScriptBasedOnFilename(scriptCrtDth.FilenameOrTag, scriptCrtDth.Parm1, scriptCrtDth.Parm2, scriptCrtDth.Parm3, scriptCrtDth.Parm4);
+                    // * sinopip, 25.12.14
+		            // * default death animation, or from spritsheet
+		            if (((Creature)crt).CharSprite.DeathNumberOfFrames <= 1)
+		            	frm.currentCombat.drawEndEffect(((Creature)crt).CombatLocation, 0, "generic_death.spt"); // if file doesn't exists, this does nothing
+		            else
+		            	deathCreatureAnimation(((Creature)crt));
 		            Thread.Sleep(100);
-		            // * default death animation (not checking for one in the creature spritesheet yet)
-		            frm.currentCombat.drawEndEffect(((Creature)crt).CombatLocation, 0, "generic_death.spt"); // if file doesn't exists, this does nothing
-		            Thread.Sleep(100);
-                    //                    
+                    //                
                     SetLocalInt(((Creature)crt).Tag, "HasDied", 1);
                 }
             }
 			CombatSource = temp;
 		}
+        // * sinopip, 25.12.14
+        public void deathPCAnimation(PC pc, int PcIndex)
+        {
+            int deathRowIndex = 3;
+            int sleep = 1000 / pc.CharSprite.DeathFPS;
+            //start a for loop based on the number of frames in the attack row
+            for (int x = 0; x < pc.CharSprite.DeathNumberOfFrames; x++)
+            {
+                gm.CombatAreaPcAnimateRenderAll(PcIndex, x, deathRowIndex);
+                Thread.Sleep(sleep);
+            }
+        }
+        //
+        // * sinopip, 25.12.15
+        public void deathCreatureAnimation(Creature crt)
+        {
+            int deathRowIndex = 3;
+            int sleep = 1000 / crt.CharSprite.DeathFPS;
+            //start a for loop based on the number of frames in the attack row
+            for (int x = 0; x < crt.CharSprite.DeathNumberOfFrames; x++)
+            {
+                gm.CombatAreaCreatureAnimateRenderAll(crt, x, deathRowIndex);
+                Thread.Sleep(sleep);
+            }
+        }
+        //  
+        
         //
 		// ______________________
 		// for a spell cast in combat with one or more targets
