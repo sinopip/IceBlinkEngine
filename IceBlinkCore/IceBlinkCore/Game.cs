@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.AccessControl;
 using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -178,8 +181,28 @@ namespace IceBlinkCore
         public Bitmap g_facingRight;
         [XmlIgnore]
         public Bitmap currentMapBitmap;
+        // * sinopip, 11.01.15
+        //[XmlIgnore]
+        //public Texture currentMapTexture;
         [XmlIgnore]
-        public Texture currentMapTexture;
+        public Bitmap mapbmp;
+        [XmlIgnore]
+        public List<List<Bitmap>> boardImages;
+        [XmlIgnore]
+        public List<List<Texture>> areaBoards;
+		[XmlIgnore]
+        public int boardSize = 2048; // * pixels square
+		[XmlIgnore]
+        public List<List<SharpDX.Direct3D9.Sprite>> areaSprites;
+        [XmlIgnore]
+        public int centerX; // * (not used yet)
+        [XmlIgnore]
+        public int centerY; // * (not used yet)
+        [XmlIgnore]
+        public int panelNbSquaresX;
+        [XmlIgnore]
+        public int panelNbSquaresY;
+        // *        
         [XmlIgnore]
         private PictureBox g_pb;
         [XmlElement]
@@ -893,6 +916,10 @@ namespace IceBlinkCore
         {
             renderPanel = rp;
             createDevice();
+            // * sinopip, 11.01.15
+            panelNbSquaresX = renderPanel.Width / _squareSize;
+            panelNbSquaresY = renderPanel.Height / _squareSize;
+            // *
             /*
             try
             {
@@ -977,7 +1004,35 @@ namespace IceBlinkCore
             }
             try
             {
-                currentMapTexture = Texture.FromFile(device, mainDirectory + "\\modules\\" + module.ModuleFolderName + "\\areas\\" + currentArea.MapFileName, 0, 0, 1, Usage.None, Format.Unknown, Pool.Default, Filter.None, Filter.None, 0);
+            	// * sinopip, 11.01.15
+            	//currentMapTexture = Texture.FromFile(device, mainDirectory + "\\modules\\" + module.ModuleFolderName + "\\areas\\" + currentArea.MapFileName, 0, 0, 1, Usage.None, Format.Unknown, Pool.Default, Filter.None, Filter.None, 0);
+            	mapbmp = (Bitmap)Image.FromFile(mainDirectory + "\\modules\\" + module.ModuleFolderName + "\\areas\\" + currentArea.MapFileName);
+            	boardImages = new List<List<Bitmap>>();
+            	areaBoards = new List<List<Texture>>();
+                // * tiles grouped as boards by "<nb squares on display> * <square size>", so it's manageable by DirectX
+                int boardsCountX = Math.Max(1, (int)Math.Ceiling((1.0 * mapbmp.Width) / boardSize));
+                int boardsCountY = Math.Max(1, (int)Math.Ceiling((1.0 * mapbmp.Height) / boardSize));
+                for (int x=0; x < boardsCountX; x++)
+                {
+                	areaBoards.Add(new List<Texture>());
+                	boardImages.Add(new List<Bitmap>());
+                	areaSprites.Add(new List<SharpDX.Direct3D9.Sprite>());
+                	for (int y = 0; y < boardsCountY; y++)
+                	{
+	     		       	areaSprites[x].Add(new SharpDX.Direct3D9.Sprite(device));
+	     		       	string bmpfile;
+	     		       	if (boardsCountX > 1 || boardsCountY > 1)
+	     		       	{
+	     		       		string path = mainDirectory + "\\modules\\" + module.ModuleFolderName + "\\areas\\" + currentArea.MapFileName.Substring(0,currentArea.MapFileName.Length-4);
+	     		       		bmpfile = path + "\\" + currentArea.MapFileName.Substring(0,currentArea.MapFileName.Length-4)+"-"+x.ToString()+"-"+y.ToString()+currentArea.MapFileName.Substring(currentArea.MapFileName.Length-4);
+	     		       	}
+	     		       	else
+							bmpfile = mainDirectory + "\\modules\\" + module.ModuleFolderName + "\\areas\\" + currentArea.MapFileName;
+	     		       	boardImages[x].Add((Bitmap)Image.FromFile(bmpfile));
+	     		       	areaBoards[x].Add(Texture.FromFile(device, bmpfile));
+	                }
+                } 
+                // *
             }
             catch (Exception ex)
             {
@@ -1179,7 +1234,12 @@ namespace IceBlinkCore
                 //MessageBox.Show("Not able to use hardware vertex processing...using software instead");
                 //device = new Device(new Direct3D(), 0, DeviceType.Hardware, renderPanel.Handle, CreateFlags.SoftwareVertexProcessing, new PresentParameters(renderPanel.ClientSize.Width, renderPanel.ClientSize.Height));
             }
+            // * sinopip, 11.01.15
+            //centerX = playerPosition.X;
+            //centerY = playerPosition.Y;
             areaSprite = new SharpDX.Direct3D9.Sprite(device);
+            areaSprites = new List<List<SharpDX.Direct3D9.Sprite>>();
+            // *
             for (int index = 0; index < 6; index++) //Set at 6 snce the party size never goes above 6
             {
                 SharpDX.Direct3D9.Sprite newSprite = new SharpDX.Direct3D9.Sprite(device);
@@ -1292,7 +1352,13 @@ namespace IceBlinkCore
                 {
                     crt.CharSprite.Texture.Dispose();
                 }
-                currentMapTexture.Dispose();
+                // * sinopip, 11.01.15
+                //currentMapTexture.Dispose();
+                for (int x = 0; x < areaBoards.Count; x++)
+                	for (int y=0; y < areaBoards[x].Count; y++)
+                		areaBoards[x][y].Dispose();
+                areaBoards.Clear();
+                // *
                 blackTile.Dispose();
                 walkPass.Dispose();
                 walkBlock.Dispose();
@@ -1308,6 +1374,12 @@ namespace IceBlinkCore
                 pcSprites.Clear();
                 smallSprite.Dispose();
                 areaSprite.Dispose();
+                // * sinopip, 11.01.15
+	            for (int x = 0; x < areaSprites.Count; x++)
+	            	for (int y = 0; y < areaSprites[x].Count; y++)
+	            		areaSprites[x][y].Dispose();
+	            areaSprites.Clear();
+	            // *
                 //resetDevice();
                 //device.Dispose();
                 //device = null;
@@ -1489,9 +1561,64 @@ namespace IceBlinkCore
         }
         private void renderMainMap()
         {
-            areaSprite.Begin(SpriteFlags.AlphaBlend);
-            areaSprite.Draw(currentMapTexture, SharpDX.Color.White, new SharpDX.Rectangle(0, 0, currentArea.MapSizeInPixels.Width, currentArea.MapSizeInPixels.Height), new Vector3(0, 0, 0), new Vector3(0 - upperLeftPixel.X, 0 - upperLeftPixel.Y, 0));
-            areaSprite.End();
+            // * sinopip, 11.01.15
+            //areaSprite.Begin(SpriteFlags.AlphaBlend);
+            //areaSprite.Draw(currentMapTexture, SharpDX.Color.White, new SharpDX.Rectangle(0, 0, currentArea.MapSizeInPixels.Width, currentArea.MapSizeInPixels.Height), new Vector3(0, 0, 0), new Vector3(0 - upperLeftPixel.X, 0 - upperLeftPixel.Y, 0));
+            //areaSprite.Draw(blankBackground, SharpDX.Color.White);
+            //areaSprite.End();
+            int leftx, topy, maxDisplayPosX, maxDisplayPosY;
+			maxDisplayPosX = playerPosition.X;
+			maxDisplayPosY = playerPosition.Y;
+			maxDisplayPosX = Math.Min(maxDisplayPosX, mapbmp.Width/_squareSize - panelNbSquaresX/2 -1);
+			maxDisplayPosY = Math.Min(maxDisplayPosY, mapbmp.Height/_squareSize - panelNbSquaresY/2 -1);
+            for (int x = 0; x < areaBoards.Count; x++)
+				for (int y = 0; y < areaBoards[x].Count; y++)
+				{      
+					    
+            		leftx =
+            			(- currentArea.MapSizeInSquares.Width + x * boardSize/_squareSize //panelNbSquaresX
+            			+ (currentArea.MapSizeInSquares.Width - maxDisplayPosX)// - playerPosition.X)
+            			+ panelNbSquaresX/2)
+            			*_squareSize
+            			;
+            		topy = 
+            			(- currentArea.MapSizeInSquares.Height + y * boardSize/_squareSize //panelNbSquaresY
+            			+ (currentArea.MapSizeInSquares.Height - maxDisplayPosY)//- playerPosition.Y)
+            			+ panelNbSquaresY/2)
+            			*_squareSize
+            			;
+            		//
+            		// * adjustment when only one board in X
+            		if (areaBoards.Count == 1)
+            			leftx = - upperLeftPixel.X;
+            		// * first of many board adjustment in X
+            		else if (x == 0)
+            			if (maxDisplayPosX < panelNbSquaresX/2 || mapbmp.Width/_squareSize < panelNbSquaresX)
+            			  leftx = 0;
+            		//
+            		// * adjustment when only one board in Y
+            		if (areaBoards[x].Count == 1)
+            			topy = - upperLeftPixel.Y;
+            		// * or first of many board adjustment in Y
+            		else if (y == 0)
+            			if (maxDisplayPosY < panelNbSquaresY/2 || mapbmp.Height/_squareSize < panelNbSquaresY)
+            			  topy = 0;
+            		//
+					areaSprites[x][y].Begin(SpriteFlags.AlphaBlend);
+					/*areaSprites[x][y].Draw(areaBoards[x][y], SharpDX.Color.White, new SharpDX.Rectangle
+					                       //(x*_numberOfSquares*_squareSize, y*_numberOfSquares*_squareSize, _numberOfSquares*_squareSize, _numberOfSquares*_squareSize)
+					                       (0, 0, Math.Min(_numberOfSquares*_squareSize, (currentMapBitmap.Width-1)%(_numberOfSquares*_squareSize))
+					                        , Math.Min(_numberOfSquares*_squareSize, (currentMapBitmap.Height-1)%(_numberOfSquares*_squareSize)))
+					                       , new Vector3(0,0,0)
+					                       , new Vector3((float)x*_numberOfSquares*_squareSize,(float)y*_numberOfSquares*_squareSize,0.0f));*/
+					areaSprites[x][y].Draw(areaBoards[x][y], SharpDX.Color.White, null //new SharpDX.Rectangle
+					                       //(0, 0, boardSize, boardSize)
+					                       , new Vector3(0, 0, 0)
+					                       , new Vector3((leftx), (topy), 0));
+					areaSprites[x][y].End();
+				}
+            //areaSprite.End();
+            //
         }
         private void renderCreatures()
         {
@@ -4911,3 +5038,4 @@ namespace IceBlinkCore
         }
     }
 }
+

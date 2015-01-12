@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using IceBlinkCore;
 using WeifenLuo.WinFormsUI.Docking;
+// * sinopip, 11.01.15
+using System.Drawing.Imaging;
+//
 
 namespace IceBlinkToolset
 {
@@ -69,15 +72,22 @@ namespace IceBlinkToolset
         //public bool editTriggerSelected = false;
         //public bool toggleWalkable = false;
         // * sinopip, 22.12.14        
+		public bool beginscrolling = false;
 		public bool is_upscrolling = false;
 		public bool is_downscrolling = false;
 		public bool is_leftscrolling = false;
 		public bool is_rightscrolling = false;
-		//
+		// * sinopip, 11.01.15
+		public int boardSize = 2048;
+		// *
 		
         public LevelEditor(Module mod, Game g, ParentForm p)
         {
             InitializeComponent();
+			// * sinopip, 20.12.14
+            scrollTimer.Enabled = true;
+            scrollTimer.Stop();
+            //
             le_mod = mod;
             le_game = g;
             prntForm = p;
@@ -1005,8 +1015,100 @@ namespace IceBlinkToolset
                 area.MapFileName = Path.GetFileName(openFileDialog2.FileName);
                 //string directory = Path.GetDirectoryName(openFileDialog2.FileName);
                 //MessageBox.Show("filename selected = " + filename);
+                // * sinopip, 11.01.15
+                Bitmap preloadedbitmap = new Bitmap(filename);
+                int checkW, checkH;
+                // * check for the map to be a power of 2 (specifically the last boards of the map, in width and in height)
+                checkW = preloadedbitmap.Width % 2048;
+                checkH = preloadedbitmap.Height % 2048;
+                if (checkW != 0)
+ 					while(checkW % 2 == 0)
+ 						checkW = checkW / 2;
+                if (checkH != 0)
+                	while(checkH % 2 == 0)
+   						checkH = checkH / 2;
+                if (checkW > 1 || checkH > 1)
+                {
+                	MessageBox.Show("The area map will be resized to 2048x2048, because the last board is not a power of 2.\r\n"
+                	                +"A map must be a multiple of 2048 (or a power of 2) pixels in width and in height, "
+                	                + "and eventually with an additional value which must be a power of 2.\r\n"
+                	               	+"(e.g. a map with a width of 2560 is valid, as it is 2048 + 512)"
+                	               	+"\r\nValid size examples : 512x512, 1024x1024, 2048x2048, 2560x2560 pixels,... ;"
+									+"\r\n(non-square) 2048x4096, 4096x512, 3072x2560 pixels."
+                	               );
+                }
+                // * split the area Image if needed
+                if (preloadedbitmap.Width > boardSize || preloadedbitmap.Height > boardSize)
+                {
+                	if (MessageBox.Show("The area image to be loaded has a size greater then 2048 pixels.\r\nDo you wish to use it and to split it (may takes some time)?"
+                	                    , "Split area image", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                	{
+                		Bitmap mapbmp = preloadedbitmap;
+                		if (Directory.Exists(filename.Substring(0,filename.Length-4)))
+                		{
+                			foreach (string file in Directory.GetFiles(filename.Substring(0,filename.Length-4)))
+                		    	File.Delete(file);
+                		}
+                		else
+                			Directory.CreateDirectory(filename.Substring(0,filename.Length-4));
+                		int boardsCountX = Math.Max(1, (int)Math.Ceiling((1.0 * mapbmp.Width) / boardSize));
+               			int boardsCountY = Math.Max(1, (int)Math.Ceiling((1.0 * mapbmp.Height) / boardSize));
+                		for (int x=0; x < boardsCountX; x++)
+                		{
+                			int max_width = Math.Min(mapbmp.Width-x*(boardSize), boardSize);
+                			if (max_width < boardSize)
+                				if (checkW == 1)
+                				{
+                					while (checkW < max_width)
+                					{
+                						if (checkW * 2 > max_width)
+                							break;
+                						checkW = checkW * 2;
+                					}
+                					max_width = checkW;
+                				}
+                			for (int y = 0; y < boardsCountY; y++)
+                			{
+	     		       			int max_height = Math.Min(mapbmp.Height-y*(boardSize), boardSize);
+                				if (max_height < boardSize)
+                					if (checkH == 1)
+                					{
+	                					while (checkW < max_height)
+	                					{
+	                						if (checkH * 2 > max_height)
+	                							break;
+	                						checkH = checkH * 2;
+	                					}
+	                					max_height = checkH;
+                					}
+                				Bitmap bmp = mapbmp.Clone(new Rectangle(x*(boardSize), y*(boardSize), max_width, max_height), PixelFormat.Format32bppRgb);
+                				FileStream fs = new FileStream(filename.Substring(0,filename.Length-4)
+                				                               +"\\"+filename.Substring(filename.LastIndexOf("\\")+1,filename.Length-filename.LastIndexOf("\\")-5)
+                				                               +"-"+x.ToString()+"-"+y.ToString()+".jpg",FileMode.Create);
+                				// * (.Save method is very slow to process many Bitmaps (ex. 16x16, 256 Bitmap tiles take about 7-8s to save them all))
+                				bmp.Save(fs, ImageFormat.Jpeg);
+	        					bmp.Dispose();
+	        					fs.Close();
+	               			}
+                		}                
+                	}
+                	else return;
+                }
+                // *
                 gameMapBitmap = new Bitmap(filename);
                 drawArea = new Bitmap(filename);
+                // * sinopip, 12.01.15
+                // * make an alternative bitmap when the original is not a power of 2
+                if (checkW > 1 || checkH > 1)
+                {
+                	string newfilename = filename.Substring(0,filename.Length-4)+"_resized"+filename.Substring(filename.Length-4);
+                	area.MapFileName = newfilename.Substring(newfilename.LastIndexOf("\\")+1);
+                	Bitmap resizedBitmap = new Bitmap(gameMapBitmap,2048,2048);
+                	resizedBitmap.Save(newfilename);
+                	gameMapBitmap = (Bitmap)resizedBitmap.Clone();
+                	drawArea = (Bitmap)resizedBitmap.Clone();
+                }
+                // *
                 pictureBox1.Width = gameMapBitmap.Size.Width;
                 pictureBox1.Height = gameMapBitmap.Size.Height;
                 pictureBox1.Image = (Image)drawArea;
@@ -1034,6 +1136,9 @@ namespace IceBlinkToolset
         }
         private void LevelEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
+        	// * sinopip, 20.12.14
+            scrollTimer.Stop();
+            //
             gfx.Dispose();
             drawArea.Dispose();          
             //gfxSelected.Dispose();
@@ -1125,6 +1230,7 @@ namespace IceBlinkToolset
             }
             // * sinopip, 22.12.14
             // * enable scroll area when mouse is on borders (scrollbar position values are negative)
+            beginscrolling = false;
             is_leftscrolling = false;
         	is_rightscrolling = false;
         	is_upscrolling = false;
@@ -1137,6 +1243,14 @@ namespace IceBlinkToolset
         		is_rightscrolling = true;
         	if (mousey > (panel3.Height-100) + -panel3.AutoScrollPosition.Y)
         		is_downscrolling = true;
+			if (is_leftscrolling || is_rightscrolling || is_upscrolling || is_downscrolling)
+			{
+	        	beginscrolling = true;
+	        	if (!scrollTimer.Enabled)
+	        		scrollTimer.Interval = 500;
+	        	scrollTimer.Enabled = true;	
+			}
+			else scrollTimer.Enabled = false;
 			//                          
         }
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
@@ -1146,7 +1260,8 @@ namespace IceBlinkToolset
         	is_rightscrolling = false;
         	is_upscrolling = false;
         	is_downscrolling = false;   
-			//        	
+			scrollTimer.Enabled = false;     			
+			//
             try
             {
                 refreshMap();
@@ -1481,20 +1596,30 @@ namespace IceBlinkToolset
 		// * scroll the map (timer component of 25ms tick)
         void ScrollTimerTick(object sender, EventArgs e)
         {
-        	if (is_leftscrolling)
+        	if (!beginscrolling)
+        	{
+        		scrollTimer.Enabled = false;
+        		return;
+        	}
+        	if (scrollTimer.Interval > 100)
+        		scrollTimer.Interval = 40;
+			//
+			// * scroll by steps of 32px (arbitrary value)
+	        if (is_leftscrolling)
         		panel3.AutoScrollPosition = new Point(
-        			-panel3.AutoScrollPosition.X - 16,
+        			-panel3.AutoScrollPosition.X - 32,
         			-panel3.AutoScrollPosition.Y);
         	if (is_rightscrolling) panel3.AutoScrollPosition = new Point(
-        			-panel3.AutoScrollPosition.X + 16,
+        			-panel3.AutoScrollPosition.X + 32,
         			-panel3.AutoScrollPosition.Y);
         	if (is_upscrolling) panel3.AutoScrollPosition = new Point(
         			-panel3.AutoScrollPosition.X,
-        			-panel3.AutoScrollPosition.Y - 16);
+        			-panel3.AutoScrollPosition.Y - 32);
         	if (is_downscrolling) panel3.AutoScrollPosition = new Point(
         			-panel3.AutoScrollPosition.X,
-        			-panel3.AutoScrollPosition.Y + 16);    	
-        }
-		//  
+        			-panel3.AutoScrollPosition.Y + 32);    	
+        }        
+        //
+        
     }
 }

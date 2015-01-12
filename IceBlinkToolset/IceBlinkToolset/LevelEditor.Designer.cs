@@ -355,8 +355,7 @@
         	// 
         	// scrollTimer
         	// 
-        	this.scrollTimer.Enabled = true;
-        	this.scrollTimer.Interval = 25;
+        	this.scrollTimer.Interval = 500;
         	this.scrollTimer.Tick += new System.EventHandler(this.ScrollTimerTick);
         	// 
         	// LevelEditor

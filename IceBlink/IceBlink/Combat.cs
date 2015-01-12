@@ -58,11 +58,12 @@ namespace IceBlink
         public bool okToDrawHighlights = true;
         public bool showStepNumbers = false;
         // * sinopip, 20.12.14
+        public bool beginscrolling = false;
 		public bool is_upscrolling = false;
 		public bool is_downscrolling = false;
 		public bool is_leftscrolling = false;
 		public bool is_rightscrolling = false;
-		//
+		// *
         
 
         public Combat(Game game, Form1 frm, Encounter encounter)
@@ -159,7 +160,6 @@ namespace IceBlink
             frm.playCombatAreaMusicSounds();
             combatTimer.Start();
             // * sinopip, 20.12.14
-            scrollTimer.Start();
             foreach (Creature crtr in com_encounter.EncounterCreatureList.creatures)
             	com_frm.sf.SetLocalInt(crtr.Tag, "HasDied", 0);
             foreach (PC pc in game.playerList.PCList)
@@ -1797,7 +1797,7 @@ namespace IceBlink
 		            	Thread.Sleep(100);
 		            } catch { }
                     // * sinopip, 25.12.14
-		            // * default death animation, or from spritsheet
+		            // * default death animation, or from spritesheet
 		            if (crtr.CharSprite.DeathNumberOfFrames <= 1)
 		            	com_frm.currentCombat.drawEndEffect(crtr.CombatLocation, 0, "generic_death.spt"); // if file doesn't exists, this does nothing
 		            else
@@ -4138,6 +4138,7 @@ namespace IceBlink
             gridy = e.Y / com_game._squareSize;
             mousex = e.X;
             mousey = e.Y;
+
             com_game.mouseCombatLocation = new Point(gridx, gridy);
             lblMouseInfo.Text = "CURSOR " + e.X.ToString() + "," + e.Y.ToString() +
                 " - GRID " + gridx.ToString() + "," + gridy.ToString();
@@ -4199,6 +4200,7 @@ namespace IceBlink
             
             // * sinopip, 20.12.14
             // * enable scroll area when mouse is on borders (scrollbar position values are negative)
+            beginscrolling = false;
             is_leftscrolling = false;
         	is_rightscrolling = false;
         	is_upscrolling = false;
@@ -4211,7 +4213,15 @@ namespace IceBlink
         		is_rightscrolling = true;
         	if (mousey > (panel1.Height-100) + -panel1.AutoScrollPosition.Y)
         		is_downscrolling = true;
-			//        	
+			if (is_leftscrolling || is_rightscrolling || is_upscrolling || is_downscrolling)
+			{
+	        	beginscrolling = true;
+	        	if (!scrollTimer.Enabled)
+	        		scrollTimer.Interval = 500;
+	        	scrollTimer.Enabled = true;	
+			}
+			else scrollTimer.Enabled = false;
+			// *
         }
         public void drawEndEffect(Point target, int radius, string spriteFilename)
         {
@@ -4564,13 +4574,22 @@ namespace IceBlink
         }
        
         // * sinopip, 20.12.14
-		// * scroll the map (timer component of 25ms tick)
+		// * scroll the map (timer component)
         void ScrollTimerTick(object sender, EventArgs e)
         {
-        	if (is_leftscrolling) 
-        		panel1.AutoScrollPosition = new Point(
-        			-panel1.AutoScrollPosition.X - 16,
-        			-panel1.AutoScrollPosition.Y);
+        	if (!beginscrolling)
+        	{
+        		scrollTimer.Enabled = false;
+        		return;
+        	}
+        	if (scrollTimer.Interval > 100)
+        		scrollTimer.Interval = 60;
+			//
+        	// * scroll by steps of 16px (arbitrary value)
+	        if (is_leftscrolling) 
+	        	panel1.AutoScrollPosition = new Point(
+	        		-panel1.AutoScrollPosition.X - 16,
+	        		-panel1.AutoScrollPosition.Y);
         	if (is_rightscrolling) panel1.AutoScrollPosition = new Point(
         			-panel1.AutoScrollPosition.X + 16,
         			-panel1.AutoScrollPosition.Y);
@@ -4579,16 +4598,17 @@ namespace IceBlink
         			-panel1.AutoScrollPosition.Y - 16);
         	if (is_downscrolling) panel1.AutoScrollPosition = new Point(
         			-panel1.AutoScrollPosition.X,
-        			-panel1.AutoScrollPosition.Y + 16);    	
+        			-panel1.AutoScrollPosition.Y + 16);
         }
         void CombatRenderPanelMouseLeave(object sender, EventArgs e)
         {
             is_leftscrolling = false;
         	is_rightscrolling = false;
         	is_upscrolling = false;
-        	is_downscrolling = false;        	
+        	is_downscrolling = false;
+			scrollTimer.Enabled = false;
         }
-        //
+        // *
     }
 
     public class MoveOrder

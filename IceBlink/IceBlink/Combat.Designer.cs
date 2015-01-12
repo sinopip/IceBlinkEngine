@@ -610,7 +610,7 @@
         	// 
         	// scrollTimer
         	// 
-        	this.scrollTimer.Interval = 25;
+        	this.scrollTimer.Interval = 500;
         	this.scrollTimer.Tick += new System.EventHandler(this.ScrollTimerTick);
         	// 
         	// Combat
