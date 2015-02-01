@@ -62,6 +62,10 @@
         	this.btnLoadMap = new System.Windows.Forms.Button();
         	this.btnProperties = new System.Windows.Forms.Button();
         	this.scrollTimer = new System.Windows.Forms.Timer(this.components);
+        	this.btnZoom1 = new System.Windows.Forms.Button();
+        	this.btnZoom2 = new System.Windows.Forms.Button();
+        	this.btnZoom3 = new System.Windows.Forms.Button();
+        	this.labelZoom = new System.Windows.Forms.Label();
         	this.groupBox2.SuspendLayout();
         	this.groupBox1.SuspendLayout();
         	this.panel3.SuspendLayout();
@@ -312,7 +316,7 @@
         	this.panel3.Controls.Add(this.pictureBox1);
         	this.panel3.Location = new System.Drawing.Point(129, 6);
         	this.panel3.Name = "panel3";
-        	this.panel3.Size = new System.Drawing.Size(725, 650);
+        	this.panel3.Size = new System.Drawing.Size(658, 654);
         	this.panel3.TabIndex = 16;
         	// 
         	// pictureBox1
@@ -325,10 +329,11 @@
         	this.pictureBox1.Size = new System.Drawing.Size(800, 800);
         	this.pictureBox1.TabIndex = 2;
         	this.pictureBox1.TabStop = false;
-        	this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+        	this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDown);
         	this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
         	this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
         	this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+        	this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseUp);
         	this.pictureBox1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.pictureBox1_PreviewKeyDown);
         	// 
         	// btnLoadMap
@@ -345,7 +350,7 @@
         	// btnProperties
         	// 
         	this.btnProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        	this.btnProperties.Location = new System.Drawing.Point(11, 574);
+        	this.btnProperties.Location = new System.Drawing.Point(10, 618);
         	this.btnProperties.Name = "btnProperties";
         	this.btnProperties.Size = new System.Drawing.Size(106, 48);
         	this.btnProperties.TabIndex = 72;
@@ -356,19 +361,61 @@
         	// scrollTimer
         	// 
         	this.scrollTimer.Enabled = true;
-        	this.scrollTimer.Interval = 25;
+        	this.scrollTimer.Interval = 500;
         	this.scrollTimer.Tick += new System.EventHandler(this.ScrollTimerTick);
+        	// 
+        	// btnZoom1
+        	// 
+        	this.btnZoom1.Location = new System.Drawing.Point(10, 590);
+        	this.btnZoom1.Name = "btnZoom1";
+        	this.btnZoom1.Size = new System.Drawing.Size(30, 23);
+        	this.btnZoom1.TabIndex = 73;
+        	this.btnZoom1.Text = "1:1";
+        	this.btnZoom1.UseVisualStyleBackColor = true;
+        	this.btnZoom1.Click += new System.EventHandler(this.BtnZoom1Click);
+        	// 
+        	// btnZoom2
+        	// 
+        	this.btnZoom2.Location = new System.Drawing.Point(46, 590);
+        	this.btnZoom2.Name = "btnZoom2";
+        	this.btnZoom2.Size = new System.Drawing.Size(30, 23);
+        	this.btnZoom2.TabIndex = 74;
+        	this.btnZoom2.Text = "1:2";
+        	this.btnZoom2.UseVisualStyleBackColor = true;
+        	this.btnZoom2.Click += new System.EventHandler(this.BtnZoom2Click);
+        	// 
+        	// btnZoom3
+        	// 
+        	this.btnZoom3.Location = new System.Drawing.Point(82, 590);
+        	this.btnZoom3.Name = "btnZoom3";
+        	this.btnZoom3.Size = new System.Drawing.Size(30, 23);
+        	this.btnZoom3.TabIndex = 75;
+        	this.btnZoom3.Text = "1:4";
+        	this.btnZoom3.UseVisualStyleBackColor = true;
+        	this.btnZoom3.Click += new System.EventHandler(this.BtnZoom3Click);
+        	// 
+        	// labelZoom
+        	// 
+        	this.labelZoom.Location = new System.Drawing.Point(10, 576);
+        	this.labelZoom.Name = "labelZoom";
+        	this.labelZoom.Size = new System.Drawing.Size(100, 11);
+        	this.labelZoom.TabIndex = 3;
+        	this.labelZoom.Text = "Zoom factor";
         	// 
         	// LevelEditor
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.ClientSize = new System.Drawing.Size(859, 662);
-        	this.Controls.Add(this.btnProperties);
+        	this.ClientSize = new System.Drawing.Size(792, 666);
         	this.Controls.Add(this.lblMouseInfo);
+        	this.Controls.Add(this.labelZoom);
+        	this.Controls.Add(this.btnZoom2);
+        	this.Controls.Add(this.btnZoom3);
         	this.Controls.Add(this.btnLoadMap);
+        	this.Controls.Add(this.btnZoom1);
         	this.Controls.Add(this.groupBox1);
         	this.Controls.Add(this.groupBox2);
+        	this.Controls.Add(this.btnProperties);
         	this.Controls.Add(this.chkGrid);
         	this.Controls.Add(this.panel3);
         	this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -388,6 +435,10 @@
         	((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
         	this.ResumeLayout(false);
         }
+        private System.Windows.Forms.Label labelZoom;
+        private System.Windows.Forms.Button btnZoom3;
+        private System.Windows.Forms.Button btnZoom2;
+        private System.Windows.Forms.Button btnZoom1;
         private System.Windows.Forms.Timer scrollTimer;
 
         #endregion

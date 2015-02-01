@@ -68,12 +68,19 @@ namespace IceBlinkToolset
         //public bool paintTriggerSelected = false;
         //public bool editTriggerSelected = false;
         //public bool toggleWalkable = false;
-        // * sinopip, 22.12.14        
+        // * sinopip, 18.01.15        
+		public bool beginscrolling = false;
 		public bool is_upscrolling = false;
 		public bool is_downscrolling = false;
 		public bool is_leftscrolling = false;
 		public bool is_rightscrolling = false;
-		//
+		// * sinopip, 1.02.15
+		public bool is_mousedragging = false;
+		public Point last_mouse_point = new Point(-1,-1);
+		public int zoom_factor = 1;
+		public Bitmap[] drawAreasZoomed = {null, null, null};
+		public Point last_selected_object = new Point();
+		// *
 		
         public LevelEditor(Module mod, Game g, ParentForm p)
         {
@@ -253,6 +260,12 @@ namespace IceBlinkToolset
                 gameMapBitmap = new Bitmap(area.MapSizeInPixels.Width, area.MapSizeInPixels.Height);
                 drawArea = new Bitmap(area.MapSizeInPixels.Width, area.MapSizeInPixels.Height);
             }
+            // * sinopip, 18.01.15
+            drawAreasZoomed[0] = new Bitmap(gameMapBitmap, gameMapBitmap.Width, gameMapBitmap.Height);
+            drawAreasZoomed[1] = new Bitmap(gameMapBitmap, gameMapBitmap.Width/2, gameMapBitmap.Height/2);
+            drawAreasZoomed[2] = new Bitmap(gameMapBitmap, gameMapBitmap.Width/4, gameMapBitmap.Height/4);
+            zoom_factor = 1;
+            // *
             pictureBox1.Width = gameMapBitmap.Size.Width;
             pictureBox1.Height = gameMapBitmap.Size.Height;
             pictureBox1.Image = (Image)drawArea;
@@ -374,6 +387,9 @@ namespace IceBlinkToolset
             }
             pictureBox1.Width = gameMapBitmap.Size.Width;
             pictureBox1.Height = gameMapBitmap.Size.Height;
+            // * sinopip, 18.01.15
+            zoom_factor = 1;
+            // *
             pictureBox1.Image = (Image)drawArea;
             gfx = Graphics.FromImage(drawArea);
             if (drawArea == null)
@@ -403,11 +419,17 @@ namespace IceBlinkToolset
                 area.TileMapList.Add(newTile);
             }
         }
-        public void refreshMap()
+        // * sinopip, 1.02.15 
+        // * added bool for omitting elements, for faster drawing
+        // * (not working yet)
+        public void refreshMap(bool elements_only = false)
         {
             try
             {
-                if (gameMapBitmap != null)
+            	// * sinopip, 1.02.15
+            	gfx.Clear(Color.Black);
+            	// *
+            	if (gameMapBitmap != null)
                 {
                     gfx.DrawImage((Image)gameMapBitmap, 0, 0);
                 }
@@ -444,24 +466,38 @@ namespace IceBlinkToolset
                     spritePropDraw(cspx, cspy, cnt);
                     cnt++;
                 }*/
-                if (area != null)
+                // * sinopip, 1.02.15, removed redundant
+                /*if (area != null)
                 {
                     drawTileSettings();
-                }
+                }*/
             }
             catch (Exception ex)
             {
                 MessageBox.Show("failed on refresh map: " + ex.ToString());
                 le_game.errorLog("failed on refresh map: " + ex.ToString());
             }
-            drawTileSettings();
+            // * sinopip, 1.02.15
+            try
+            {
+            	if (area != null)
+            		drawTileSettings();
+            } catch (Exception ex)
+            {
+                MessageBox.Show("failed on refresh tiles: " + ex.ToString());
+                le_game.errorLog("failed on refresh tiles: " + ex.ToString());
+            }
+            
+            pictureBox1.Image = drawArea;
+			// *
         }
+        // * sinopip, 18.01.15 : apply zoom factor
         private void spriteCreatureDraw(int cspx, int cspy, int spriteListIndex, int size)
         {
             //source image
             Rectangle source = new Rectangle(0, 0, tileSize * size, tileSize * size);
             //target location
-            Rectangle target = new Rectangle(cspx * tileSize, cspy * tileSize, tileSize * size, tileSize * size);
+            Rectangle target = new Rectangle(cspx * tileSize / zoom_factor, cspy * tileSize / zoom_factor, tileSize * size / zoom_factor, tileSize * size / zoom_factor);
             //draw sprite
             gfx.DrawImage((Image)crtBitmapList[spriteListIndex], target, source, GraphicsUnit.Pixel);
         }
@@ -470,25 +506,25 @@ namespace IceBlinkToolset
             //source image
             Rectangle source = new Rectangle(0, 0, le_selectedProp.PropSprite.SpriteSize.Width, le_selectedProp.PropSprite.SpriteSize.Height);
             //target location
-            Rectangle target = new Rectangle(cspx * tileSize, cspy * tileSize, le_selectedProp.PropSprite.SpriteSize.Width, le_selectedProp.PropSprite.SpriteSize.Height);
+            Rectangle target = new Rectangle(cspx * tileSize / zoom_factor, cspy * tileSize / zoom_factor, le_selectedProp.PropSprite.SpriteSize.Width / zoom_factor, le_selectedProp.PropSprite.SpriteSize.Height / zoom_factor);
             //draw sprite
             gfx.DrawImage((Image)propBitmapList[spriteListIndex], target, source, GraphicsUnit.Pixel);
         }
         private void drawTileSettings()
         {
             //for (int index = 0; index < area.MapSizeInSquares.Width * area.MapSizeInSquares.Height; index++)
-            for (int x = 0; x < area.MapSizeInSquares.Width; x++)
+            if (showGrid) //if show grid is turned on, draw grid squares
             {
-                for (int y = 0; y < area.MapSizeInSquares.Height; y++)
-                {
-                    if (showGrid) //if show grid is turned on, draw grid squares
-                    {
+	            for (int x = 0; x < area.MapSizeInSquares.Width; x++)
+	            {
+	                for (int y = 0; y < area.MapSizeInSquares.Height; y++)
+	                {
                         if (area.TileMapList[y * this.area.MapSizeInSquares.Width + x].LoSBlocked)
                         {
                             Rectangle src = new Rectangle(0, 0, tileSize, tileSize);
                             int dx = x * tileSize;
                             int dy = y * tileSize;
-                            Rectangle target = new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize);
+                            Rectangle target = new Rectangle(x * tileSize / zoom_factor, y * tileSize / zoom_factor, tileSize / zoom_factor, tileSize / zoom_factor);
                             gfx.DrawImage(g_LoSBlock, target, src, GraphicsUnit.Pixel);
                         }
                         if (area.TileMapList[y * this.area.MapSizeInSquares.Width + x].collidable)
@@ -496,7 +532,7 @@ namespace IceBlinkToolset
                             Rectangle src = new Rectangle(0, 0, tileSize, tileSize);
                             int dx = x * tileSize;
                             int dy = y * tileSize;
-                            Rectangle target = new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize);
+                            Rectangle target = new Rectangle(x * tileSize / zoom_factor, y * tileSize / zoom_factor, tileSize / zoom_factor, tileSize / zoom_factor);
                             gfx.DrawImage(g_walkBlock, target, src, GraphicsUnit.Pixel);
                         }
                         else
@@ -504,11 +540,11 @@ namespace IceBlinkToolset
                             Rectangle src = new Rectangle(0, 0, tileSize, tileSize);
                             int dx = x * tileSize;
                             int dy = y * tileSize;
-                            Rectangle target = new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize);
+                            Rectangle target = new Rectangle(x * tileSize / zoom_factor, y * tileSize / zoom_factor, tileSize / zoom_factor, tileSize / zoom_factor);
                             gfx.DrawImage(g_walkPass, target, src, GraphicsUnit.Pixel);
-                        }
-                    }    
-                }
+	                    }
+	                }    
+	        	}
             }
             foreach (Trigger t in area.AreaTriggerList.triggersList)
             {
@@ -517,29 +553,32 @@ namespace IceBlinkToolset
                     int dx = p.X * tileSize;
                     int dy = p.Y * tileSize;
                     Pen pen = new Pen(t.TriggerColor, 2);
-                    Rectangle rect = new Rectangle(dx + 3, dy + 3, tileSize - 6, tileSize - 6);
+                    Rectangle rect = new Rectangle(dx / zoom_factor + 3, dy / zoom_factor + 3, tileSize / zoom_factor - 6, tileSize / zoom_factor - 6);
                     gfx.DrawRectangle(pen, rect);
                 }
             }
-            pictureBox1.Image = drawArea;
+            // * sinopip, 1.02.15
+            //pictureBox1.Image = drawArea;
+            // *
         }
         public void drawSelectionBox(int gridx, int gridy)
         {
             //hideSelectionBox();
-            refreshMap();
             //remember current tile
             //selectedTile.oldIndex = selectedTile.index;
 
             //draw selection box around tile
             int dx = gridx * tileSize;
             int dy = gridy * tileSize;
+
             Pen pen = new Pen(Color.DarkMagenta, 2);
-            Rectangle rect = new Rectangle(dx + 1, dy + 1, tileSize - 2, tileSize - 2);
+            Rectangle rect = new Rectangle(dx / zoom_factor + 1, dy / zoom_factor + 1, tileSize / zoom_factor - 2, tileSize / zoom_factor - 2);
             gfx.DrawRectangle(pen, rect);
 
             //save changes
-            pictureBox1.Image = drawArea;
+            //pictureBox1.Image = drawArea;
         }
+        // *
         /*public void refreshCmbBoxes()
         {
             cmbEncounter.BeginUpdate();
@@ -606,6 +645,7 @@ namespace IceBlinkToolset
             */
             //draw selection box
             drawSelectionBox(gridx, gridy);
+            pictureBox1.Image = drawArea;
         }
         /*private void fillSpriteIconList()
         {
@@ -636,23 +676,32 @@ namespace IceBlinkToolset
                 }
             }
         }*/
+        // * sinopip, 18.01.15
+        // * apply (left mouse button) or remove (right mouse button)
+        // * 	continuously walkmesh and LoS while mouse button is pressed ;
+        // * apply zoom factor
         private void clickDrawArea(MouseEventArgs e)
         {
+            gridx = e.X * zoom_factor / tileSize;
+            gridy = e.Y * zoom_factor / tileSize;
+            selectedTile.index = gridy * area.MapSizeInSquares.Width + gridx;
+
+            if (is_mousedragging && last_mouse_point.X == gridx && last_mouse_point.Y == gridy) 
+            	return;
+            
+            refreshLeftPanelInfo();
+            last_selected_object = new Point(-1,-1);
+            	
             switch (e.Button)
             {
                 #region Left Button
                 case MouseButtons.Left:
-                    refreshLeftPanelInfo();
                     #region Creature Selected
                     if (prntForm.CreatureSelected)
                     {
                         string selectedCrt = prntForm.selectedLevelMapCreatureTag;
                         prntForm.logText(selectedCrt);
                         prntForm.logText(Environment.NewLine);
-
-                        gridx = e.X / tileSize;
-                        gridy = e.Y / tileSize;
-
                         prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
                         prntForm.logText(Environment.NewLine);
                         // verify that there is no creature, blocked, or PC already on this location
@@ -708,10 +757,6 @@ namespace IceBlinkToolset
                         string selectedProp = prntForm.selectedLevelMapPropTag;
                         prntForm.logText(selectedProp);
                         prntForm.logText(Environment.NewLine);
-
-                        gridx = e.X / tileSize;
-                        gridy = e.Y / tileSize;
-
                         prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
                         prntForm.logText(Environment.NewLine);
                         // verify that there is no creature, blocked, or PC already on this location
@@ -762,10 +807,6 @@ namespace IceBlinkToolset
                         string selectedTrigger = prntForm.selectedLevelMapTriggerTag;
                         prntForm.logText(selectedTrigger);
                         prntForm.logText(Environment.NewLine);
-
-                        gridx = e.X / tileSize;
-                        gridy = e.Y / tileSize;
-
                         prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
                         prntForm.logText(Environment.NewLine);
                         Point newPoint = new Point(gridx, gridy);
@@ -795,7 +836,7 @@ namespace IceBlinkToolset
                             MessageBox.Show("The tag of the selected Trigger was not found in the area's trigger list"); 
                         }                        
                         //update the map to show colored squares    
-                        refreshMap();
+                        //refreshMap(true);
                     }
                     #endregion
                     #region Edit Trigger Selected
@@ -806,10 +847,6 @@ namespace IceBlinkToolset
                             string selectedTrigger = prntForm.selectedLevelMapTriggerTag;
                             prntForm.logText(selectedTrigger);
                             prntForm.logText(Environment.NewLine);
-
-                            gridx = e.X / tileSize;
-                            gridy = e.Y / tileSize;
-
                             prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
                             prntForm.logText(Environment.NewLine);
                             Point newPoint = new Point(gridx, gridy);
@@ -842,47 +879,47 @@ namespace IceBlinkToolset
                                 MessageBox.Show("The tag of the selected Trigger was not found in the area's trigger list");
                             }
                             //update the map to show colored squares    
-                            refreshMap();
+                            //refreshMap(true);
                         }
                     }
                     #endregion
-                    #region Walkmesh Toggle Selected
-                    else if (rbtnWalkable.Checked)
+                    #region Walkmesh Apply (while mouse dragging)
+                    else if (is_mousedragging && rbtnWalkable.Checked)
                     {
-                        gridx = e.X / tileSize;
-                        gridy = e.Y / tileSize;
-                        selectedTile.index = gridy * area.MapSizeInSquares.Width + gridx;
+                        area.TileMapList[selectedTile.index].collidable = true;
+                    }                    
+                    #endregion
+                    #region Walkmesh Toggle Selected
+                    else if (rbtnWalkable.Checked && (last_mouse_point.X == -1 && last_mouse_point.Y == -1))
+                    {
                         prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
                         prntForm.logText(Environment.NewLine);
-                        if (area.TileMapList[selectedTile.index].collidable == true)
-                            area.TileMapList[selectedTile.index].collidable = false;
-                        else
-                            area.TileMapList[selectedTile.index].collidable = true;
-                        refreshMap();
+                        area.TileMapList[selectedTile.index].collidable =
+                            !area.TileMapList[selectedTile.index].collidable;
+                    }                    				
+                    #endregion
+                    #region LoS Apply (while mouse dragging)
+                    else if (is_mousedragging && rbtnLoS.Checked)
+                    {
+                        area.TileMapList[selectedTile.index].LoSBlocked = true;
                     }
                     #endregion
                     #region LoS mesh Toggle Selected
-                    else if (rbtnLoS.Checked)
+					else if (rbtnLoS.Checked && (last_mouse_point.X == -1 && last_mouse_point.Y == -1))
                     {
-                        gridx = e.X / tileSize;
-                        gridy = e.Y / tileSize;
-                        selectedTile.index = gridy * area.MapSizeInSquares.Width + gridx;
                         prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
                         prntForm.logText(Environment.NewLine);
-                        if (area.TileMapList[selectedTile.index].LoSBlocked == true)
-                            area.TileMapList[selectedTile.index].LoSBlocked = false;
-                        else
-                            area.TileMapList[selectedTile.index].LoSBlocked = true;
-                        refreshMap();
-                    }
+                        area.TileMapList[selectedTile.index].LoSBlocked =
+                            !area.TileMapList[selectedTile.index].LoSBlocked;
+                    }                    
                     #endregion
                     #region None Selected
                     else // not placing, just getting info and possibly deleteing icon
                     {
                         contextMenuStrip1.Items.Clear();
                         //when left click, get location
-                        gridx = e.X / tileSize;
-                        gridy = e.Y / tileSize;
+                        //gridx = e.X / tileSize;
+                        //gridy = e.Y / tileSize;
                         Point newPoint = new Point(gridx, gridy);                        
                         EventHandler handler = new EventHandler(HandleContextMenuClick);
                         //loop through all the objects
@@ -890,7 +927,8 @@ namespace IceBlinkToolset
                         //draw selection box
                         drawSelectionBox(gridx, gridy);
                         txtSelectedIconInfo.Text = "";
-
+						prntForm.frmIceBlinkProperties.propertyGrid1.SelectedObject = null;
+						
                         foreach (CreatureRefs crt in area.AreaCreatureRefsList)
                         {
                             if (crt.CreatureStartLocation == newPoint)
@@ -903,6 +941,7 @@ namespace IceBlinkToolset
                                 lastSelectedObjectTag = crt.CreatureTag;
                                 pictureBox1.ContextMenuStrip.Items.Add(crt.CreatureTag, null, handler); //string, image, handler
                                 prntForm.frmIceBlinkProperties.propertyGrid1.SelectedObject = crt;
+                                last_selected_object = newPoint;
                             }
                         }
                         foreach (PropRefs prp in area.AreaPropRefsList)
@@ -917,6 +956,7 @@ namespace IceBlinkToolset
                                 lastSelectedObjectTag = prp.PropTag;
                                 pictureBox1.ContextMenuStrip.Items.Add(prp.PropTag, null, handler); //string, image, handler
                                 prntForm.frmIceBlinkProperties.propertyGrid1.SelectedObject = prp;
+                                last_selected_object = newPoint;
                             }
                         }
                         /*foreach (Creature crt in area.AreaCreatureList.creatures)
@@ -953,6 +993,7 @@ namespace IceBlinkToolset
                                     lastSelectedObjectTag = t.TriggerTag;
                                     pictureBox1.ContextMenuStrip.Items.Add(t.TriggerTag, null, handler); //string, image, handler
                                     prntForm.frmIceBlinkProperties.propertyGrid1.SelectedObject = t;
+                                    last_selected_object = newPoint;
                                 }
                             }
                         }
@@ -961,28 +1002,52 @@ namespace IceBlinkToolset
                         {
                             contextMenuStrip1.Show(pictureBox1, e.Location);
                         }
+                        return;
                     }
                     #endregion
                     break;
                 #endregion
                 #region Right Button
                 case MouseButtons.Right:
-                    // exit by right click or ESC
-                    prntForm.logText("entered right-click");
-                    prntForm.logText(Environment.NewLine);
-                    //prntForm.selectedEncounterCreatureTag = "";
-                    prntForm.selectedLevelMapCreatureTag = "";
-                    prntForm.selectedLevelMapPropTag = "";
-                    prntForm.CreatureSelected = false;
-                    prntForm.PropSelected = false;
-                    refreshMap();
-                    pictureBox1.Image = drawArea;
-                    rbtnInfo.Checked = true;
+                    #region Walkmesh remove
+                    if (rbtnWalkable.Checked)
+                    {
+                        area.TileMapList[selectedTile.index].collidable = false;
+                    }
+					#endregion                    
+                    #region LoS mesh remove
+                    else if (rbtnLoS.Checked)
+                    {
+                        area.TileMapList[selectedTile.index].LoSBlocked = false;
+                    }
+					#endregion                    
+					#region Unselect
+					else
+                	{
+	                    // exit by right click or ESC
+	                    prntForm.logText("entered right-click");
+	                    prntForm.logText(Environment.NewLine);
+                        prntForm.logText("gridx = " + gridx.ToString() + "gridy = " + gridy.ToString());
+                        prntForm.logText(Environment.NewLine);
+	                    prntForm.selectedLevelMapCreatureTag = "";
+	                    prntForm.selectedLevelMapPropTag = "";
+	                    prntForm.CreatureSelected = false;
+	                    prntForm.PropSelected = false;
+	                    rbtnInfo.Checked = true;
+                	}
+                	#endregion					
                     break;
                 #endregion
             }
+           	
+            if (!is_mousedragging) // * when mouse is released
+            {
+            	refreshMap();
+            	pictureBox1.Image = drawArea;
+            } 
+            else
+           		last_mouse_point = new Point(gridx, gridy);
         }
-        
         #endregion
 
         #region Event Handlers
@@ -1007,6 +1072,12 @@ namespace IceBlinkToolset
                 //MessageBox.Show("filename selected = " + filename);
                 gameMapBitmap = new Bitmap(filename);
                 drawArea = new Bitmap(filename);
+                // * sinopip, 18.01.15
+                drawAreasZoomed[0] = new Bitmap(gameMapBitmap, gameMapBitmap.Width, gameMapBitmap.Height);
+                drawAreasZoomed[1] = new Bitmap(gameMapBitmap, gameMapBitmap.Width/2, gameMapBitmap.Height/2);
+                drawAreasZoomed[2] = new Bitmap(gameMapBitmap, gameMapBitmap.Width/4, gameMapBitmap.Height/4);
+                zoom_factor = 1;
+                // *
                 pictureBox1.Width = gameMapBitmap.Size.Width;
                 pictureBox1.Height = gameMapBitmap.Size.Height;
                 pictureBox1.Image = (Image)drawArea;
@@ -1017,7 +1088,6 @@ namespace IceBlinkToolset
                     MessageBox.Show("returned a null bitmap");
                     le_game.errorLog("returned a null Map bitmap");
                 }
-
                 resetAreaTileValues(gameMapBitmap.Size.Width / tileSize, gameMapBitmap.Size.Height / tileSize);
                 refreshMap();
             }
@@ -1035,7 +1105,7 @@ namespace IceBlinkToolset
         private void LevelEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
             gfx.Dispose();
-            drawArea.Dispose();          
+            drawArea.Dispose();     
             //gfxSelected.Dispose();
             //selectedBitmap.Dispose();
             //this.Close();
@@ -1060,6 +1130,11 @@ namespace IceBlinkToolset
             //createNewArea(area.MapSizeInSquares.Width, area.MapSizeInSquares.Height);
             //set up level drawing surface
             drawArea = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+            // * sinopip, 18.01.15
+            drawAreasZoomed[0] = new Bitmap(drawArea, drawArea.Width, drawArea.Height);
+            drawAreasZoomed[1] = new Bitmap(drawArea, drawArea.Width/2, drawArea.Height/2);
+            drawAreasZoomed[2] = new Bitmap(drawArea, drawArea.Width/4, drawArea.Height/4);
+            // *
             pictureBox1.Image = drawArea;
             gfx = Graphics.FromImage(drawArea);
 
@@ -1093,14 +1168,21 @@ namespace IceBlinkToolset
             prntForm.openAreasList.Add(area);
             rbtnInfo.Checked = true;            
         }
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-            clickDrawArea(e);
-        }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {            
-            gridx = e.X / tileSize;
-            gridy = e.Y / tileSize;
+        	// * sinopip, 18.01.15
+        	// * MouseMove with button pressed fires a click (for continuous Walkmesh/LoS application) ; 
+        	// * apply zoom factor
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            {
+            	is_mousedragging = true;
+            	clickDrawArea(e);
+            	return;
+            }
+            
+            gridx = e.X * zoom_factor / tileSize;
+            gridy = e.Y * zoom_factor / tileSize;
+            
             mousex = e.X;
             mousey = e.Y;
             lblMouseInfo.Text = "CURSOR " + e.X.ToString() + "," + e.Y.ToString() + Environment.NewLine + "GRID " + gridx.ToString() + "," + gridy.ToString();
@@ -1114,7 +1196,8 @@ namespace IceBlinkToolset
                         //source image size
                         Rectangle frame = new Rectangle(0, 0, tileSize * selectedBitmapSize, tileSize * selectedBitmapSize);
                         //target location
-                        Rectangle target = new Rectangle(gridx * tileSize, gridy * tileSize, tileSize * selectedBitmapSize, tileSize * selectedBitmapSize);
+                        Rectangle target = new Rectangle(gridx * tileSize / zoom_factor, gridy * tileSize / zoom_factor, 
+                                                         tileSize * selectedBitmapSize / zoom_factor, tileSize * selectedBitmapSize / zoom_factor);
                         //draw sprite
                         gfx.DrawImage((Image)selectedBitmap, target, frame, GraphicsUnit.Pixel);
                     }
@@ -1123,8 +1206,10 @@ namespace IceBlinkToolset
                 //save changes
                 pictureBox1.Image = drawArea;
             }
+            //
             // * sinopip, 22.12.14
             // * enable scroll area when mouse is on borders (scrollbar position values are negative)
+            beginscrolling = false;
             is_leftscrolling = false;
         	is_rightscrolling = false;
         	is_upscrolling = false;
@@ -1137,7 +1222,15 @@ namespace IceBlinkToolset
         		is_rightscrolling = true;
         	if (mousey > (panel3.Height-100) + -panel3.AutoScrollPosition.Y)
         		is_downscrolling = true;
-			//                          
+			if (is_leftscrolling || is_rightscrolling || is_upscrolling || is_downscrolling)
+			{
+	        	beginscrolling = true;
+	        	if (!scrollTimer.Enabled)
+	        		scrollTimer.Interval = 500;
+	        	scrollTimer.Enabled = true;	
+			}
+			else scrollTimer.Enabled = false;
+			// *                    
         }
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
@@ -1146,6 +1239,7 @@ namespace IceBlinkToolset
         	is_rightscrolling = false;
         	is_upscrolling = false;
         	is_downscrolling = false;   
+			scrollTimer.Enabled = false;     			
 			//        	
             try
             {
@@ -1293,7 +1387,7 @@ namespace IceBlinkToolset
                 prntForm.CreatureSelected = false;
                 prntForm.PropSelected = false;
                 refreshMap();
-                pictureBox1.Image = drawArea;
+                
             }
         }
         private void rbtnPaintTrigger_CheckedChanged(object sender, EventArgs e)
@@ -1478,23 +1572,75 @@ namespace IceBlinkToolset
         }
 
         // * sinopip, 22.12.14
-		// * scroll the map (timer component of 25ms tick)
         void ScrollTimerTick(object sender, EventArgs e)
         {
-        	if (is_leftscrolling)
+			if (!beginscrolling)
+        	{
+        		scrollTimer.Enabled = false;
+        		return;
+        	}
+        	if (scrollTimer.Interval > 100)
+        		scrollTimer.Interval = 40;
+			//
+			// * scroll by steps of 32px (arbitrary value)
+	        if (is_leftscrolling)
         		panel3.AutoScrollPosition = new Point(
-        			-panel3.AutoScrollPosition.X - 16,
+        			-panel3.AutoScrollPosition.X - 32,
         			-panel3.AutoScrollPosition.Y);
         	if (is_rightscrolling) panel3.AutoScrollPosition = new Point(
-        			-panel3.AutoScrollPosition.X + 16,
+        			-panel3.AutoScrollPosition.X + 32,
         			-panel3.AutoScrollPosition.Y);
         	if (is_upscrolling) panel3.AutoScrollPosition = new Point(
         			-panel3.AutoScrollPosition.X,
-        			-panel3.AutoScrollPosition.Y - 16);
+        			-panel3.AutoScrollPosition.Y - 32);
         	if (is_downscrolling) panel3.AutoScrollPosition = new Point(
         			-panel3.AutoScrollPosition.X,
-        			-panel3.AutoScrollPosition.Y + 16);    	
+        			-panel3.AutoScrollPosition.Y + 32);	
         }
 		//  
+        // * sinopip, 18.01.15
+        void resetDrawArea()
+        {
+        	pictureBox1.Width = gameMapBitmap.Width;
+        	pictureBox1.Height = gameMapBitmap.Height;
+        	area.MapSizeInSquares.Width = gameMapBitmap.Width / tileSize * zoom_factor;
+        	area.MapSizeInSquares.Height = gameMapBitmap.Height / tileSize * zoom_factor;
+        }
+        void BtnZoom1Click(object sender, EventArgs e)
+        {
+        	zoom_factor = 1;
+        	gameMapBitmap = drawAreasZoomed[0];
+        	resetDrawArea();
+        	refreshMap();
+        }
+        
+        void BtnZoom2Click(object sender, EventArgs e)
+        {
+        	zoom_factor = 2;
+        	gameMapBitmap = drawAreasZoomed[1];
+        	resetDrawArea();
+        	refreshMap();
+        }
+        
+        void BtnZoom3Click(object sender, EventArgs e)
+        {
+        	zoom_factor = 4;
+        	gameMapBitmap = drawAreasZoomed[2];
+        	resetDrawArea();
+        	refreshMap();
+        }
+        void PictureBox1MouseDown(object sender, MouseEventArgs e)
+        {
+        	clickDrawArea(e);
+        }        
+        void PictureBox1MouseUp(object sender, MouseEventArgs e)
+        {
+        	is_mousedragging = false;
+        	refreshMap();
+        	if (last_selected_object.X != -1 && last_mouse_point.Y != -1)
+        		drawSelectionBox(last_selected_object.X, last_selected_object.Y);
+        	last_mouse_point = new Point(-1,-1);
+        }
+        // *        
     }
 }
